@@ -30,11 +30,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: UI
 
-### Johnny Doe
+### Estelle Lim
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/estelle-ljgui.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/estelle-ljgui)] [[portfolio](team/estelle-ljgui.md)]
 
 * Role: Developer
 * Responsibilities: Data
