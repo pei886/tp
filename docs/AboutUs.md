@@ -59,3 +59,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+
+### Hasan Ahmed Nasif
+
+![](/docs/images/naa_siuuuu_ff.png)
+
+* Role: Developer
+* Responsibilities: A little bit of everything
+
+
