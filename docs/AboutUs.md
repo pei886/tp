@@ -11,11 +11,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### Dominique (Xue Minjie)
+### Xue Minjie
 
-<img src="images/dominiquedp9.png" width="200px">
+<img src="images/dominique-dp9.png" width="200px">
 
-[[github](http://github.com/Dominique-Dp9)]
+[[github](http://github.com/Dominique-DP9)]
 [[portfolio](team/dom.md)]
 
 * Role: Team Lead
@@ -34,7 +34,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/estelle-ljgui.png" width="200px">
 
-[[github](http://github.com/estelle-ljgui)] [[portfolio](team/estelle-ljgui.md)]
+[[github](http://github.com/estelle-ljgui)] 
+[[portfolio](team/estelle-ljgui.md)]
 
 * Role: Developer
 * Responsibilities: Data
@@ -49,19 +50,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
-### James Doe
+### Hasan Ahmed Nasif
 
-<img src="images/johndoe.png" width="200px">
+<img src="/docs/images/naa_siuuuu_ff.png" width="200px">
 
 [[github](http://github.com/johndoe)]
 [[portfolio](team/johndoe.md)]
-
-* Role: Developer
-* Responsibilities: UI
-
-### Hasan Ahmed Nasif
-
-![](/docs/images/naa_siuuuu_ff.png)
 
 * Role: Developer
 * Responsibilities: A little bit of everything
