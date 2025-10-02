@@ -20,12 +20,13 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Team Lead
 
-### Jane Doe
+### Ong Yi Xin
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/ongyixin.png"
+width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/ongyixin)]
+[[portfolio](team/ongyixin.md)]
 
 * Role: Developer
 * Responsibilities: UI
