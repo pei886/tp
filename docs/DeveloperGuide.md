@@ -300,46 +300,299 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `Loopin` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use Case: UC1 - Add Team Member**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a team member and provides information about team member.
+2. System stores the new team member's details.
 
     Use case ends.
 
 **Extensions**
 
-* 2a. The list is empty.
+* 1a. Missing or incorrectly formatted parameter(s).
+
+    * 1a1. System shows an error message indicating parameter(s) are missing or incorrect.
+
+      Use case ends.
+
+* 1b. Duplicate team member
+
+    * 1b1. System checks the database and finds a team member with identical names or emails.
+    * 1b2. System shows an error message.
+
+      Use case ends.
+
+**Use Case: UC2 - Add Organisation**
+
+**MSS**
+
+1.  User requests to add an organisation and provides information about the organisation.
+2. System stores the new organisation's details.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. Missing or incorrectly formatted parameter(s).
+
+    * 1a1. System shows an error message indicating parameter(s) are missing or incorrect.
+
+      Use case ends.
+
+* 1b. Duplicate organisation.
+
+    * 1b1. System checks the database and finds an organisation with identical names or emails.
+    * 1b2. System shows an error message.
+
+      Use case ends.
+
+**Use Case: UC3 - Add Volunteer**
+
+**MSS**
+
+1.  User requests to add a volunteer and provides information about the volunteer.
+2. System stores the new volunteer's details.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. Missing or incorrectly formatted parameter(s).
+
+    * 1a1. System shows an error message indicating parameter(s) are missing or incorrect.
+
+      Use case ends.
+
+* 1b. Duplicate volunteer.
+
+    * 1b1. System checks the database and finds a volunteer with identical names or emails.
+    * 1b2. System shows an error message.
+
+      Use case ends.
+
+**Use case: UC4 - Delete Person**
+
+**MSS**
+
+1. User requests to delete a specific person in the list.
+   - User specifies the index to delete.
+3. System removes the person from the address book.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The address book is empty.
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 1b. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 1b1. System shows an error message.
 
-      Use case resumes at step 2.
+      Use case ends
+
+**Use case: UC5 - Add Remark for Person Update**
+
+**MSS**
+
+1. User requests to create remark for a person.
+   - User specifies the index to create remark. 
+2. System stores the new remark and sets its status to `pending`.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. Missing or incorrectly formatted parameter(s).
+
+    * 1a1. System shows an error message indicating parameter(s) are missing or incorrect.
+
+      Use case ends.
+
+* 1b. The given index is invalid.
+
+    * 1b1. System shows an error message.
+
+      Use case ends.
+
+* 1c. The same person has duplicate remarks.
+
+    * 1c1. System checks the database and finds that the specified person already has an identical remark pending or completed.
+    * 1c2. System shows an error message indicating that person already has an identical remark.
+
+      Use case ends.
+
+**Use case: UC6 - Complete Person Update**
+
+**MSS**
+
+1. User requests to mark a person’s update as completed by providing the index of the person.
+    - User specifies the index to create remark.
+2. System updates the remark status to `completed`.
+
+  Use case ends.
+
+
+**Extensions**
+
+* 1a. Missing or incorrectly formatted parameter(s).
+
+    * 1a1. System shows an error message.
+
+      Use case ends.
+
+* 1b. The given index is invalid.
+
+    * 1b1. AddressBook shows an error message.
+
+      Use case ends.
+
+* 1c. Remark not found for this person.
+
+    * 1c1. System checks the person’s remarks and finds no matching pending or completed remark.
+
+    * 1c2. System shows an error message indicating the remark was not found.
+  
+    * 1c3. User may choose to <u>UC5 - Add Remark for Person Update</u>.
+
+      Use case resumes at step 1.
+
+**Use case: UC7 - Add project**
+
+**MSS**
+
+1. User requests to create a new project.
+2. System stores the new project.
+
+Use case ends.
+
+
+**Extensions**
+
+* 1a. Missing or incorrectly formatted parameter(s).
+
+    * 1a1. System shows an error message.
+
+      Use case ends.
+
+* 1b. Duplicate project.
+
+    * 1b1. System checks the database and finds a project with the same name. 
+    * 1b2. System shows an error message.
+
+      Use case ends.
+
+**Use case: UC8 - Assign person to project**
+
+**MSS**
+
+1. User requests to assign a person to a project by specifying the person index and the project name.
+2. System links the person to the project.
+
+Use case ends.
+
+
+**Extensions**
+
+* 1a. Invalid person index.
+
+    * 1a1. System shows an error message indicating that index is invalid.
+
+      Use case ends.
+
+* 1b. Project does not exist.
+
+    * 1b1. System shows an error indicating that project does not exist.
+    * 1b2. User may choose to <u>UC7: Add Project</u>. 
+      Use case resumes at step 1.
+
+* 1c. Person already linked to project.
+
+    * 1c1. System shows an error indicating that person already linked to project. 
+      Use case ends.
+
+
+**Use case: UC9 - Remove Person from Project**
+
+**MSS**
+
+1. User requests to remove a person from a project by specifying the person index and the project name.
+2. System removes the person from the project.
+
+Use case ends.
+
+
+**Extensions**
+
+* 1a. Invalid person index.
+
+    * 1a1. System shows an error message indicating that index is invalid.
+
+      Use case ends.
+
+* 1b. Project does not exist.
+
+    * 1b1. System shows an error indicating that project does not exist.
+    * 1b2. User may choose to <u>UC7: Add Project</u>.
+      Use case resumes at step 1.
+
+* 1c. Person not in project.
+
+    * 1c1. System shows an error indicating that person not linked to project.
+
+
+**Use case: UC10 - View Project**
+
+**MSS**
+
+1. User requests to view a project.
+2. System retrieves the details of the project.
+3. System displays the project to users.
+
+Use case ends.
+
+
+**Extensions**
+
+* 1a. Missing or incorrectly formatted parameter(s).
+
+    * 1a1. System shows an error message.
+
+      Use case ends.
+
+* 1b. Project does not exist.
+
+    * 1b1. System shows an error indicating that project does not exist.
+    * 1b2. User may choose to <u>UC7: Add Project</u>.
+      Use case resumes at step 1.
+
 
 *{More to be added}*
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+2. Should process commands and display commands within 1 second.
+3. Should function without an internet connection.
+4. Should not use more than 1GB of RAM.
+5. Should be able to hold up to 1000 persons and 30 projects without a noticeable sluggishness in performance for typical usage.
+6. A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-*{More to be added}*
 
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Private contact detail**: A contact detail that is not meant to be shared with others
-
+* **CLI command**: A text-based instruction entered by the user to perform an action in Loopin.
+* **Parameter**: A piece of information provided by the user as part of a CLI command. Usually follows a strict format.
+* **Index**: The position of a contact in the current list as displayed by the system. Uses 1-based indexing.
+* **Remark**: A tag attached to a contact indicating a need to update them on the project. Each remark has its own status (pending or completed).
+* **Project**: A logical grouping of tasks, updates, and contacts in Loopin.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
