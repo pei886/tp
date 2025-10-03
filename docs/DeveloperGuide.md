@@ -380,7 +380,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User requests to delete a specific person in the list.
    - User specifies the index to delete.
-3. System removes the person from the address book.
+2. System removes the person from the address book.
 
     Use case ends.
 
