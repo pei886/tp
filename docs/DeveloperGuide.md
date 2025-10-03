@@ -515,6 +515,7 @@ Use case ends.
 * 1c. Person already linked to project.
 
     * 1c1. System shows an error indicating that person already linked to project. 
+
       Use case ends.
 
 
