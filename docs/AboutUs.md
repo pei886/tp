@@ -53,7 +53,7 @@ width="200px">
 
 ### Hasan Ahmed Nasif
 
-<img src="images/naa_siuuuu_ff.png" width="200px">
+<img src="images/naa-siuuuu-ff.png" width="200px">
 
 [[github](http://github.com/johndoe)]
 [[portfolio](team/johndoe.md)]
