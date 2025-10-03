@@ -509,6 +509,7 @@ Use case ends.
 
     * 1b1. System shows an error indicating that project does not exist.
     * 1b2. User may choose to <u>UC7: Add Project</u>. 
+
       Use case resumes at step 1.
 
 * 1c. Person already linked to project.
@@ -539,12 +540,14 @@ Use case ends.
 
     * 1b1. System shows an error indicating that project does not exist.
     * 1b2. User may choose to <u>UC7: Add Project</u>.
+
       Use case resumes at step 1.
 
 * 1c. Person not in project.
 
     * 1c1. System shows an error indicating that person not linked to project.
 
+      Use case ends.
 
 **Use case: UC10 - View Project**
 
