@@ -43,7 +43,7 @@ width="200px">
 
 ### Pei Jingya
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/pei886.png" width="200px">
 
 [[github](http://github.com/pei886)]
 [[portfolio](team/pei886.md)]
