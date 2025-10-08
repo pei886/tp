@@ -1,12 +1,10 @@
 package loopin.projectbook.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static loopin.projectbook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.ALICE;
 import static loopin.projectbook.testutil.TypicalPersons.BENSON;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,7 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.commons.core.GuiSettings;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
-import loopin.projectbook.testutil.AddressBookBuilder;
+import loopin.projectbook.testutil.ProjectBookBuilder;
 
 public class ModelManagerTest {
 
@@ -78,12 +76,12 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
+    public void hasPerson_personNotInProjectBook_returnsFalse() {
         assertFalse(modelManager.hasPerson(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
+    public void hasPerson_personInProjectBook_returnsTrue() {
         modelManager.addPerson(ALICE);
         assertTrue(modelManager.hasPerson(ALICE));
     }
@@ -95,7 +93,7 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        ProjectBook projectBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        ProjectBook projectBook = new ProjectBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         ProjectBook differentProjectBook = new ProjectBook();
         UserPrefs userPrefs = new UserPrefs();
 
@@ -113,7 +111,7 @@ public class ModelManagerTest {
         // different types -> returns false
         assertFalse(modelManager.equals(5));
 
-        // different addressBook -> returns false
+        // different projectBook -> returns false
         assertFalse(modelManager.equals(new ModelManager(differentProjectBook, userPrefs)));
 
         // different filteredList -> returns false

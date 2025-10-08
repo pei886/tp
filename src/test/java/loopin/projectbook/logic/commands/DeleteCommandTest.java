@@ -1,14 +1,10 @@
 package loopin.projectbook.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandFailure;
-import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static loopin.projectbook.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static loopin.projectbook.logic.commands.CommandTestUtil.*;
 import static loopin.projectbook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static loopin.projectbook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 

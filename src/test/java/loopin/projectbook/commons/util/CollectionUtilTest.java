@@ -1,9 +1,9 @@
 package loopin.projectbook.commons.util;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
 import static loopin.projectbook.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;

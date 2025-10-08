@@ -1,11 +1,11 @@
 package loopin.projectbook.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,16 +13,8 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import loopin.projectbook.logic.commands.AddCommand;
-import loopin.projectbook.logic.commands.ClearCommand;
-import loopin.projectbook.logic.commands.DeleteCommand;
-import loopin.projectbook.logic.commands.EditCommand;
+import loopin.projectbook.logic.commands.*;
 import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
-import loopin.projectbook.logic.commands.ExitCommand;
-import loopin.projectbook.logic.commands.FindCommand;
-import loopin.projectbook.logic.commands.HelpCommand;
-import loopin.projectbook.logic.commands.ListCommand;
-import loopin.projectbook.logic.commands.RemarkCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
 import loopin.projectbook.model.person.Person;

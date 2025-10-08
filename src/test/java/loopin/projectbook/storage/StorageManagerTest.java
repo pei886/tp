@@ -1,8 +1,8 @@
 package loopin.projectbook.storage;
 
+import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
 
 import java.nio.file.Path;
 
@@ -24,9 +24,9 @@ public class StorageManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonProjectBookStorage addressBookStorage = new JsonProjectBookStorage(getTempFilePath("ab"));
+        JsonProjectBookStorage projectBookStorage = new JsonProjectBookStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(projectBookStorage, userPrefsStorage);
     }
 
     private Path getTempFilePath(String fileName) {
@@ -48,11 +48,11 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void addressBookReadSave() throws Exception {
+    public void projectBookReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
-         * {@link JsonAddressBookStorage} class.
-         * More extensive testing of UserPref saving/reading is done in {@link JsonAddressBookStorageTest} class.
+         * {@link JsonProjectBookStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link JsonProjectBookStorageTest} class.
          */
         ProjectBook original = getTypicalProjectBook();
         storageManager.saveProjectBook(original);

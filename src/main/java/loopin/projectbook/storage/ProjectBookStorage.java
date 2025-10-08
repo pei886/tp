@@ -33,14 +33,14 @@ public interface ProjectBookStorage {
 
     /**
      * Saves the given {@link ReadOnlyProjectBook} to the storage.
-     * @param addressBook cannot be null.
+     * @param projectBook cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveProjectBook(ReadOnlyProjectBook addressBook) throws IOException;
+    void saveProjectBook(ReadOnlyProjectBook projectBook) throws IOException;
 
     /**
      * @see #saveProjectBook(ReadOnlyProjectBook)
      */
-    void saveProjectBook(ReadOnlyProjectBook addressBook, Path filePath) throws IOException;
+    void saveProjectBook(ReadOnlyProjectBook projectBook, Path filePath) throws IOException;
 
 }

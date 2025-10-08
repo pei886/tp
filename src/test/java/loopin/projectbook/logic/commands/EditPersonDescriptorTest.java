@@ -1,15 +1,7 @@
 package loopin.projectbook.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static loopin.projectbook.logic.commands.CommandTestUtil.DESC_AMY;
-import static loopin.projectbook.logic.commands.CommandTestUtil.DESC_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static loopin.projectbook.logic.commands.CommandTestUtil.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 

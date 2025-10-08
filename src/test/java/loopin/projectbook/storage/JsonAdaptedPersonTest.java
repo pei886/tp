@@ -1,9 +1,9 @@
 package loopin.projectbook.storage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static loopin.projectbook.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.BENSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;

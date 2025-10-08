@@ -1,13 +1,11 @@
 package loopin.projectbook.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.ALICE;
 import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,7 +35,7 @@ public class ProjectBookTest {
     }
 
     @Test
-    public void resetData_withValidReadOnlyAddressBook_replacesData() {
+    public void resetData_withValidReadOnlyProjectBook_replacesData() {
         ProjectBook newData = getTypicalProjectBook();
         projectBook.resetData(newData);
         assertEquals(newData, projectBook);
@@ -60,18 +58,18 @@ public class ProjectBookTest {
     }
 
     @Test
-    public void hasPerson_personNotInAddressBook_returnsFalse() {
+    public void hasPerson_personNotInProjectBook_returnsFalse() {
         assertFalse(projectBook.hasPerson(ALICE));
     }
 
     @Test
-    public void hasPerson_personInAddressBook_returnsTrue() {
+    public void hasPerson_personInProjectBook_returnsTrue() {
         projectBook.addPerson(ALICE);
         assertTrue(projectBook.hasPerson(ALICE));
     }
 
     @Test
-    public void hasPerson_personWithSameIdentityFieldsInAddressBook_returnsTrue() {
+    public void hasPerson_personWithSameIdentityFieldsInProjectBook_returnsTrue() {
         projectBook.addPerson(ALICE);
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
@@ -90,7 +88,7 @@ public class ProjectBookTest {
     }
 
     /**
-     * A stub ReadOnlyAddressBook whose persons list can violate interface constraints.
+     * A stub ReadOnlyProjectBook whose persons list can violate interface constraints.
      */
     private static class ProjectBookStub implements ReadOnlyProjectBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
