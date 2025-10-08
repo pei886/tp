@@ -2,8 +2,8 @@ package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.Model;
+import loopin.projectbook.model.ProjectBook;
 
 /**
  * Clears the project book.
