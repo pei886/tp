@@ -5,15 +5,15 @@ import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
 
 import org.junit.jupiter.api.Test;
 
-import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
+import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.UserPrefs;
 
 public class ClearCommandTest {
 
     @Test
-    public void execute_emptyAddressBook_success() {
+    public void execute_emptyProjectBook_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
 
@@ -21,7 +21,7 @@ public class ClearCommandTest {
     }
 
     @Test
-    public void execute_nonEmptyAddressBook_success() {
+    public void execute_nonEmptyProjectBook_success() {
         Model model = new ModelManager(getTypicalProjectBook(), new UserPrefs());
         Model expectedModel = new ModelManager(getTypicalProjectBook(), new UserPrefs());
         expectedModel.setProjectBook(new ProjectBook());

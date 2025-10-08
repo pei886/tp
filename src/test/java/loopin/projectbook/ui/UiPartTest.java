@@ -1,8 +1,8 @@
 package loopin.projectbook.ui;
 
+import static loopin.projectbook.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static loopin.projectbook.testutil.Assert.assertThrows;
 
 import java.net.URL;
 import java.nio.file.Path;

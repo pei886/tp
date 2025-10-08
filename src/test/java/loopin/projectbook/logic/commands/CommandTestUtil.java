@@ -1,13 +1,9 @@
 package loopin.projectbook.logic.commands;
 
+import static loopin.projectbook.logic.parser.CliSyntax.*;
+import static loopin.projectbook.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
-import static loopin.projectbook.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +11,8 @@ import java.util.List;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
-import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.Model;
+import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.testutil.EditPersonDescriptorBuilder;

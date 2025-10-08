@@ -1,12 +1,9 @@
 package loopin.projectbook.storage;
 
+import static loopin.projectbook.testutil.Assert.assertThrows;
+import static loopin.projectbook.testutil.TypicalPersons.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static loopin.projectbook.testutil.Assert.assertThrows;
-import static loopin.projectbook.testutil.TypicalPersons.ALICE;
-import static loopin.projectbook.testutil.TypicalPersons.HOON;
-import static loopin.projectbook.testutil.TypicalPersons.IDA;
-import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
 
 import java.io.IOException;
 import java.nio.file.Path;

@@ -1,13 +1,11 @@
 package loopin.projectbook.model.person;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.ALICE;
 import static loopin.projectbook.testutil.TypicalPersons.BOB;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Collections;

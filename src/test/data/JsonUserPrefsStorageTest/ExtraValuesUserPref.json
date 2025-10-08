@@ -9,5 +9,5 @@
       "z" : 99
     }
   },
-  "addressBookFilePath" : "projectbook.json"
+  "projectBookFilePath" : "projectbook.json"
 }

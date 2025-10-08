@@ -4,26 +4,26 @@ import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.person.Person;
 
 /**
- * A utility class to help with building Addressbook objects.
+ * A utility class to help with building Projectbook objects.
  * Example usage: <br>
- *     {@code AddressBook ab = new AddressBookBuilder().withPerson("John", "Doe").build();}
+ *     {@code ProjectBook ab = new ProjectBookBuilder().withPerson("John", "Doe").build();}
  */
-public class AddressBookBuilder {
+public class ProjectBookBuilder {
 
     private ProjectBook projectBook;
 
-    public AddressBookBuilder() {
+    public ProjectBookBuilder() {
         projectBook = new ProjectBook();
     }
 
-    public AddressBookBuilder(ProjectBook projectBook) {
+    public ProjectBookBuilder(ProjectBook projectBook) {
         this.projectBook = projectBook;
     }
 
     /**
-     * Adds a new {@code Person} to the {@code AddressBook} that we are building.
+     * Adds a new {@code Person} to the {@code ProjectBook} that we are building.
      */
-    public AddressBookBuilder withPerson(Person person) {
+    public ProjectBookBuilder withPerson(Person person) {
         projectBook.addPerson(person);
         return this;
     }

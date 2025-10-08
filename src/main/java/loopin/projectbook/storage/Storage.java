@@ -27,6 +27,6 @@ public interface Storage extends ProjectBookStorage, UserPrefsStorage {
     Optional<ReadOnlyProjectBook> readProjectBook() throws DataLoadingException;
 
     @Override
-    void saveProjectBook(ReadOnlyProjectBook addressBook) throws IOException;
+    void saveProjectBook(ReadOnlyProjectBook projectBook) throws IOException;
 
 }

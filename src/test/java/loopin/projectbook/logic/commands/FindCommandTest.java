@@ -1,14 +1,9 @@
 package loopin.projectbook.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static loopin.projectbook.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static loopin.projectbook.testutil.TypicalPersons.CARL;
-import static loopin.projectbook.testutil.TypicalPersons.ELLE;
-import static loopin.projectbook.testutil.TypicalPersons.FIONA;
-import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
+import static loopin.projectbook.testutil.TypicalPersons.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Collections;

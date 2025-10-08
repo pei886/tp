@@ -1,28 +1,19 @@
 package loopin.projectbook.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static loopin.projectbook.logic.commands.CommandTestUtil.DESC_AMY;
-import static loopin.projectbook.logic.commands.CommandTestUtil.DESC_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandFailure;
-import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static loopin.projectbook.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static loopin.projectbook.logic.commands.CommandTestUtil.*;
 import static loopin.projectbook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static loopin.projectbook.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
-import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
+import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.UserPrefs;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.testutil.EditPersonDescriptorBuilder;
