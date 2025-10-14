@@ -1,13 +1,13 @@
 package loopin.projectbook.model.project;
 
-import loopin.projectbook.commons.util.ToStringBuilder;
-import loopin.projectbook.model.person.Person;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+import loopin.projectbook.commons.util.ToStringBuilder;
+import loopin.projectbook.model.person.Person;
 
 import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
 
