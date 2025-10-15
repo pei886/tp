@@ -78,9 +78,10 @@ public class Project {
     /**
      * Updates the timestamp indicating when this project was last modified.
      *
-     * @param updatedAt the new update timestamp
      */
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public void touch() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     /**
      * Adds a new membership (person) to this project.
