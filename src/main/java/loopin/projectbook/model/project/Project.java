@@ -68,9 +68,11 @@ public class Project {
      * @return a list of {@link Person} objects representing all members
      */
     public List<Person> getAllPeople() {
-        return memberships.stream()
+        return java.util.Collections.unmodifiableList(
+                memberships.stream()
                 .map(Membership::getPerson)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+        );
     }
 
     /**
