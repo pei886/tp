@@ -18,7 +18,6 @@ import loopin.projectbook.logic.commands.ExitCommand;
 import loopin.projectbook.logic.commands.FindCommand;
 import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
-import loopin.projectbook.logic.commands.RemarkCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
 /**
