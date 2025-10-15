@@ -31,17 +31,18 @@ public class PersonTest {
                 .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
-        // different name, all other attributes same -> returns false
-        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
+        // different name, different email, all other attributes same -> returns false
+        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).withEmail(VALID_EMAIL_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // name differs in case, all other attributes same -> returns false
-        Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
+        // name differs in case, different email, all other attributes same -> returns false
+        Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase())
+                .withEmail(VALID_EMAIL_AMY).build();
         assertFalse(BOB.isSamePerson(editedBob));
 
-        // name has trailing spaces, all other attributes same -> returns false
+        // name has trailing spaces, different email, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
-        editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
+        editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).withEmail(VALID_EMAIL_AMY).build();
         assertFalse(BOB.isSamePerson(editedBob));
     }
 
