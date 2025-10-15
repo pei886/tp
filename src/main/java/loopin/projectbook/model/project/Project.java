@@ -38,10 +38,13 @@ public class Project {
     public Project(UUID id, String name, String description) {
         requireAllNonNull(id, name, description);
         this.id = id;
-        this.name = name;
-        this.description = description;
+        this.name = name.trim();
+        this.description = description.trim();
+        if (this.name.isEmpty() || this.description.isEmpty()) {
+            throw new IllegalArgumentException("Project name and description cannot be blank.");
+        }
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
     }
 
     /** @return the unique ID of this project */
