@@ -20,13 +20,13 @@ import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
  */
 public class Project {
 
-    private UUID id;
-    private String name;
-    private String description;
-    private LocalDateTime createdAt;
+    private final UUID id;
+    private final String name;
+    private final String description;
+    private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<Membership> memberships = new ArrayList<>();
+    private final List<Membership> memberships = new ArrayList<>();
 
     /**
      * Creates a new Project with the given id, name, and description.
