@@ -20,13 +20,13 @@ import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
  */
 public class Project {
 
-    private UUID id;
-    private String name;
-    private String description;
-    private LocalDateTime createdAt;
+    private final UUID id;
+    private final String name;
+    private final String description;
+    private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<Membership> memberships = new ArrayList<>();
+    private final List<Membership> memberships = new ArrayList<>();
 
     /**
      * Creates a new Project with the given id, name, and description.
@@ -38,10 +38,13 @@ public class Project {
     public Project(UUID id, String name, String description) {
         requireAllNonNull(id, name, description);
         this.id = id;
-        this.name = name;
-        this.description = description;
+        this.name = name.trim();
+        this.description = description.trim();
+        if (this.name.isEmpty() || this.description.isEmpty()) {
+            throw new IllegalArgumentException("Project name and description cannot be blank.");
+        }
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
     }
 
     /** @return the unique ID of this project */
@@ -65,17 +68,20 @@ public class Project {
      * @return a list of {@link Person} objects representing all members
      */
     public List<Person> getAllPeople() {
-        return memberships.stream()
+        return java.util.Collections.unmodifiableList(
+                memberships.stream()
                 .map(Membership::getPerson)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+        );
     }
 
     /**
      * Updates the timestamp indicating when this project was last modified.
      *
-     * @param updatedAt the new update timestamp
      */
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public void touch() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     /**
      * Adds a new membership (person) to this project.
