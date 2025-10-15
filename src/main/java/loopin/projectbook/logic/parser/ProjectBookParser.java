@@ -80,7 +80,7 @@ public class ProjectBookParser {
             return new HelpCommand();
 
         case AddTeamMemberCommand.COMMAND_WORD:
-            return new AddTeamMemberCommand();
+            return new AddTeamMemberCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
