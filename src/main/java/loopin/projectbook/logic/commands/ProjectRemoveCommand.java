@@ -10,23 +10,23 @@ import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Project;
 
-public final class ProjectAssignCommand extends Command {
+public final class ProjectRemoveCommand extends Command {
     public static final String COMMAND_WORD = "project";
-    public static final String SUBCOMMAND = "assign";
+    public static final String SUBCOMMAND = "remove";
     public static final String MESSAGE_USAGE =
-            "project assign: Assign a person to a project.\n"
-                    + "Format: project assign INDEX project/PROJECT_NAME\n"
-                    + "Example: project assign 1 project/MyProject";
+            "project remove: Remove a person from a project.\n"
+                    + "Format: project remove INDEX project/PROJECT_NAME\n"
+                    + "Example: project remove 1 project/MyProject";
 
-    public static final String MESSAGE_SUCCESS = "Assigned %s to %s.";
-    public static final String MESSAGE_ALREADY = "%s is already in this project.";
+    public static final String MESSAGE_SUCCESS = "Removed %s from the project %s.";
+    public static final String MESSAGE_NOT_IN = "%s is not in this project.";
     public static final String MESSAGE_NO_PROJECT = "Project '%s' does not exist.";
     public static final String MESSAGE_INVALID_INDEX = "The person index provided is invalid.";
 
     private final Index index;
     private final String projectName;
 
-    public ProjectAssignCommand(Index index, String projectName) {
+    public ProjectRemoveCommand(Index index, String projectName) {
         this.index = index;
         this.projectName = projectName;
     }
@@ -44,12 +44,13 @@ public final class ProjectAssignCommand extends Command {
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_NO_PROJECT, projectName)));
 
         Person target = lastShown.get(index.getZeroBased());
-        if (project.hasMember(target)) {
-            throw new CommandException(String.format(MESSAGE_ALREADY, target.getName()));
+        if (!project.hasMember(target)) {
+            throw new CommandException(String.format(MESSAGE_NOT_IN, target.getName()));
         }
 
-        project.assignPerson(target);
+        project.removePerson(target);
         model.setProject(project);
         return new CommandResult(String.format(MESSAGE_SUCCESS, target.getName(), projectName));
     }
+
 }
