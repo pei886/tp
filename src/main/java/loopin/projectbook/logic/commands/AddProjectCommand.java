@@ -1,15 +1,19 @@
 package loopin.projectbook.logic.commands;
 
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.project.Project;
 
-import static java.util.Objects.requireNonNull;
-import static loopin.projectbook.logic.parser.CliSyntax.*;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
-
+/**
+ * Adds a {@code Project} to the project book.
+ * The {@code AddProjectCommand} encapsulates the logic for creating and adding
+ * a new project with the specified details (name and description) into the project book.
+ * If a project with the same identity already exists, a {@code CommandException} is thrown.
+ */
 public class AddProjectCommand extends Command {
     public static final String COMMAND_WORD = "project";
     public static final String SUBCOMMAND = "add";

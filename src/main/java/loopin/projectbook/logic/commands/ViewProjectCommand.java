@@ -2,12 +2,10 @@ package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.parser.CliSyntax.*;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Optional;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
-import loopin.projectbook.logic.Messages;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;

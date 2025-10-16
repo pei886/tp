@@ -22,6 +22,15 @@ import java.util.stream.Stream;
  */
 public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand>{
 
+    /**
+     * Parses the given {@code String} of arguments and constructs an {@code AddTeamMemberCommand}.
+     * The input string is tokenized using the defined prefixes {@code n/}, {@code c/}, {@code p/},
+     * {@code e/} corresponding to the team memmber's name, committee, phone, and email.
+     *
+     * @param args the full command arguments string to parse
+     * @return an {@code AddTeamMemberCommand} object representing the parsed input
+     * @throws ParseException if the input format is invalid or required fields are missing
+     */
     public AddTeamMemberCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL);
