@@ -54,12 +54,21 @@ public class ProjectBook implements ReadOnlyProjectBook {
     }
 
     /**
+     * Replaces the contents of the person list with {@code persons}.
+     * {@code projects} must not contain duplicate persons.
+     */
+    public void setProjects(List<Project> projects) {
+        this.projects.setProjects(projects);
+    }
+
+    /**
      * Resets the existing data of this {@code ProjectBook} with {@code newData}.
      */
     public void resetData(ReadOnlyProjectBook newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setProjects(newData.getProjectList());
     }
 
     //// person-level operations
