@@ -10,7 +10,7 @@ package loopin.projectbook.model.teammember;
 public class Committee {
     public static final String MESSAGE_CONSTRAINTS = "Committee should not start with a blank";
 
-    public String committeeName;
+    public final String committeeName;
 
     public Committee(String committee) {
         this.committeeName = committee;
@@ -18,6 +18,7 @@ public class Committee {
 
     /**
      * Checks if committee is valid, it cannot be empty
+     *
      * @param committee User input for commmittee
      * @return boolean
      */
@@ -26,6 +27,13 @@ public class Committee {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Returns the committee name.
+     */
+    public String getCommitteeName() {
+        return committeeName;
     }
 
     @Override
