@@ -121,4 +121,13 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    public static String parseProjectName(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (trimmedName.isEmpty()) {
+            throw new ParseException("Project name cannot be blank."); // to be included in exceptions
+        }
+        return trimmedName;
+    }
 }
