@@ -12,6 +12,7 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
+import loopin.projectbook.model.person.Organisation;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.ProjectName;
@@ -160,6 +161,18 @@ public class ParserUtil {
             throw new ParseException(ProjectName.MESSAGE_CONSTRAINTS);
         }
         return new ProjectName(trimmedName);
+    }
+
+    /**
+     * Parses {@code String organisation} into a {@code Organisation}.
+     */
+    public static Organisation parseOrganisation(String organisation) throws ParseException {
+        requireNonNull(organisation);
+        String trimmedOrg = organisation.trim();
+        if (trimmedOrg.isEmpty()) {
+            throw new ParseException(Organisation.MESSAGE_CONSTRAINTS);
+        }
+        return new Organisation(trimmedOrg);
     }
 
     /**
