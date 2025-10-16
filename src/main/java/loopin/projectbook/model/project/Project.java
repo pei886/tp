@@ -125,4 +125,12 @@ public class Project {
         touch();
     }
 
+    public void removePerson(Person p) {
+        boolean removed = memberships.removeIf(m -> m.getPerson().isSamePerson(p));
+        if (!removed) {
+            throw new IllegalStateException("Person is not in this project.");
+        }
+        touch();
+    }
+
 }

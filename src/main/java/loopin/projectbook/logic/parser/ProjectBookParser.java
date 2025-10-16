@@ -21,6 +21,7 @@ import loopin.projectbook.logic.commands.FindCommand;
 import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
 import loopin.projectbook.logic.commands.ProjectAssignCommand;
+import loopin.projectbook.logic.commands.ProjectRemoveCommand;
 import loopin.projectbook.logic.commands.RemarkCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
@@ -89,7 +90,8 @@ public class ProjectBookParser {
             final String trimmed = arguments.trim();
             if (trimmed.isEmpty()) {
                 throw new ParseException("Unknown project subcommand. Try:\n"
-                        + ProjectAssignCommand.MESSAGE_USAGE);
+                        + ProjectAssignCommand.MESSAGE_USAGE + "\n"
+                        + ProjectRemoveCommand.MESSAGE_USAGE);
             }
 
             // first token = subcommand ("assign"/"remove"); rest = sub-args
@@ -98,13 +100,16 @@ public class ProjectBookParser {
             String rest = parts.length > 1 ? parts[1] : "";
 
             switch (sub) {
-                case AddProjectCommand.COMMAND_WORD:
-                    return new AddProjectCommandParser().parse(" " + rest);
-                case "assign":
-                    return new ProjectAssignCommandParser().parse(rest);
-                default:
-                    throw new ParseException("Unknown project subcommand. Try:\n"
-                            + ProjectAssignCommand.MESSAGE_USAGE);
+            case AddProjectCommand.COMMAND_WORD:
+                return new AddProjectCommandParser().parse(" " + rest);
+            case "assign":
+                return new ProjectAssignCommandParser().parse(rest);
+            case "remove":
+                return new ProjectRemoveCommandParser().parse(rest);
+            default:
+                throw new ParseException("Unknown project subcommand. Try:\n"
+                        + ProjectAssignCommand.MESSAGE_USAGE + "\n"
+                        + ProjectRemoveCommand.MESSAGE_USAGE);
             }
         }
         case AddVolunteerCommand.COMMAND_WORD:
