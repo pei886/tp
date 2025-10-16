@@ -12,6 +12,7 @@ import loopin.projectbook.commons.exceptions.IllegalValueException;
 import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.ReadOnlyProjectBook;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 
 /**
  * An Immutable ProjectBook that is serializable to JSON format.
@@ -20,15 +21,20 @@ import loopin.projectbook.model.person.Person;
 class JsonSerializableProjectBook {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Persons list contains duplicate person(s).";
+    public static final String MESSAGE_DUPLICATE_PROJECT = "Projects list contains duplicate project(s).";
 
     private final List<JsonAdaptedPerson> persons = new ArrayList<>();
+    private final List<JsonAdaptedProject> projects = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableProjectBook} with the given persons.
      */
     @JsonCreator
-    public JsonSerializableProjectBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons) {
-        this.persons.addAll(persons);
+    public JsonSerializableProjectBook(@JsonProperty("persons") List<JsonAdaptedPerson> persons,
+                                       @JsonProperty("projects") List<JsonAdaptedProject> projects) {
+        this.persons.addAll(persons != null ? persons : new ArrayList<>());
+        this.projects.addAll(projects != null ? projects : new ArrayList<>());
+
     }
 
     /**
@@ -38,6 +44,7 @@ class JsonSerializableProjectBook {
      */
     public JsonSerializableProjectBook(ReadOnlyProjectBook source) {
         persons.addAll(source.getPersonList().stream().map(JsonAdaptedPerson::new).collect(Collectors.toList()));
+        projects.addAll(source.getProjectList().stream().map(JsonAdaptedProject::new).collect(Collectors.toList()));
     }
 
     /**
@@ -54,6 +61,16 @@ class JsonSerializableProjectBook {
             }
             projectBook.addPerson(person);
         }
+
+        // Add projects
+        for (JsonAdaptedProject jsonAdaptedProject : projects) {
+            Project project = jsonAdaptedProject.toModelType();
+            if (projectBook.hasProject(project)) {
+                throw new IllegalValueException(MESSAGE_DUPLICATE_PROJECT);
+            }
+            projectBook.addProject(project);
+        }
+
         return projectBook;
     }
 
