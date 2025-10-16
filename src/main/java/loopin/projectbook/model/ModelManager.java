@@ -12,6 +12,7 @@ import javafx.collections.transformation.FilteredList;
 import loopin.projectbook.commons.core.GuiSettings;
 import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 
 /**
  * Represents the in-memory model of the project book data.
@@ -109,6 +110,29 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedPerson);
 
         projectBook.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public void addProject(Project project) {
+        requireNonNull(project);
+        projectBook.addProject(project);
+    }
+
+    @Override
+    public boolean hasProject(Project project) {
+        requireNonNull(project);
+        return projectBook.hasProject(project);
+    }
+
+    @Override
+    public void setProject(Project project) {
+        requireNonNull(project);
+        projectBook.setProject(project);
+    }
+
+    @Override
+    public java.util.Optional<Project> findProjectByName(String name) {
+        return projectBook.findProjectByName(name);
     }
 
     //=========== Filtered Person List Accessors =============================================================

@@ -1,5 +1,7 @@
 package loopin.projectbook.model.project;
 
+import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +9,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
+import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
-
-import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a project in the ProjectBook system.
@@ -20,44 +21,52 @@ import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
  */
 public class Project {
 
-    private UUID id;
-    private String name;
-    private String description;
-    private LocalDateTime createdAt;
+//    private final UUID id;
+    private final ProjectName name;
+    private final Description description;
+    private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<Membership> memberships = new ArrayList<>();
+    private final List<Membership> memberships = new ArrayList<>();
 
     /**
      * Creates a new Project with the given id, name, and description.
      *
-     * @param id          unique identifier for the project
      * @param name        name of the project
      * @param description short description of the project
      */
-    public Project(UUID id, String name, String description) {
-        requireAllNonNull(id, name, description);
-        this.id = id;
+    public Project(ProjectName name, Description description) {
+        requireAllNonNull(name, description);
         this.name = name;
         this.description = description;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = this.createdAt;
     }
 
-    /** @return the unique ID of this project */
-    public UUID getId() { return id; }
+//    /** @return the unique ID of this project */
+//    public UUID getId() {
+//        return id;
+//    }
 
     /** @return the name of this project */
-    public String getName() { return name; }
+    public ProjectName getName() {
+        return name;
+    }
 
     /** @return the description of this project */
-    public String getDescription() { return description; }
+    public Description getDescription() {
+        return description;
+    }
 
     /** @return the timestamp when this project was created */
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
     /** @return the timestamp of the last update to this project */
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 
     /**
      * Returns all people who are members of this project.
@@ -65,17 +74,20 @@ public class Project {
      * @return a list of {@link Person} objects representing all members
      */
     public List<Person> getAllPeople() {
-        return memberships.stream()
+        return java.util.Collections.unmodifiableList(
+                memberships.stream()
                 .map(Membership::getPerson)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+        );
     }
 
     /**
      * Updates the timestamp indicating when this project was last modified.
      *
-     * @param updatedAt the new update timestamp
      */
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public void touch() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     /**
      * Adds a new membership (person) to this project.
@@ -99,6 +111,18 @@ public class Project {
                 .add("description", description)
                 .add("memberships", memberships)
                 .toString();
+    }
+
+    public boolean hasMember(Person p) {
+        return memberships.stream().anyMatch(m -> m.getPerson().isSamePerson(p));
+    }
+
+    public void assignPerson(Person p) {
+        if (hasMember(p)) {
+            throw new IllegalStateException("Person is already in this project.");
+        }
+        memberships.add(new Membership(p));
+        touch();
     }
 
 }

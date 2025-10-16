@@ -1,5 +1,6 @@
 package loopin.projectbook.model;
 
+
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
@@ -7,7 +8,9 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.person.UniquePersonList;
+import loopin.projectbook.model.project.UniqueProjectList;
 
 /**
  * Wraps all data at the project-book level
@@ -16,6 +19,7 @@ import loopin.projectbook.model.person.UniquePersonList;
 public class ProjectBook implements ReadOnlyProjectBook {
 
     private final UniquePersonList persons;
+    private final UniqueProjectList projects;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -26,6 +30,7 @@ public class ProjectBook implements ReadOnlyProjectBook {
      */
     {
         persons = new UniquePersonList();
+        projects = new UniqueProjectList();
     }
 
     public ProjectBook() {}
@@ -92,6 +97,38 @@ public class ProjectBook implements ReadOnlyProjectBook {
      */
     public void removePerson(Person key) {
         persons.remove(key);
+    }
+
+    /**
+     * Returns true if a project with the same identity as {@code project} exists in the project book.
+     */
+    public boolean hasProject(Project project) {
+        requireNonNull(project);
+        return projects.contains(project);
+    }
+
+    /**
+     * Adds a project to the project book.
+     */
+    public void addProject(Project p) {
+        projects.add(p);
+    }
+
+    /**
+     * Replaces by id the given project {@code project}.
+     * {@code project} must exist in the project book.
+     */
+    public void setProject(Project project) {
+        requireNonNull(project);
+        projects.setProject(project);
+    }
+
+    public java.util.Optional<Project> findProjectByName(String name) {
+        return projects.findByName(name);
+    }
+
+    public javafx.collections.ObservableList<Project> getProjectList() {
+        return projects.asUnmodifiableObservableList();
     }
 
     //// util methods

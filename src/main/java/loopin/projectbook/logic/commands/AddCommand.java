@@ -48,6 +48,10 @@ public class AddCommand extends Command {
         toAdd = person;
     }
 
+    protected String getSuccessMessage() {
+        return MESSAGE_SUCCESS;
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -57,7 +61,7 @@ public class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatPerson(toAdd)));
     }
 
     @Override

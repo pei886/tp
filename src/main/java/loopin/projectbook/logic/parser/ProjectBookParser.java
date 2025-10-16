@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
 
 import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.logic.commands.AddCommand;
+import loopin.projectbook.logic.commands.AddProjectCommand;
 import loopin.projectbook.logic.commands.AddTeamMemberCommand;
+import loopin.projectbook.logic.commands.AddVolunteerCommand;
 import loopin.projectbook.logic.commands.ClearCommand;
 import loopin.projectbook.logic.commands.Command;
 import loopin.projectbook.logic.commands.DeleteCommand;
@@ -18,6 +20,7 @@ import loopin.projectbook.logic.commands.ExitCommand;
 import loopin.projectbook.logic.commands.FindCommand;
 import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
+import loopin.projectbook.logic.commands.ProjectAssignCommand;
 import loopin.projectbook.logic.commands.RemarkCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
@@ -81,6 +84,31 @@ public class ProjectBookParser {
 
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommandParser().parse(arguments);
+
+        case "project": {
+            final String trimmed = arguments.trim();
+            if (trimmed.isEmpty()) {
+                throw new ParseException("Unknown project subcommand. Try:\n"
+                        + ProjectAssignCommand.MESSAGE_USAGE);
+            }
+
+            // first token = subcommand ("assign"/"remove"); rest = sub-args
+            String[] parts = trimmed.split("\\s+", 2);
+            String sub = parts[0];
+            String rest = parts.length > 1 ? parts[1] : "";
+
+            switch (sub) {
+                case AddProjectCommand.COMMAND_WORD:
+                    return new AddProjectCommandParser().parse(" " + rest);
+                case "assign":
+                    return new ProjectAssignCommandParser().parse(rest);
+                default:
+                    throw new ParseException("Unknown project subcommand. Try:\n"
+                            + ProjectAssignCommand.MESSAGE_USAGE);
+            }
+        }
+        case AddVolunteerCommand.COMMAND_WORD:
+            return new AddVolunteerCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

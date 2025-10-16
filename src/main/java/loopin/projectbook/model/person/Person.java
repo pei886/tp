@@ -53,6 +53,10 @@ public class Person {
         return address;
     }
 
+    public String getRole() {
+        return "Unknown Role";
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -71,7 +75,8 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getName().equals(getName());
+                && (otherPerson.getName().equals(getName())
+                || otherPerson.getEmail().equals(getEmail()));
     }
 
     /**
@@ -93,7 +98,6 @@ public class Person {
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags);
     }
 
