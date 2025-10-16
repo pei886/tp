@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import loopin.projectbook.logic.parser.Prefix;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 
 /**
  * Container for user visible messages.
@@ -34,7 +35,7 @@ public class Messages {
     /**
      * Formats the {@code person} for display to the user.
      */
-    public static String format(Person person) {
+    public static String formatPerson(Person person) {
         final StringBuilder builder = new StringBuilder();
         builder.append(person.getName())
                 .append("; Phone: ")
@@ -48,4 +49,15 @@ public class Messages {
         return builder.toString();
     }
 
+    public static String formatProject(Project project) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(project.getName())
+                .append("; Description: ")
+                .append(project.getDescription())
+                .append("; Email: ")
+                .append(project.getCreatedAt())
+                .append("; Created at: ")
+                .append(project.getCreatedAt());
+        return builder.toString();
+    }
 }
