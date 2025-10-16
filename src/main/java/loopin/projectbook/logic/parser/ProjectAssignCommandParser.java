@@ -8,6 +8,11 @@ import loopin.projectbook.logic.commands.ProjectAssignCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.project.ProjectName;
 
+/**
+ * Parses input arguments and creates a new {@link ProjectAssignCommand} object.
+ * Expected format: {@code INDEX p/PROJECT_NAME}
+ *
+ */
 public final class ProjectAssignCommandParser implements Parser<ProjectAssignCommand> {
 
     @Override
