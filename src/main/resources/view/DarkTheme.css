@@ -350,3 +350,10 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+.remark_tag {
+    -fx-background-color: #ff9933; /* Orange/Gold color */
+    -fx-border-radius: 3;
+    -fx-padding: 1 5 1 5;
+    -fx-text-fill: #303030; /* Dark text for contrast */
+}

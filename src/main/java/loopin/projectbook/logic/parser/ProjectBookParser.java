@@ -84,6 +84,9 @@ public class ProjectBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        case RemarkCommand.COMMAND_WORD:
+            return new RemarkCommandParser().parse(arguments);
+
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommandParser().parse(arguments);
 
