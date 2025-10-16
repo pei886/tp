@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.logic.commands.AddCommand;
+import loopin.projectbook.logic.commands.AddProjectCommand;
 import loopin.projectbook.logic.commands.AddTeamMemberCommand;
 import loopin.projectbook.logic.commands.ClearCommand;
 import loopin.projectbook.logic.commands.Command;
@@ -80,6 +81,9 @@ public class ProjectBookParser {
 
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommand();
+
+        case AddProjectCommand.COMMAND_WORD:
+            return new AddProjectCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

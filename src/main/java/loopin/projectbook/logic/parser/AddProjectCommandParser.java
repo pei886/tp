@@ -1,0 +1,57 @@
+package loopin.projectbook.logic.parser;
+
+import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static loopin.projectbook.logic.parser.CliSyntax.*;
+
+import java.util.Set;
+import java.util.stream.Stream;
+
+import loopin.projectbook.logic.commands.AddCommand;
+import loopin.projectbook.logic.commands.AddProjectCommand;
+import loopin.projectbook.logic.parser.exceptions.ParseException;
+import loopin.projectbook.model.person.Address;
+import loopin.projectbook.model.person.Email;
+import loopin.projectbook.model.person.Name;
+import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.project.Description;
+import loopin.projectbook.model.project.Project;
+import loopin.projectbook.model.tag.Tag;
+
+/**
+ * Parses input arguments and creates a new AddProjectCommand object
+ */
+public class AddProjectCommandParser implements Parser<AddProjectCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddCommand
+     * and returns an AddCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddProjectCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DESCRIPTION);
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME)
+                || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+        }
+
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DESCRIPTION);
+        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
+
+        Project project = new Project(name, description);
+
+        return new AddProjectCommand(project);
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
