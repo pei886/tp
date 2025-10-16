@@ -8,8 +8,8 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.model.person.Person;
-import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.person.UniquePersonList;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.UniqueProjectList;
 
 /**
@@ -54,12 +54,21 @@ public class ProjectBook implements ReadOnlyProjectBook {
     }
 
     /**
+     * Replaces the contents of the person list with {@code persons}.
+     * {@code projects} must not contain duplicate persons.
+     */
+    public void setProjects(List<Project> projects) {
+        this.projects.setProjects(projects);
+    }
+
+    /**
      * Resets the existing data of this {@code ProjectBook} with {@code newData}.
      */
     public void resetData(ReadOnlyProjectBook newData) {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setProjects(newData.getProjectList());
     }
 
     //// person-level operations

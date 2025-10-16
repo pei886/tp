@@ -1,11 +1,16 @@
 package loopin.projectbook.model.teammember;
 
-import loopin.projectbook.model.person.Address;
-
+/**
+ * Represents a committee to which a {@code TeamMember} belongs in the project book.
+ * A {@code Committee} is identified by its name.
+ * This class ensures that committee names conform to the defined constraints and
+ * supports equality checks and proper hashing for use in collections.
+ *
+ */
 public class Committee {
     public static final String MESSAGE_CONSTRAINTS = "Committee should not start with a blank";
 
-    public String committeeName;
+    public final String committeeName;
 
     public Committee(String committee) {
         this.committeeName = committee;
@@ -13,6 +18,7 @@ public class Committee {
 
     /**
      * Checks if committee is valid, it cannot be empty
+     *
      * @param committee User input for commmittee
      * @return boolean
      */
@@ -21,6 +27,13 @@ public class Committee {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Returns the committee name.
+     */
+    public String getCommitteeName() {
+        return committeeName;
     }
 
     @Override

@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import loopin.projectbook.commons.exceptions.IllegalValueException;
-import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
@@ -95,7 +94,7 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         //if (address == null) {
-        //    throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        // throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         //}
         //if (!Address.isValidAddress(address)) {
         //    throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);

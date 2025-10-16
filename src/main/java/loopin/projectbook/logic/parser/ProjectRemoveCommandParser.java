@@ -8,6 +8,10 @@ import loopin.projectbook.logic.commands.ProjectRemoveCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.project.ProjectName;
 
+/**
+ * Parses input arguments and creates a new {@link ProjectRemoveCommand} object.
+ * Expected format: {@code INDEX project/PROJECT_NAME}
+ */
 public final class ProjectRemoveCommandParser implements Parser<ProjectRemoveCommand> {
 
     @Override
@@ -18,8 +22,11 @@ public final class ProjectRemoveCommandParser implements Parser<ProjectRemoveCom
             Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
             ProjectName projectName = argMultimap.getValue(PREFIX_PROJECT)
                     .map(n -> {
-                        try { return ParserUtil.parseProjectName(n); }
-                        catch (ParseException e) { throw new RuntimeException(e); }
+                        try {
+                            return ParserUtil.parseProjectName(n);
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
                     })
                     .orElseThrow(() -> new ParseException(ProjectRemoveCommand.MESSAGE_USAGE));
 
