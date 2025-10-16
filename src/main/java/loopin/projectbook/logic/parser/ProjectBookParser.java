@@ -84,7 +84,7 @@ public class ProjectBookParser {
             return new HelpCommand();
 
         case AddTeamMemberCommand.COMMAND_WORD:
-            return new AddTeamMemberCommand();
+            return new AddTeamMemberCommandParser().parse(arguments);
 
         case "project": {
             final String trimmed = arguments.trim();

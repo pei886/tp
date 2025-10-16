@@ -1,17 +1,17 @@
 package loopin.projectbook.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 
+import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
+import loopin.projectbook.model.teammember.TeamMember;
 
-/**
- * Adds a team member to the project book.
- */
-public class AddTeamMemberCommand extends Command {
+public class AddTeamMemberCommand extends Command{
 
     public static final String COMMAND_WORD = "addmember";
 
@@ -30,12 +30,21 @@ public class AddTeamMemberCommand extends Command {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com ";
 
-    public AddTeamMemberCommand() {
+    private final TeamMember toAdd;
 
+    public AddTeamMemberCommand(TeamMember member) {
+        requireNonNull(member);
+        this.toAdd = member;
     }
-
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        throw new CommandException("MESSAGE_NOT_IMPLEMENTED_YET");
+        requireNonNull(model);
+
+        if (model.hasPerson(toAdd)) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        }
+
+        model.addPerson(toAdd);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatPerson(toAdd)));
     }
 }
