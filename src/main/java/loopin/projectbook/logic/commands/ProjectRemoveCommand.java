@@ -11,6 +11,11 @@ import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;
 
+/**
+ * Removes a person (by index in the current person list) from an existing project.
+ * Usage: {@code project remove INDEX project/PROJECT_NAME}
+ *
+ */
 public final class ProjectRemoveCommand extends Command {
     public static final String COMMAND_WORD = "project";
     public static final String SUBCOMMAND = "remove";
@@ -27,6 +32,12 @@ public final class ProjectRemoveCommand extends Command {
     private final Index index;
     private final ProjectName projectName;
 
+    /**
+     * Constructs a command to remove the person at {@code index} from the project named {@code projectName}.
+     *
+     * @param index index of the person in the current filtered person list
+     * @param projectName the validated project name value object
+     */
     public ProjectRemoveCommand(Index index, ProjectName projectName) {
         this.index = index;
         this.projectName = projectName;

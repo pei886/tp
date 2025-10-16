@@ -13,7 +13,7 @@ import loopin.projectbook.model.project.ProjectName;
 
 /**
  * Assigns a person (by index in the current person list) to an existing project.
- * Usage: {@code project assign INDEX p/PROJECT_NAME}
+ * Usage: {@code project assign INDEX project/PROJECT_NAME}
  *
  */
 public final class ProjectAssignCommand extends Command {

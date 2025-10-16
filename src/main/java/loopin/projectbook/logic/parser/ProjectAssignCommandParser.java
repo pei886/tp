@@ -10,7 +10,7 @@ import loopin.projectbook.model.project.ProjectName;
 
 /**
  * Parses input arguments and creates a new {@link ProjectAssignCommand} object.
- * Expected format: {@code INDEX p/PROJECT_NAME}
+ * Expected format: {@code INDEX project/PROJECT_NAME}
  *
  */
 public final class ProjectAssignCommandParser implements Parser<ProjectAssignCommand> {
