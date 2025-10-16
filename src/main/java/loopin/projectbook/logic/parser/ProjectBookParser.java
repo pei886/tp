@@ -22,6 +22,7 @@ import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
 import loopin.projectbook.logic.commands.ProjectAssignCommand;
 import loopin.projectbook.logic.commands.RemarkCommand;
+import loopin.projectbook.logic.commands.ViewProjectCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
 /**
@@ -102,6 +103,8 @@ public class ProjectBookParser {
                     return new AddProjectCommandParser().parse(" " + rest);
                 case "assign":
                     return new ProjectAssignCommandParser().parse(rest);
+                case ViewProjectCommand.COMMAND_WORD:
+                    return new ViewProjectCommandParser().parse(" " + rest);
                 default:
                     throw new ParseException("Unknown project subcommand. Try:\n"
                             + ProjectAssignCommand.MESSAGE_USAGE);
