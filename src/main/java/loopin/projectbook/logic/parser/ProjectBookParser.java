@@ -85,9 +85,6 @@ public class ProjectBookParser {
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommand();
 
-        case AddProjectCommand.COMMAND_WORD:
-            return new AddProjectCommandParser().parse(arguments);
-
         case "project": {
             final String trimmed = arguments.trim();
             if (trimmed.isEmpty()) {
@@ -101,6 +98,8 @@ public class ProjectBookParser {
             String rest = parts.length > 1 ? parts[1] : "";
 
             switch (sub) {
+                case AddProjectCommand.COMMAND_WORD:
+                    return new AddProjectCommandParser().parse(" " + rest);
                 case "assign":
                     return new ProjectAssignCommandParser().parse(rest);
                 default:

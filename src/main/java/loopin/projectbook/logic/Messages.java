@@ -54,8 +54,6 @@ public class Messages {
         builder.append(project.getName())
                 .append("; Description: ")
                 .append(project.getDescription())
-                .append("; Email: ")
-                .append(project.getCreatedAt())
                 .append("; Created at: ")
                 .append(project.getCreatedAt());
         return builder.toString();
