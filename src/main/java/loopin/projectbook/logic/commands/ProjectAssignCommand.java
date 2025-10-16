@@ -9,6 +9,7 @@ import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Project;
+import loopin.projectbook.model.project.ProjectName;
 
 public final class ProjectAssignCommand extends Command {
     public static final String COMMAND_WORD = "project";
@@ -18,15 +19,15 @@ public final class ProjectAssignCommand extends Command {
                     + "Format: project assign INDEX project/PROJECT_NAME\n"
                     + "Example: project assign 1 project/MyProject";
 
-    public static final String MESSAGE_SUCCESS = "Assigned %s to %s.";
+    public static final String MESSAGE_SUCCESS = "Assigned %s to the project %s.";
     public static final String MESSAGE_ALREADY = "%s is already in this project.";
     public static final String MESSAGE_NO_PROJECT = "Project '%s' does not exist.";
     public static final String MESSAGE_INVALID_INDEX = "The person index provided is invalid.";
 
     private final Index index;
-    private final String projectName;
+    private final ProjectName projectName;
 
-    public ProjectAssignCommand(Index index, String projectName) {
+    public ProjectAssignCommand(Index index, ProjectName projectName) {
         this.index = index;
         this.projectName = projectName;
     }
@@ -40,8 +41,9 @@ public final class ProjectAssignCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_INDEX);
         }
 
-        Project project = model.findProjectByName(projectName)
-                .orElseThrow(() -> new CommandException(String.format(MESSAGE_NO_PROJECT, projectName)));
+        String lookup = projectName.toString();
+        Project project = model.findProjectByName(lookup)
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_NO_PROJECT, lookup)));
 
         Person target = lastShown.get(index.getZeroBased());
         if (project.hasMember(target)) {

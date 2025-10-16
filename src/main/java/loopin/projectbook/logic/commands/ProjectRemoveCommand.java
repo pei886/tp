@@ -9,6 +9,7 @@ import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Project;
+import loopin.projectbook.model.project.ProjectName;
 
 public final class ProjectRemoveCommand extends Command {
     public static final String COMMAND_WORD = "project";
@@ -24,9 +25,9 @@ public final class ProjectRemoveCommand extends Command {
     public static final String MESSAGE_INVALID_INDEX = "The person index provided is invalid.";
 
     private final Index index;
-    private final String projectName;
+    private final ProjectName projectName;
 
-    public ProjectRemoveCommand(Index index, String projectName) {
+    public ProjectRemoveCommand(Index index, ProjectName projectName) {
         this.index = index;
         this.projectName = projectName;
     }
@@ -40,8 +41,9 @@ public final class ProjectRemoveCommand extends Command {
             throw new CommandException(MESSAGE_INVALID_INDEX);
         }
 
-        Project project = model.findProjectByName(projectName)
-                .orElseThrow(() -> new CommandException(String.format(MESSAGE_NO_PROJECT, projectName)));
+        String lookup = projectName.toString();
+        Project project = model.findProjectByName(lookup)
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_NO_PROJECT, lookup)));
 
         Person target = lastShown.get(index.getZeroBased());
         if (!project.hasMember(target)) {

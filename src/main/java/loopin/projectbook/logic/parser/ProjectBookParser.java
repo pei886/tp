@@ -91,7 +91,7 @@ public class ProjectBookParser {
             if (trimmed.isEmpty()) {
                 throw new ParseException("Unknown project subcommand. Try:\n"
                         + ProjectAssignCommand.MESSAGE_USAGE + "\n"
-                        + ProjectRemoveComamnd.MESSAGE_USAGE);
+                        + ProjectRemoveCommand.MESSAGE_USAGE);
             }
 
             // first token = subcommand ("assign"/"remove"); rest = sub-args
@@ -104,12 +104,12 @@ public class ProjectBookParser {
                 return new AddProjectCommandParser().parse(" " + rest);
             case "assign":
                 return new ProjectAssignCommandParser().parse(rest);
-                case "remove":
-                    return new ProjectRemoveCommandParser().parse(rest);
+            case "remove":
+                return new ProjectRemoveCommandParser().parse(rest);
             default:
                 throw new ParseException("Unknown project subcommand. Try:\n"
                         + ProjectAssignCommand.MESSAGE_USAGE + "\n"
-                        + ProjectRemoveComamnd.MESSAGE_USAGE);
+                        + ProjectRemoveCommand.MESSAGE_USAGE);
             }
         }
         case AddVolunteerCommand.COMMAND_WORD:
