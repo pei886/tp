@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import loopin.projectbook.model.project.exceptions.DuplicateProjectException;
+import loopin.projectbook.model.project.exceptions.ProjectNotFoundException;
 
 /**
  * A list of projects that enforces uniqueness between its elements and does not allow nulls.
@@ -26,8 +28,16 @@ public class UniqueProjectList implements Iterable<Project> {
         return internalList.stream().anyMatch(p -> p.equals(toCheck));
     }
 
+    /**
+     * Finds a project by its name.
+     *
+     * @param name the project name to search for
+     * @return an {@code Optional} containing the first matching project, or {@code Optional.empty()} if none found
+     */
     public Optional<Project> findByName(String name) {
-        if (name == null) return Optional.empty();
+        if (name == null) {
+            return Optional.empty();
+        }
         String normalisedName = name.trim().replaceAll("\\s+", " ").toLowerCase();
         return internalList.stream()
                 .filter(p -> p.getName().toString()
@@ -38,11 +48,13 @@ public class UniqueProjectList implements Iterable<Project> {
     /**
      * Adds a project to the list.
      * The project must not already exist in the list.
+     *
+     * @throws DuplicateProjectException if the project already exists
      */
-    public void add (Project toAdd) {
+    public void add(Project toAdd) {
         requireNonNull(toAdd);
         if (contains(toAdd)) {
-            throw new IllegalArgumentException("Duplicate project"); // to be included in exceptions
+            throw new DuplicateProjectException();
         }
         internalList.add(toAdd);
     }
@@ -50,13 +62,15 @@ public class UniqueProjectList implements Iterable<Project> {
     /**
      * Replaces the project {@code target} in the list with the updated version.
      * {@code target} must exist in the list.
+     *
+     * @throws ProjectNotFoundException if the target project does not exist
      */
     public void setProject(Project target) {
         requireNonNull(target);
 
         int index = internalList.indexOf(target);
         if (index == -1) {
-            throw new IllegalArgumentException("Target project not found"); // to be included in exceptions
+            throw new ProjectNotFoundException();
         }
 
         internalList.set(index, target);
@@ -73,7 +87,9 @@ public class UniqueProjectList implements Iterable<Project> {
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public ObservableList<Project> asUnmodifiableObservableList() { return internalUnmodifiableList; }
+    public ObservableList<Project> asUnmodifiableObservableList() {
+        return internalUnmodifiableList;
+    }
 
     @Override
     public Iterator<Project> iterator() {

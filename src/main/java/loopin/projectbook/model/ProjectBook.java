@@ -8,8 +8,8 @@ import java.util.List;
 import javafx.collections.ObservableList;
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.model.person.Person;
-import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.person.UniquePersonList;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.UniqueProjectList;
 
 /**

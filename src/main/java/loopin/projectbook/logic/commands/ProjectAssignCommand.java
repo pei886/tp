@@ -11,6 +11,10 @@ import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;
 
+/**
+ * Assigns a person (by index in the current person list) to an existing project.
+ * Usage: {@code project assign INDEX project/PROJECT_NAME}
+ */
 public final class ProjectAssignCommand extends Command {
     public static final String COMMAND_WORD = "project";
     public static final String SUBCOMMAND = "assign";
@@ -27,6 +31,12 @@ public final class ProjectAssignCommand extends Command {
     private final Index index;
     private final ProjectName projectName;
 
+    /**
+     * Constructs a command to assign the person at {@code index} to the project named {@code projectName}.
+     *
+     * @param index index of the person in the current filtered person list
+     * @param projectName the validated project name value object
+     */
     public ProjectAssignCommand(Index index, ProjectName projectName) {
         this.index = index;
         this.projectName = projectName;

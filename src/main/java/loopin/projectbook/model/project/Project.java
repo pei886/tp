@@ -21,7 +21,7 @@ import loopin.projectbook.model.person.Person;
  */
 public class Project {
 
-//    private final UUID id;
+    //    private final UUID id;
     private final ProjectName name;
     private final Description description;
     private final LocalDateTime createdAt;
@@ -76,8 +76,8 @@ public class Project {
     public List<Person> getAllPeople() {
         return java.util.Collections.unmodifiableList(
                 memberships.stream()
-                .map(Membership::getPerson)
-                .collect(Collectors.toList())
+                        .map(Membership::getPerson)
+                        .collect(Collectors.toList())
         );
     }
 
@@ -113,10 +113,24 @@ public class Project {
                 .toString();
     }
 
+    /**
+     * Returns {@code true} if the specified {@code Person} is a member of this project.
+     *
+     * @param p the person to check for membership
+     * @return {@code true} if the person is already in the project and {@code false} otherwise
+     */
     public boolean hasMember(Person p) {
         return memberships.stream().anyMatch(m -> m.getPerson().isSamePerson(p));
     }
 
+    /**
+     * Assigns the specified {@code Person} to this project as a new member.
+     *
+     * Updates the project's last modified timestamp.
+     *
+     * @param p the person to assign
+     * @throws IllegalStateException if the person is already a member of the project
+     */
     public void assignPerson(Person p) {
         if (hasMember(p)) {
             throw new IllegalStateException("Person is already in this project.");
@@ -125,6 +139,13 @@ public class Project {
         touch();
     }
 
+    /**
+     * Removes the specified {@code Person} from this project.
+     * Updates the project's last modified timestamp.
+     *
+     * @param p the person to remove
+     * @throws IllegalStateException if the person is not currently a member of the project
+     */
     public void removePerson(Person p) {
         boolean removed = memberships.removeIf(m -> m.getPerson().isSamePerson(p));
         if (!removed) {
