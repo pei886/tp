@@ -26,6 +26,12 @@ public class UniqueProjectList implements Iterable<Project> {
         return internalList.stream().anyMatch(p -> p.equals(toCheck));
     }
 
+    /**
+     * Finds a project by its name.
+     *
+     * @param name the project name to search for
+     * @return an {@code Optional} containing the first matching project, or {@code Optional.empty()} if none found
+     */
     public Optional<Project> findByName(String name) {
         if (name == null) return Optional.empty();
         String normalisedName = name.trim().replaceAll("\\s+", " ").toLowerCase();
