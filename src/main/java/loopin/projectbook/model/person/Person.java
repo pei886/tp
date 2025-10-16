@@ -2,8 +2,10 @@ package loopin.projectbook.model.person;
 
 import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,6 +26,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final List<Remark> remarks = new ArrayList<>(); // empty by default. TODO: change implementation
 
     /**
      * Name, email and tags must be present and non null but phone and address can be null.
@@ -77,6 +80,25 @@ public class Person {
         return otherPerson != null
                 && (otherPerson.getName().equals(getName())
                 || otherPerson.getEmail().equals(getEmail()));
+    }
+
+    // Add this method for duplicate checking in RemarkCommand
+    public boolean hasRemark(Remark remark) {
+        return remarks.contains(remark); // leverages UpdateRemark's equals()
+    }
+
+    // Add this method for adding a remark (returns a new immutable Person)
+    public Person withNewRemark(Remark newRemark) {
+        // Implementation must create a copy of the existing person and add the new remark.
+        Person updatedPerson = new Person(name, phone, email, address, tags);
+        updatedPerson.remarks.addAll(this.remarks);
+        updatedPerson.remarks.add(newRemark);
+        return updatedPerson;
+    }
+
+    // Add a getter for the UI
+    public List<Remark> getRemarks() {
+        return Collections.unmodifiableList(remarks);
     }
 
     /**

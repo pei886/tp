@@ -84,6 +84,9 @@ public class ProjectBookParser {
         case HelpCommand.COMMAND_WORD:
             return new HelpCommand();
 
+        case RemarkCommand.COMMAND_WORD:
+            return new RemarkCommandParser().parse(arguments);
+
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommandParser().parse(arguments);
 
@@ -106,7 +109,7 @@ public class ProjectBookParser {
                 case ProjectAssignCommand.SUBCOMMAND:
                     return new ProjectAssignCommandParser().parse(rest);
                 case ProjectRemoveCommand.SUBCOMMAND:
-                    return new PrrojectRemoveCommandParser().parse(rest);
+                    return new ProjectRemoveCommandParser().parse(rest);
                 case ViewProjectCommand.SUBCOMMAND:
                     return new ViewProjectCommandParser().parse(" " + rest);
                 default:
