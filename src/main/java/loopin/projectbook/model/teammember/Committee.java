@@ -1,7 +1,10 @@
 package loopin.projectbook.model.teammember;
 
+/**
+ * Represents a committee for team members in the ProjectBook.
+ */
 public class Committee {
-    public String committeeName;
+    private String committeeName;
 
     public Committee(String committee) {
         this.committeeName = committee;

@@ -1,5 +1,7 @@
 package loopin.projectbook.model.project;
 
+import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,8 +10,6 @@ import java.util.stream.Collectors;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.model.person.Person;
-
-import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a project in the ProjectBook system.
@@ -48,19 +48,29 @@ public class Project {
     }
 
     /** @return the unique ID of this project */
-    public UUID getId() { return id; }
+    public UUID getId() {
+        return id;
+    }
 
     /** @return the name of this project */
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     /** @return the description of this project */
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
     /** @return the timestamp when this project was created */
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 
     /** @return the timestamp of the last update to this project */
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 
     /**
      * Returns all people who are members of this project.
