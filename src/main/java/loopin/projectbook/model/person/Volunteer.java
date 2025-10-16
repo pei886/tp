@@ -21,9 +21,7 @@ public class Volunteer extends Person {
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
-            return true;
-        } else if (!(otherPerson instanceof Volunteer)) {
+        if (!(otherPerson instanceof Volunteer)) {
             return false;
         }
 
