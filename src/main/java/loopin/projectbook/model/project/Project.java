@@ -5,11 +5,9 @@ import static loopin.projectbook.commons.util.CollectionUtil.requireAllNonNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
-import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 
 /**
@@ -43,10 +41,10 @@ public class Project {
         this.updatedAt = this.createdAt;
     }
 
-//    /** @return the unique ID of this project */
-//    public UUID getId() {
-//        return id;
-//    }
+    //    /** @return the unique ID of this project */
+    //    public UUID getId() {
+    //        return id;
+    //    }
 
     /** @return the name of this project */
     public ProjectName getName() {

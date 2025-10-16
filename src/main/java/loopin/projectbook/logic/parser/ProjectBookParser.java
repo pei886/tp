@@ -101,18 +101,18 @@ public class ProjectBookParser {
             String rest = parts.length > 1 ? parts[1] : "";
 
             switch (sub) {
-                case AddProjectCommand.SUBCOMMAND:
-                    return new AddProjectCommandParser().parse(" " + rest);
-                case ProjectAssignCommand.SUBCOMMAND:
-                    return new ProjectAssignCommandParser().parse(rest);
-                case ProjectRemoveCommand.SUBCOMMAND:
-                    return new ProjectRemoveCommandParser().parse(rest);
-                case ViewProjectCommand.SUBCOMMAND:
-                    return new ViewProjectCommandParser().parse(" " + rest);
-                default:
-                    throw new ParseException("Unknown project subcommand. Try:\n"
-                            + ProjectAssignCommand.MESSAGE_USAGE + "\n"
-                            + ProjectRemoveCommand.MESSAGE_USAGE);
+            case AddProjectCommand.SUBCOMMAND:
+                return new AddProjectCommandParser().parse(" " + rest);
+            case ProjectAssignCommand.SUBCOMMAND:
+                return new ProjectAssignCommandParser().parse(rest);
+            case ProjectRemoveCommand.SUBCOMMAND:
+                return new ProjectRemoveCommandParser().parse(rest);
+            case ViewProjectCommand.SUBCOMMAND:
+                return new ViewProjectCommandParser().parse(" " + rest);
+            default:
+                throw new ParseException("Unknown project subcommand. Try:\n"
+                        + ProjectAssignCommand.MESSAGE_USAGE + "\n"
+                        + ProjectRemoveCommand.MESSAGE_USAGE);
             }
         }
         case AddVolunteerCommand.COMMAND_WORD:
