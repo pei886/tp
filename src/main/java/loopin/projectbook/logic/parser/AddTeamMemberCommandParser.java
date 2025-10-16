@@ -7,6 +7,8 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 
+import java.util.stream.Stream;
+
 import loopin.projectbook.logic.commands.AddTeamMemberCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Email;
@@ -15,12 +17,10 @@ import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.teammember.Committee;
 import loopin.projectbook.model.teammember.TeamMember;
 
-import java.util.stream.Stream;
-
 /**
  * Parses user input to create a new AddTeamMember object
  */
-public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand>{
+public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> {
 
     /**
      * Parses the given {@code String} of arguments and constructs an {@code AddTeamMemberCommand}.
@@ -33,7 +33,8 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand>{
      */
     public AddTeamMemberCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
