@@ -22,8 +22,11 @@ public final class ProjectRemoveCommandParser implements Parser<ProjectRemoveCom
             Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
             ProjectName projectName = argMultimap.getValue(PREFIX_PROJECT)
                     .map(n -> {
-                        try { return ParserUtil.parseProjectName(n); }
-                        catch (ParseException e) { throw new RuntimeException(e); }
+                        try {
+                            return ParserUtil.parseProjectName(n);
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
                     })
                     .orElseThrow(() -> new ParseException(ProjectRemoveCommand.MESSAGE_USAGE));
 

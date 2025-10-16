@@ -27,6 +27,7 @@ public class AddProjectCommandParser implements Parser<AddProjectCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public AddProjectCommand parse(String args) throws ParseException {

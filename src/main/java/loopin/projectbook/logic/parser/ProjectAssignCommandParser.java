@@ -23,8 +23,11 @@ public final class ProjectAssignCommandParser implements Parser<ProjectAssignCom
 
             ProjectName projectName = argMultimap.getValue(PREFIX_PROJECT)
                     .map(n -> {
-                        try { return ParserUtil.parseProjectName(n); }
-                        catch (ParseException e) { throw new RuntimeException(e); }
+                        try {
+                            return ParserUtil.parseProjectName(n);
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
                     })
                     .orElseThrow(() -> new ParseException(ProjectAssignCommand.MESSAGE_USAGE));
 

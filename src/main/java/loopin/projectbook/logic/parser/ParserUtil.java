@@ -127,7 +127,7 @@ public class ParserUtil {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (trimmedName.isEmpty()) {
-            throw new ParseException("Project name cannot be blank."); // to be included in exceptions
+            throw new ParseException(ProjectName.MESSAGE_CONSTRAINTS);
         }
         return new ProjectName(trimmedName);
     }
