@@ -118,7 +118,7 @@ public class ProjectBook implements ReadOnlyProjectBook {
      * Replaces by id the given project {@code project}.
      * {@code project} must exist in the project book.
      */
-    public void setPerson(Project project) {
+    public void setProject(Project project) {
         requireNonNull(project);
         projects.setProject(project);
     }

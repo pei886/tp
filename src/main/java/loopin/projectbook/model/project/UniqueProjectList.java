@@ -1,6 +1,6 @@
 package loopin.projectbook.model.project;
 
-import static java.util.Obejcts.requireNonNull;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.List;
@@ -105,5 +105,4 @@ public class UniqueProjectList implements Iterable<Project> {
         return internalList.toString();
     }
 
-    }
 }

@@ -18,6 +18,7 @@ import loopin.projectbook.logic.commands.ExitCommand;
 import loopin.projectbook.logic.commands.FindCommand;
 import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
+import loopin.projectbook.logic.commands.ProjectAssignCommand;
 import loopin.projectbook.logic.commands.RemarkCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
@@ -81,6 +82,27 @@ public class ProjectBookParser {
 
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommand();
+
+        case "project": {
+            final String trimmed = arguments.trim();
+            if (trimmed.isEmpty()) {
+                throw new ParseException("Unknown project subcommand. Try:\n"
+                        + ProjectAssignCommand.MESSAGE_USAGE);
+            }
+
+            // first token = subcommand ("assign"/"remove"); rest = sub-args
+            String[] parts = trimmed.split("\\s+", 2);
+            String sub = parts[0];
+            String rest = parts.length > 1 ? parts[1] : "";
+
+            switch (sub) {
+                case "assign":
+                    return new ProjectAssignCommandParser().parse(rest);
+                default:
+                    throw new ParseException("Unknown project subcommand. Try:\n"
+                            + ProjectAssignCommand.MESSAGE_USAGE);
+            }
+        }
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

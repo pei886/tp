@@ -15,7 +15,8 @@ public final class ProjectAssignCommand extends Command {
     public static final String SUBCOMMAND = "assign";
     public static final String MESSAGE_USAGE =
             "project assign: Assign a person to a project.\n"
-                    + "  Format: project assign INDEX p/PROJECT_NAME";
+                    + "Format: project assign INDEX project/PROJECT_NAME\n"
+                    + "Example: project assign 1 project/MyProject";
 
     public static final String MESSAGE_SUCCESS = "Assigned %s to %s.";
     public static final String MESSAGE_ALREADY = "%s is already in this project.";
