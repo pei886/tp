@@ -49,6 +49,15 @@ public class Messages {
         return builder.toString();
     }
 
+    /**
+     * Returns a formatted string representation of the given {@code Project}.
+     * The formatted string includes the project's name, description, and creation timestamp,
+     * separated by semicolons for readability.
+     *
+     * @param project the project to format; must not be {@code null}
+     * @return a human-readable string summarizing the project's key details
+     */
+
     public static String formatProject(Project project) {
         final StringBuilder builder = new StringBuilder();
         builder.append(project.getName())
