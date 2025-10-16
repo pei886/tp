@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import loopin.projectbook.commons.core.GuiSettings;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 
 /**
  * The API of the Model component.
@@ -84,4 +85,7 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    java.util.Optional<Project> findProjectByName(String name);
+    void setProject(Project project);
 }

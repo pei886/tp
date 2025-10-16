@@ -123,6 +123,15 @@ public class ParserUtil {
         return tagSet;
     }
 
+    public static String parseProjectName(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (trimmedName.isEmpty()) {
+            throw new ParseException("Project name cannot be blank."); // to be included in exceptions
+        }
+        return trimmedName;
+    }
+
     /**
      * Parses a {@code String description} into a {@code Description}.
      * Leading and trailing whitespaces will be trimmed.
@@ -136,4 +145,5 @@ public class ParserUtil {
             throw new ParseException(Description.MESSAGE_CONSTRAINTS);
         }
         return new Description(trimmedDescription);
-    }}
+    }
+}

@@ -113,4 +113,16 @@ public class Project {
                 .toString();
     }
 
+    public boolean hasMember(Person p) {
+        return memberships.stream().anyMatch(m -> m.getPerson().isSamePerson(p));
+    }
+
+    public void assignPerson(Person p) {
+        if (hasMember(p)) {
+            throw new IllegalStateException("Person is already in this project.");
+        }
+        memberships.add(new Membership(p));
+        touch();
+    }
+
 }
