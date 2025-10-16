@@ -97,6 +97,16 @@ public class ParserUtil {
         return new Email(trimmedEmail);
     }
 
+    /**
+     * Parses the given {@code String} into a {@code Committee} object.
+     * The input string is trimmed of leading and trailing whitespaces and validates
+     * against {@link Committee#isValidCommittee(String}}. If the input does not satisfy
+     * the committee constraints, a {@code ParseException} is thrown.
+     *
+     * @param committee the string representing a committee
+     * @return a {@code Committee} object with the given valid committee name}
+     * @throws ParseException if the given string is invalid according to {@link Committee#MESSAGE_CONSTRAINTS}
+     */
     public static Committee parseCommittee(String committee) throws ParseException {
         requireNonNull(committee);
         String trimmedCommittee = committee.trim();
@@ -133,6 +143,16 @@ public class ParserUtil {
         return tagSet;
     }
 
+
+    /**
+     * Parses the given {@code String} into a {@code ProjectName} object.
+     * The input string is trimmed of leading and trailing whitespaces.
+     * If the resulting string is empty, a {@code ParseException} is thrown.
+     *
+     * @param name the string representing a project name
+     * @return a {@code ProjectName} object with the given valid name
+     * @throws ParseException if the given string is empty or invalid
+     */
     public static ProjectName parseProjectName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
