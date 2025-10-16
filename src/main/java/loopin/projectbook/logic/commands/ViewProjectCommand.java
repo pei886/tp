@@ -17,7 +17,8 @@ import loopin.projectbook.model.project.ProjectName;
  */
 public class ViewProjectCommand extends Command {
 
-    public static final String COMMAND_WORD = "view";
+    public static final String COMMAND_WORD = "project";
+    public static final String SUBCOMMAND = "view";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Views details of a project.\n"
             + "Parameters: "
