@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.logic.commands.AddCommand;
+import loopin.projectbook.logic.commands.AddOrgMemberCommand;
 import loopin.projectbook.logic.commands.AddProjectCommand;
 import loopin.projectbook.logic.commands.AddTeamMemberCommand;
 import loopin.projectbook.logic.commands.AddVolunteerCommand;
@@ -22,7 +23,6 @@ import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
 import loopin.projectbook.logic.commands.ProjectAssignCommand;
 import loopin.projectbook.logic.commands.ProjectRemoveCommand;
-import loopin.projectbook.logic.commands.RemarkCommand;
 import loopin.projectbook.logic.commands.ViewProjectCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
@@ -90,6 +90,9 @@ public class ProjectBookParser {
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommandParser().parse(arguments);
 
+        case AddOrgMemberCommand.COMMAND_WORD:
+            return new AddOrgMemberCommandParser().parse(arguments);
+
         case "project": {
             final String trimmed = arguments.trim();
             if (trimmed.isEmpty()) {
@@ -104,18 +107,18 @@ public class ProjectBookParser {
             String rest = parts.length > 1 ? parts[1] : "";
 
             switch (sub) {
-                case AddProjectCommand.SUBCOMMAND:
-                    return new AddProjectCommandParser().parse(" " + rest);
-                case ProjectAssignCommand.SUBCOMMAND:
-                    return new ProjectAssignCommandParser().parse(rest);
-                case ProjectRemoveCommand.SUBCOMMAND:
-                    return new ProjectRemoveCommandParser().parse(rest);
-                case ViewProjectCommand.SUBCOMMAND:
-                    return new ViewProjectCommandParser().parse(" " + rest);
-                default:
-                    throw new ParseException("Unknown project subcommand. Try:\n"
-                            + ProjectAssignCommand.MESSAGE_USAGE + "\n"
-                            + ProjectRemoveCommand.MESSAGE_USAGE);
+            case AddProjectCommand.SUBCOMMAND:
+                return new AddProjectCommandParser().parse(" " + rest);
+            case ProjectAssignCommand.SUBCOMMAND:
+                return new ProjectAssignCommandParser().parse(rest);
+            case ProjectRemoveCommand.SUBCOMMAND:
+                return new ProjectRemoveCommandParser().parse(rest);
+            case ViewProjectCommand.SUBCOMMAND:
+                return new ViewProjectCommandParser().parse(" " + rest);
+            default:
+                throw new ParseException("Unknown project subcommand. Try:\n"
+                        + ProjectAssignCommand.MESSAGE_USAGE + "\n"
+                        + ProjectRemoveCommand.MESSAGE_USAGE);
             }
         }
         case AddVolunteerCommand.COMMAND_WORD:

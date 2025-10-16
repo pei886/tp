@@ -12,6 +12,7 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
+import loopin.projectbook.model.person.Organisation;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.ProjectName;
@@ -97,6 +98,16 @@ public class ParserUtil {
         return new Email(trimmedEmail);
     }
 
+    /**
+     * Parses the given {@code String} into a {@code Committee} object.
+     * The input string is trimmed of leading and trailing whitespaces and validates
+     * against {@link Committee#isValidCommittee(String)}. If the input does not satisfy
+     * the committee constraints, a {@code ParseException} is thrown.
+     *
+     * @param committee the string representing a committee
+     * @return a {@code Committee} object with the given valid committee name}
+     * @throws ParseException if the given string is invalid according to {@link Committee#MESSAGE_CONSTRAINTS}
+     */
     public static Committee parseCommittee(String committee) throws ParseException {
         requireNonNull(committee);
         String trimmedCommittee = committee.trim();
@@ -133,6 +144,16 @@ public class ParserUtil {
         return tagSet;
     }
 
+
+    /**
+     * Parses the given {@code String} into a {@code ProjectName} object.
+     * The input string is trimmed of leading and trailing whitespaces.
+     * If the resulting string is empty, a {@code ParseException} is thrown.
+     *
+     * @param name the string representing a project name
+     * @return a {@code ProjectName} object with the given valid name
+     * @throws ParseException if the given string is empty or invalid
+     */
     public static ProjectName parseProjectName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
@@ -140,6 +161,18 @@ public class ParserUtil {
             throw new ParseException(ProjectName.MESSAGE_CONSTRAINTS);
         }
         return new ProjectName(trimmedName);
+    }
+
+    /**
+     * Parses {@code String organisation} into a {@code Organisation}.
+     */
+    public static Organisation parseOrganisation(String organisation) throws ParseException {
+        requireNonNull(organisation);
+        String trimmedOrg = organisation.trim();
+        if (trimmedOrg.isEmpty()) {
+            throw new ParseException(Organisation.MESSAGE_CONSTRAINTS);
+        }
+        return new Organisation(trimmedOrg);
     }
 
     /**

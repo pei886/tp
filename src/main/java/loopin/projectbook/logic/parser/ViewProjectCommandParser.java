@@ -1,14 +1,13 @@
 package loopin.projectbook.logic.parser;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PROJECT;
+
+import java.util.stream.Stream;
 
 import loopin.projectbook.logic.commands.ViewProjectCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.project.ProjectName;
-
-import java.util.stream.Stream;
 
 /**
  * Parses input arguments and creates a new ViewProjectCommand object
