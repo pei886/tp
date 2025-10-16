@@ -14,7 +14,6 @@ import loopin.projectbook.model.project.ProjectName;
 /**
  * Removes a person (by index in the current person list) from an existing project.
  * Usage: {@code project remove INDEX project/PROJECT_NAME}
- *
  */
 public final class ProjectRemoveCommand extends Command {
     public static final String COMMAND_WORD = "project";

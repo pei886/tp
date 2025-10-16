@@ -10,7 +10,6 @@ import loopin.projectbook.model.project.ProjectName;
 
 /**
  * Parses input arguments and creates a new {@link ProjectRemoveCommand} object.
- *
  * Expected format: {@code INDEX project/PROJECT_NAME}
  */
 public final class ProjectRemoveCommandParser implements Parser<ProjectRemoveCommand> {
