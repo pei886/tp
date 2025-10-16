@@ -87,7 +87,7 @@ public class ProjectBookParser {
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommandParser().parse(arguments);
 
-	case AddOrgMemberCommand.COMMAND_WORD:
+        case AddOrgMemberCommand.COMMAND_WORD:
             return new AddOrgMemberCommandParser().parse(arguments);
 
         case "project": {
