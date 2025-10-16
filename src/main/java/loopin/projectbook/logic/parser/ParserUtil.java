@@ -14,6 +14,7 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.project.Description;
+import loopin.projectbook.model.project.ProjectName;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -50,7 +51,6 @@ public class ParserUtil {
         }
         return new Name(trimmedName);
     }
-
     /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.
@@ -123,13 +123,13 @@ public class ParserUtil {
         return tagSet;
     }
 
-    public static String parseProjectName(String name) throws ParseException {
+    public static ProjectName parseProjectName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (trimmedName.isEmpty()) {
             throw new ParseException("Project name cannot be blank."); // to be included in exceptions
         }
-        return trimmedName;
+        return new ProjectName(trimmedName);
     }
 
     /**

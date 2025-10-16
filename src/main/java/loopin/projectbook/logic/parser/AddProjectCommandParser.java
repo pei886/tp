@@ -16,6 +16,7 @@ import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.Project;
+import loopin.projectbook.model.project.ProjectName;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -38,7 +39,7 @@ public class AddProjectCommandParser implements Parser<AddProjectCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DESCRIPTION);
-        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        ProjectName name = ParserUtil.parseProjectName(argMultimap.getValue(PREFIX_NAME).get());
         Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
 
         Project project = new Project(name, description);

@@ -30,7 +30,7 @@ public class UniqueProjectList implements Iterable<Project> {
         if (name == null) return Optional.empty();
         String normalisedName = name.trim().replaceAll("\\s+", " ").toLowerCase();
         return internalList.stream()
-                .filter(p -> p.getName().trim().replaceAll("\\s+", " ")
+                .filter(p -> p.getName().toString()
                         .equalsIgnoreCase(normalisedName))
                 .findFirst();
     }

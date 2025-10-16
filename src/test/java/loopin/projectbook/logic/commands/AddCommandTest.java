@@ -21,6 +21,7 @@ import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.ReadOnlyProjectBook;
 import loopin.projectbook.model.ReadOnlyUserPrefs;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.testutil.PersonBuilder;
 
 public class AddCommandTest {

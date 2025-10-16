@@ -22,7 +22,7 @@ import loopin.projectbook.model.person.Person;
 public class Project {
 
 //    private final UUID id;
-    private final Name name;
+    private final ProjectName name;
     private final Description description;
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -35,7 +35,7 @@ public class Project {
      * @param name        name of the project
      * @param description short description of the project
      */
-    public Project(Name name, Description description) {
+    public Project(ProjectName name, Description description) {
         requireAllNonNull(name, description);
         this.name = name;
         this.description = description;
@@ -49,7 +49,7 @@ public class Project {
 //    }
 
     /** @return the name of this project */
-    public Name getName() {
+    public ProjectName getName() {
         return name;
     }
 
