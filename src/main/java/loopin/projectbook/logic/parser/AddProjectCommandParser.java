@@ -3,21 +3,13 @@ package loopin.projectbook.logic.parser;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CliSyntax.*;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
-import loopin.projectbook.logic.commands.AddCommand;
 import loopin.projectbook.logic.commands.AddProjectCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
-import loopin.projectbook.model.person.Address;
-import loopin.projectbook.model.person.Email;
-import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.Person;
-import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddProjectCommand object
