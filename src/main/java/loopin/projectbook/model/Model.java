@@ -88,4 +88,7 @@ public interface Model {
 
     java.util.Optional<Project> findProjectByName(String name);
     void setProject(Project project);
+
+    boolean hasProject(Project project);
+    void addProject(Project project);
 }

@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
+import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 
 /**
@@ -20,9 +21,9 @@ import loopin.projectbook.model.person.Person;
  */
 public class Project {
 
-    private final UUID id;
-    private final String name;
-    private final String description;
+//    private final UUID id;
+    private final ProjectName name;
+    private final Description description;
     private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -31,34 +32,29 @@ public class Project {
     /**
      * Creates a new Project with the given id, name, and description.
      *
-     * @param id          unique identifier for the project
      * @param name        name of the project
      * @param description short description of the project
      */
-    public Project(UUID id, String name, String description) {
-        requireAllNonNull(id, name, description);
-        this.id = id;
-        this.name = name.trim();
-        this.description = description.trim();
-        if (this.name.isEmpty() || this.description.isEmpty()) {
-            throw new IllegalArgumentException("Project name and description cannot be blank.");
-        }
+    public Project(ProjectName name, Description description) {
+        requireAllNonNull(name, description);
+        this.name = name;
+        this.description = description;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = this.createdAt;
     }
 
-    /** @return the unique ID of this project */
-    public UUID getId() {
-        return id;
-    }
+//    /** @return the unique ID of this project */
+//    public UUID getId() {
+//        return id;
+//    }
 
     /** @return the name of this project */
-    public String getName() {
+    public ProjectName getName() {
         return name;
     }
 
     /** @return the description of this project */
-    public String getDescription() {
+    public Description getDescription() {
         return description;
     }
 

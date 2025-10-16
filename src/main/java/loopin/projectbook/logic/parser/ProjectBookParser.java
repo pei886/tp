@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.logic.commands.AddCommand;
+import loopin.projectbook.logic.commands.AddProjectCommand;
 import loopin.projectbook.logic.commands.AddTeamMemberCommand;
 import loopin.projectbook.logic.commands.AddVolunteerCommand;
 import loopin.projectbook.logic.commands.ClearCommand;
@@ -97,6 +98,8 @@ public class ProjectBookParser {
             String rest = parts.length > 1 ? parts[1] : "";
 
             switch (sub) {
+                case AddProjectCommand.COMMAND_WORD:
+                    return new AddProjectCommandParser().parse(" " + rest);
                 case "assign":
                     return new ProjectAssignCommandParser().parse(rest);
                 default:

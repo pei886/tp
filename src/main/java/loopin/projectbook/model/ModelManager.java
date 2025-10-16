@@ -113,6 +113,18 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void addProject(Project project) {
+        requireNonNull(project);
+        projectBook.addProject(project);
+    }
+
+    @Override
+    public boolean hasProject(Project project) {
+        requireNonNull(project);
+        return projectBook.hasProject(project);
+    }
+
+    @Override
     public void setProject(Project project) {
         requireNonNull(project);
         projectBook.setProject(project);
