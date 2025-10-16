@@ -4,27 +4,26 @@ import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PROJECT;
 
 import loopin.projectbook.commons.core.index.Index;
-import loopin.projectbook.logic.commands.ProjectAssignCommand;
+import loopin.projectbook.logic.commands.ProjectRemoveCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.project.ProjectName;
 
-public final class ProjectAssignCommandParser implements Parser<ProjectAssignCommand> {
+public final class ProjectRemoveCommandParser implements Parser<ProjectRemoveCommand> {
 
     @Override
-    public ProjectAssignCommand parse(String args) throws ParseException {
+    public ProjectRemoveCommand parse(String args) throws ParseException {
         try {
             ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PROJECT);
 
             Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
-
             ProjectName projectName = argMultimap.getValue(PREFIX_PROJECT)
                     .map(n -> {
                         try { return ParserUtil.parseProjectName(n); }
                         catch (ParseException e) { throw new RuntimeException(e); }
                     })
-                    .orElseThrow(() -> new ParseException(ProjectAssignCommand.MESSAGE_USAGE));
+                    .orElseThrow(() -> new ParseException(ProjectRemoveCommand.MESSAGE_USAGE));
 
-            return new ProjectAssignCommand(index, projectName);
+            return new ProjectRemoveCommand(index, projectName);
 
         } catch (RuntimeException re) {
             if (re.getCause() instanceof ParseException) {
@@ -33,7 +32,7 @@ public final class ProjectAssignCommandParser implements Parser<ProjectAssignCom
             throw re;
         } catch (ParseException pe) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProjectAssignCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProjectRemoveCommand.MESSAGE_USAGE), pe);
         }
     }
 }

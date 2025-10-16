@@ -53,6 +53,10 @@ public class Person {
         return address;
     }
 
+    public String getRole() {
+        return "Unknown Role";
+    }
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.

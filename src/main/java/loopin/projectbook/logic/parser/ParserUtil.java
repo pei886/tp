@@ -16,6 +16,7 @@ import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.ProjectName;
 import loopin.projectbook.model.tag.Tag;
+import loopin.projectbook.model.teammember.Committee;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -94,6 +95,15 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    public static Committee parseCommittee(String committee) throws ParseException {
+        requireNonNull(committee);
+        String trimmedCommittee = committee.trim();
+        if (!Committee.isValidCommittee(trimmedCommittee)) {
+            throw new ParseException(Committee.MESSAGE_CONSTRAINTS);
+        }
+        return new Committee(trimmedCommittee);
     }
 
     /**
