@@ -16,7 +16,7 @@ public class OrgMember extends Person {
      */
     public OrgMember(Name name, Organisation organisation, Phone phone, Email email, Set<Tag> tags) {
         super(name, phone, email, null, tags);
-	this.organisation = organisation;
+        this.organisation = organisation;
     }
 
     public Organisation getOrganisation() {
