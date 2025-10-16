@@ -26,4 +26,9 @@ public class TeamMember extends Person {
     public Committee getCommittee() {
         return committee;
     }
+
+    @Override
+    public String getRole() {
+        return this.committee.toString();
+    }
 }
