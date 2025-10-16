@@ -100,7 +100,7 @@ public class ParserUtil {
     /**
      * Parses the given {@code String} into a {@code Committee} object.
      * The input string is trimmed of leading and trailing whitespaces and validates
-     * against {@link Committee#isValidCommittee(String}}. If the input does not satisfy
+     * against {@link Committee#isValidCommittee(String)}. If the input does not satisfy
      * the committee constraints, a {@code ParseException} is thrown.
      *
      * @param committee the string representing a committee

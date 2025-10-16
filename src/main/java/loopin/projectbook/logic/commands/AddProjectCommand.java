@@ -1,13 +1,14 @@
 package loopin.projectbook.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.project.Project;
-
 /**
  * Adds a {@code Project} to the project book.
  * The {@code AddProjectCommand} encapsulates the logic for creating and adding
