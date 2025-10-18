@@ -23,6 +23,7 @@ import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
 import loopin.projectbook.logic.commands.ProjectAssignCommand;
 import loopin.projectbook.logic.commands.ProjectRemoveCommand;
+import loopin.projectbook.logic.commands.RemarkCommand;
 import loopin.projectbook.logic.commands.ViewProjectCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
