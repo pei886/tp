@@ -113,10 +113,10 @@ class JsonAdaptedPerson {
 
         String[] modelRole = role.split(" ", 2);
 
-	Person modelPerson = null;
+        Person modelPerson = null;
 
         switch (modelRole[0]) {
-        case "Unknown": 
+        case "Unknown":
             modelPerson = new Person(modelName, modelPhone, modelEmail, /*modelAddress*/null, modelTags);
             break;
         case "Volunteer":
@@ -133,7 +133,7 @@ class JsonAdaptedPerson {
         default: assert false;
         }
 
-	return modelPerson;
+        return modelPerson;
     }
 
 }
