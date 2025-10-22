@@ -15,24 +15,24 @@ Loopin is a desktop app that helps project leaders **track team members, organis
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add volunteer**    | `addv n/NAME [p/PHONE_NUMBER] [e/EMAIL]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com`
-**Add team member**  | `addt n/NAME c/COMMITTEE [p/PHONE] [e/EMAIL]` <br> e.g. `addt n/Sarah Ng p/12345678 e/sarahng@example.com
-**Add organisation member | addo n/NAME o/ORGANISATION [p/PHONE] [e/EMAIL]` <br> e.g. `addo n/Timothy Lee o/Example Company e/partner@example.com`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Remark**  | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
-**Done**    | `done INDEX u/UPDATE` <br> e.g. `done 2 u/add to shared drive`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Add project** | `project add n/NAME [d/DESCRIPTION]` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
-**List projects** | `project list`
-**View project** | `project view` <br> e.g., `project view project/Beach Cleanup`
-**Assign perosn to project** | `project assign INDEX project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
+Action                         | Format, Examples
+-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add volunteer**              | `addv n/NAME [p/PHONE_NUMBER] [e/EMAIL]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com`
+**Add team member**            | `addt n/NAME c/COMMITTEE [p/PHONE] [e/EMAIL]` <br> e.g. `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com`
+**Add organisation member**    | `addo n/NAME o/ORGANISATION [p/PHONE] [e/EMAIL]` <br> e.g. `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com`
+**Clear**                      | `clear`
+**Delete**                     | `delete INDEX`<br> e.g., `delete 3`
+**Edit**                       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Remark**                     | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
+**Done**                       | `done INDEX u/UPDATE` <br> e.g. `done 2 u/add to shared drive`
+**Find**                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**List**                       | `list`
+**Add project**                | `project add n/NAME [d/DESCRIPTION]` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
+**List projects**              | `project list`
+**View project**               | `project view` <br> e.g., `project view project/Beach Cleanup`
+**Assign perosn to project**   | `project assign INDEX project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
 **Remove person from project** | `project remove INDEX project/PROJECTNAME` <br> e.g., `project remove 4 project/Wellbeing Focus Group Discussion`
-**Help**   | `help`
+**Help**                       | `help`
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -103,11 +103,15 @@ Shows a message explaining how to access the help page.
 Format: `help`
 
 
-### Adding a person: `add`
+### Adding a person: `add(v/t/o)`
 
-Adds a person to the address book.
+Adds a person of a specific role to the project book. There are 3 roles a person can play in the project book: volunteer, committee member and organisation. 
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Feature                    | Command word | Command format                                   | Example
+---------------------------|--------------|--------------------------------------------------|-------------------------------------------------------------------------
+Add a volunteer            | `addv`       | `addv n/NAME [p/PHONE] [e/EMAIL]`                | `addv n/James Ho p/22224444 e/jamesho@example.com`
+Add a team member          | `addt`       | `addt n/NAME c/COMMITTEE [p/PHONE] [e/EMAIL]`    | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com`
+Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE] [e/EMAIL]` | `addo n/Timothy Lee o/Example Company p/92863718 e/company@email.com`
 
 <box type="tip" seamless>
 
