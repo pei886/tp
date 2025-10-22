@@ -38,7 +38,7 @@ public class Committee {
 
     @Override
     public String toString() {
-        return this.committeeName;
+        return "Committee: " + this.committeeName;
     }
 
     @Override
