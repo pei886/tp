@@ -54,8 +54,8 @@ public class ProjectBook implements ReadOnlyProjectBook {
     }
 
     /**
-     * Replaces the contents of the person list with {@code persons}.
-     * {@code projects} must not contain duplicate persons.
+     * Replaces the contents of the project list with {@code projects}.
+     * {@code projects} must not contain duplicate projects.
      */
     public void setProjects(List<Project> projects) {
         this.projects.setProjects(projects);
