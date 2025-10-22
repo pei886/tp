@@ -13,6 +13,29 @@ Loopin is a desktop app that helps project leaders **track team members, organis
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Command summary
+
+Action     | Format, Examples
+-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+**Add volunteer**    | `addv n/NAME [p/PHONE_NUMBER] [e/EMAIL]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com`
+**Add team member**  | `addt n/NAME c/COMMITTEE [p/PHONE] [e/EMAIL]` <br> e.g. `addt n/Sarah Ng p/12345678 e/sarahng@example.com
+**Add organisation member | addo n/NAME o/ORGANISATION [p/PHONE] [e/EMAIL]` <br> e.g. `addo n/Timothy Lee o/Example Company e/partner@example.com`
+**Clear**  | `clear`
+**Delete** | `delete INDEX`<br> e.g., `delete 3`
+**Edit**   | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Remark**  | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
+**Done**    | `done INDEX u/UPDATE` <br> e.g. `done 2 u/add to shared drive`
+**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**List**   | `list`
+**Add project** | `project add n/NAME [d/DESCRIPTION]` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
+**List projects** | `project list`
+**View project** | `project view` <br> e.g., `project view project/Beach Cleanup`
+**Assign perosn to project** | `project assign INDEX project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
+**Remove person from project** | `project remove INDEX project/PROJECTNAME` <br> e.g., `project remove 4 project/Wellbeing Focus Group Discussion`
+**Help**   | `help`
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Quick start
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
@@ -195,16 +218,3 @@ _Details coming soon ..._
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
---------------------------------------------------------------------------------------------------------------------
-
-## Command summary
-
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Help**   | `help`
