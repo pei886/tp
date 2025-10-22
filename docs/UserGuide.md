@@ -115,12 +115,9 @@ Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE
 
 <box type="tip" seamless>
 
-**Tip:** A person can have any number of tags (including 0)
-</box>
+**Note:** There are slight differences in the parameters for different roles.
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+</box>
 
 ### Listing all persons : `list`
 
@@ -130,20 +127,17 @@ Format: `list`
 
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Edits the specified fields of an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+* The given value will replace the existing value.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+*  `edit 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
 
 ### Locating persons by name: `find`
 
@@ -183,6 +177,74 @@ Clears all entries from the address book.
 
 Format: `clear`
 
+<box type="warning" seamless>
+Note: This action cannot be reversed.
+</box>
+
+### Listing all projects: `project list`
+
+Shows a list of all projects in the project book.
+
+Format: `project list`
+
+### Adding a project: `project add`
+
+Adds a project to the project book.
+
+Format: `project add n/PROJECTNAME [d/DESCRIPTION]
+
+Example:
+`project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
+* Adds a new project named "`Beach Cleanup`" and has the description "`Beach Cleaning at Siloso Beach`"
+* No one is associated with it yet.
+
+### Deleting a project: `project delete`
+
+Deletes the specified project from the project book.
+
+Format: `project delete project/PROJECTNAME`
+
+Example:
+`project delete project/Fundraising Drive
+
+### Viewing a project: `project view`
+
+Views the summary of an existing project and its participants.
+
+Format: `project view project/PROJECTNAME`
+
+Example:
+`project view project/Beach Cleanup`
+Views a project named "Beach Cleanup" and lists:
+* Description of project
+* Contacts of volunteers, team members, and organisations
+* Latest project updates
+
+### Assigning a person to a project: `project assign`
+
+Assigns a specified volunteer, team member, or organisation member to a project.
+
+Format: `project assign INDEX project/PROJECTNAME`
+
+* Assigns the person at the specified `INDEX` to the specified `PROJECT`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* When you view the project details using the command `project view project/PROJECTNAME`, the assigned person will show up in its details.
+
+Example:
+`project assign 4 project/Startup Showcase`
+
+### Removing a person from a project: `project remove`
+
+Removes a specified volunteer, team member, or organisation member from a project.
+
+Format: `project remove INDEX project/PROJECTNAME`
+
+* Removes the person at the specified `INDEX` from the specified `PROJECT`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* When you view the project details using the command `project view project/PROJECTNAME`, the removed person will no longer show up in its details.
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -191,11 +253,11 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Loopin data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/projectbook.json`. Advanced users are welcome to update data directly by editing that data file.
+Loopin data are saved automatically as a JSON file `[JAR file location]/data/projectbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
