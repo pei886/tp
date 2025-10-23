@@ -7,6 +7,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -17,6 +18,7 @@ import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.OrgMember;
 import loopin.projectbook.model.person.Organisation;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -45,8 +47,9 @@ public class AddOrgMemberCommandParser implements Parser<AddOrgMemberCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Set<Remark> remarkList = new HashSet<>();
 
-        OrgMember orgMember = new OrgMember(name, organisation, phone, email, tagList);
+        OrgMember orgMember = new OrgMember(name, organisation, phone, email, tagList, remarkList);
 
         return new AddOrgMemberCommand(orgMember);
     }

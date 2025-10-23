@@ -14,8 +14,8 @@ public class OrgMember extends Person {
     /**
      * Name, email and tags must be present and non null but phone can be null.
      */
-    public OrgMember(Name name, Organisation organisation, Phone phone, Email email, Set<Tag> tags) {
-        super(name, phone, email, null, tags);
+    public OrgMember(Name name, Organisation organisation, Phone phone, Email email, Set<Tag> tags, Set<Remark> remarks) {
+        super(name, phone, email, null, tags, remarks);
         this.organisation = organisation;
     }
 

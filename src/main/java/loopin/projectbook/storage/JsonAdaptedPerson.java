@@ -10,13 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import loopin.projectbook.commons.exceptions.IllegalValueException;
-import loopin.projectbook.model.person.Email;
-import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.OrgMember;
-import loopin.projectbook.model.person.Organisation;
-import loopin.projectbook.model.person.Person;
-import loopin.projectbook.model.person.Phone;
-import loopin.projectbook.model.person.Volunteer;
+import loopin.projectbook.model.person.*;
 import loopin.projectbook.model.tag.Tag;
 import loopin.projectbook.model.teammember.Committee;
 import loopin.projectbook.model.teammember.TeamMember;
@@ -34,6 +28,7 @@ class JsonAdaptedPerson {
     //private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String role;
+    private final List<JsonAdaptedRemark> remarks = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -41,7 +36,8 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, //@JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role,
+            @JsonProperty("remarks") List<JsonAdaptedRemark> remarks) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -49,7 +45,10 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
-        this.role = role;
+        this.role = role != null ? role : "Unknown";
+        if (remarks != null) {
+            this.remarks.addAll(remarks);
+        }
     }
 
     /**
@@ -64,6 +63,9 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         role = source.getRole();
+        remarks.addAll(source.getRemarks().stream()
+                .map(JsonAdaptedRemark::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -111,27 +113,35 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        String[] modelRole = role.split(" ", 2);
+        // Remarks
+        final Set<Remark> modelRemarks = new HashSet<>();
+        for (JsonAdaptedRemark remark : remarks) {
+            modelRemarks.add(remark.toModelType());
+        }
 
+        String[] modelRole = role.split(" ", 2);
         Person modelPerson = null;
 
         switch (modelRole[0]) {
         case "Unknown":
-            modelPerson = new Person(modelName, modelPhone, modelEmail, /*modelAddress*/null, modelTags);
+            modelPerson = new Person(modelName, modelPhone, modelEmail, /*modelAddress*/null, modelTags, modelRemarks);
             break;
         case "Volunteer":
-            modelPerson = new Volunteer(modelName, modelPhone, modelEmail, modelTags);
+            modelPerson = new Volunteer(modelName, modelPhone, modelEmail, modelTags, modelRemarks);
             break;
         case "Committee:":
             final Committee modelCommittee = new Committee(modelRole[1]);
-            modelPerson = new TeamMember(modelName, modelPhone, modelEmail, modelCommittee);
+            modelPerson = new TeamMember(modelName, modelPhone, modelEmail, modelCommittee, modelRemarks);
             break;
         case "Organisation:":
             final Organisation modelOrganisation = new Organisation(modelRole[1]);
-            modelPerson = new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTags);
+            modelPerson = new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTags, modelRemarks);
             break;
         default: assert false;
         }
+
+
+
 
         return modelPerson;
     }

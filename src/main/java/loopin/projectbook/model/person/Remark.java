@@ -19,8 +19,16 @@ public class Remark {
      * @param content The update message.
      */
     public Remark(String content) {
+        this(content, Status.PENDING); // New remarks start as pending
+    }
+    /**
+     * Main constructor for a Remark, used for loading from storage.
+     * @param content The remark content.
+     * @param status The remark status.
+     */
+    public Remark(String content, Status status) { // <--- NEW CONSTRUCTOR
         this.content = content.trim();
-        this.status = Status.PENDING; // New remarks start as pending
+        this.status = status;
     }
 
     /**
@@ -28,6 +36,23 @@ public class Remark {
      */
     public String getNormalizedContent() {
         return content.toLowerCase();
+    }
+
+    /**
+     * Returns a new Remark with the same content but COMPLETED status.
+     * This is the suggested way to "resolve" a remark in the model.
+     * @return A new COMPLETED Remark.
+     */
+    public Remark resolve() {
+        return new Remark(this.content, Status.COMPLETED);
+    }
+
+    /**
+     * Returns a new Remark with the same content but PENDING status.
+     * @return A new PENDING Remark.
+     */
+    public Remark unresolve() { // Optional: to un-resolve a remark
+        return new Remark(this.content, Status.PENDING);
     }
 
     @Override

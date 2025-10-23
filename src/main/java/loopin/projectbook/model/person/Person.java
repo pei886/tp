@@ -26,18 +26,19 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final List<Remark> remarks = new ArrayList<>(); // empty by default. TODO: change implementation
+    private final Set<Remark> remarks = new HashSet<>(); // empty by default. TODO: change implementation
 
     /**
      * Name, email and tags must be present and non null but phone and address can be null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Set<Remark> remarks) {
         requireAllNonNull(name, email, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.remarks.addAll(remarks);
     }
 
     public Name getName() {
@@ -82,26 +83,38 @@ public class Person {
                 || otherPerson.getEmail().equals(getEmail()));
     }
 
-    // Add this method for duplicate checking in RemarkCommand
     public boolean hasRemark(Remark remark) {
-        return remarks.contains(remark); // leverages UpdateRemark's equals()
+        return remarks.contains(remark);
     }
 
-    // Add this method for adding a remark (returns a new immutable Person)
     /**
      * Returns a new immutable Person with a remark.
      */
     public Person withNewRemark(Remark newRemark) {
-        // Implementation must create a copy of the existing person and add the new remark.
-        Person updatedPerson = new Person(name, phone, email, address, tags);
-        updatedPerson.remarks.addAll(this.remarks);
-        updatedPerson.remarks.add(newRemark);
-        return updatedPerson;
+        Set<Remark> updatedRemarks = new HashSet<>(this.remarks);
+        updatedRemarks.add(newRemark);
+        return new Person(name, phone, email, address, tags, updatedRemarks);
+    }
+    /**
+    * Returns a new immutable Person with the specified remark resolved (replaced).
+    */
+    public Person withResolvedRemark(Remark oldRemark, Remark resolvedRemark) {
+        Set<Remark> updatedRemarks = new HashSet<>(this.remarks);
+
+        // Remove the old pending remark (relies on Remark.equals() comparing content).
+        // Since the content is the same, removing the old one and adding the new one works.
+        // It's safer to check if removal succeeded, but we rely on equals() being content-only.
+        updatedRemarks.remove(oldRemark);
+        updatedRemarks.add(resolvedRemark);
+
+        return new Person(name, phone, email, address, tags, updatedRemarks);
     }
 
-    // Add a getter for the UI
-    public List<Remark> getRemarks() {
-        return Collections.unmodifiableList(remarks);
+    /**
+     * Add a getter for the UI
+     */
+    public Set<Remark> getRemarks() {
+        return Collections.unmodifiableSet(remarks);
     }
 
     /**
@@ -123,13 +136,14 @@ public class Person {
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && remarks.equals(otherPerson.remarks);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, tags, remarks);
     }
 
     @Override
@@ -140,6 +154,7 @@ public class Person {
                 .add("email", email)
                 .add("address", address)
                 .add("tags", tags)
+                .add("remarks", remarks)
                 .toString();
     }
 

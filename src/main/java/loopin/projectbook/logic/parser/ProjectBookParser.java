@@ -8,23 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import loopin.projectbook.commons.core.LogsCenter;
-import loopin.projectbook.logic.commands.AddCommand;
-import loopin.projectbook.logic.commands.AddOrgMemberCommand;
-import loopin.projectbook.logic.commands.AddProjectCommand;
-import loopin.projectbook.logic.commands.AddTeamMemberCommand;
-import loopin.projectbook.logic.commands.AddVolunteerCommand;
-import loopin.projectbook.logic.commands.ClearCommand;
-import loopin.projectbook.logic.commands.Command;
-import loopin.projectbook.logic.commands.DeleteCommand;
-import loopin.projectbook.logic.commands.EditCommand;
-import loopin.projectbook.logic.commands.ExitCommand;
-import loopin.projectbook.logic.commands.FindCommand;
-import loopin.projectbook.logic.commands.HelpCommand;
-import loopin.projectbook.logic.commands.ListCommand;
-import loopin.projectbook.logic.commands.ProjectAssignCommand;
-import loopin.projectbook.logic.commands.ProjectRemoveCommand;
-import loopin.projectbook.logic.commands.RemarkCommand;
-import loopin.projectbook.logic.commands.ViewProjectCommand;
+import loopin.projectbook.logic.commands.*;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
 /**
@@ -87,6 +71,10 @@ public class ProjectBookParser {
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
+
+        case ResolveRemarkCommand.COMMAND_WORD:
+            return new ResolveRemarkCommandParser().parse(arguments);
+
 
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommandParser().parse(arguments);

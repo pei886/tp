@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.exceptions.DuplicatePersonException;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.testutil.PersonBuilder;
 
 public class ProjectBookTest {
@@ -100,6 +101,11 @@ public class ProjectBookTest {
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public ObservableList<Project> getProjectList() {
+            return null;
         }
     }
 

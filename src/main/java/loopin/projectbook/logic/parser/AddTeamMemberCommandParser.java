@@ -2,11 +2,9 @@ package loopin.projectbook.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static loopin.projectbook.logic.parser.CliSyntax.*;
 
+import java.util.Set;
 import java.util.stream.Stream;
 
 import loopin.projectbook.logic.commands.AddTeamMemberCommand;
@@ -14,6 +12,7 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.teammember.Committee;
 import loopin.projectbook.model.teammember.TeamMember;
 
@@ -34,7 +33,7 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
     public AddTeamMemberCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_REMARK);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -46,8 +45,9 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
+        Set<Remark> remarks = ParserUtil.parseRemarks(argMultimap.getAllValues(PREFIX_REMARK));
 
-        TeamMember member = new TeamMember(name, phone, email, committee);
+        TeamMember member = new TeamMember(name, phone, email, committee, remarks);
 
         return new AddTeamMemberCommand(member);
     }
