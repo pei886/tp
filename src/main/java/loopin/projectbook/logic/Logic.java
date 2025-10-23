@@ -10,6 +10,7 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ReadOnlyProjectBook;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 
 /**
  * API of the Logic component
@@ -33,6 +34,10 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered list of projects */
+    ObservableList<Project> getFilteredProjectList();
+
 
     /**
      * Returns the user prefs' project book file path.

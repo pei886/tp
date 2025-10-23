@@ -25,9 +25,9 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final Telegram telegram;
 
     // Data fields
-    private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final List<Remark> remarks = new ArrayList<>(); // empty by default. TODO: change implementation
     private List<Project> projects = new ArrayList<>(); //list of projects the person is part of, empty by default
@@ -38,14 +38,14 @@ public class Person {
     private static final Logger logger = LogsCenter.getLogger(Person.class);
 
     /**
-     * Name, email and tags must be present and non null but phone and address can be null.
+     * Name, email and tags must be present and non null but phone and telegram can be null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
         requireAllNonNull(name, email, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.telegram = telegram;
         this.tags.addAll(tags);
     }
 
@@ -61,8 +61,8 @@ public class Person {
         return email;
     }
 
-    public Address getAddress() {
-        return address;
+    public Telegram getTelegram() {
+        return telegram;
     }
 
     public String getRole() {
@@ -102,7 +102,7 @@ public class Person {
      */
     public Person withNewRemark(Remark newRemark) {
         // Implementation must create a copy of the existing person and add the new remark.
-        Person updatedPerson = new Person(name, phone, email, address, tags);
+        Person updatedPerson = new Person(name, phone, email, telegram, tags);
         updatedPerson.remarks.addAll(this.remarks);
         updatedPerson.remarks.add(newRemark);
         return updatedPerson;
@@ -154,7 +154,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, telegram, tags);
     }
 
     @Override
@@ -163,6 +163,7 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
+                .add("telegram", telegram)
                 .add("tags", tags)
                 .toString();
     }

@@ -5,6 +5,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
 import loopin.projectbook.model.person.OrgMember;
 
@@ -21,11 +22,13 @@ public class AddOrgMemberCommand extends AddCommand {
             + PREFIX_ORGANISATION + "ORGANISATION "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_TELEGRAM + "TELEGRAM "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_TELEGRAM + "johndoe123 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
