@@ -6,6 +6,9 @@ import java.util.Objects;
  * Represents an update remark for a Person in the project book.
  */
 public class Remark {
+    /**
+     * Represents the completion status of the update remark.
+     */
     public enum Status { PENDING, COMPLETED }
 
     public final String content;

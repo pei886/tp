@@ -88,6 +88,9 @@ public class Person {
     }
 
     // Add this method for adding a remark (returns a new immutable Person)
+    /**
+     * Returns a new immutable Person with a remark.
+     */
     public Person withNewRemark(Remark newRemark) {
         // Implementation must create a copy of the existing person and add the new remark.
         Person updatedPerson = new Person(name, phone, email, address, tags);
