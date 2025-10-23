@@ -23,7 +23,7 @@ public class Project {
     private final ProjectName name;
     private final Description description;
     private final LocalDateTime createdAt;
-    private String lastUpdate;
+    private LastUpdate lastUpdate;
 
     private final List<Membership> memberships = new ArrayList<>();
 
@@ -60,11 +60,11 @@ public class Project {
         return createdAt;
     }
 
-    public void recordUpdate(String updateMessage) {
-        this.lastUpdate = updateMessage;
+    public void recordUpdate(LastUpdate lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
-    public String getLatestUpdate() {
+    public LastUpdate getLatestUpdate() {
         return lastUpdate;
     }
 
@@ -136,7 +136,8 @@ public class Project {
             throw new IllegalStateException("Person is already in this project.");
         }
         memberships.add(new Membership(p));
-//        touch();
+        LastUpdate update = LastUpdate.memberAdded(p);
+        recordUpdate(update);
     }
 
     /**
@@ -151,7 +152,8 @@ public class Project {
         if (!removed) {
             throw new IllegalStateException("Person is not in this project.");
         }
-//        touch();
+        LastUpdate update = LastUpdate.memberRemoved(p);
+        recordUpdate(update);
     }
 
 }
