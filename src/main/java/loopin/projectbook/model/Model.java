@@ -16,7 +16,7 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /**
-     *{@code Predicate} for projects that always evaluate to true */
+     *{@code Predicate} for projects that always evaluate to true
      */
     Predicate<Project> PREDICATE_SHOW_ALL_PROJECTS = unused -> true;
 
