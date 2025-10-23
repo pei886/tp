@@ -171,6 +171,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting ProjectBook " + MainApp.VERSION);
+        assert false;
         ui.start(primaryStage);
     }
 
