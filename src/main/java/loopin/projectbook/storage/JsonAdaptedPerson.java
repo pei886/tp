@@ -50,7 +50,7 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
-        this.role = role;
+        this.role = (role == null || role.isBlank()) ? "Unknown" : role;
     }
 
     /**
