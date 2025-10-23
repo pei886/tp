@@ -24,7 +24,7 @@ public class ViewProjectCommand extends Command {
             + "Example: " + COMMAND_WORD + " project/Beach Cleanup";
 
     public static final String MESSAGE_PROJECT_NOT_FOUND = "Project \"%s\" not found.";
-    public static final String MESSAGE_PROJECT_DETAILS = "Project details are shown below.\n";
+    public static final String MESSAGE_PROJECT_SUCCESS = "Project details are shown below.\n";
 
     private final ProjectName projectName;
 
@@ -43,7 +43,7 @@ public class ViewProjectCommand extends Command {
         }
 
         Project p = project.get();
-        StringBuilder output = new StringBuilder(MESSAGE_PROJECT_DETAILS);
+        StringBuilder output = new StringBuilder(MESSAGE_PROJECT_SUCCESS);
 
         output.append("Description:\n");
         output.append(p.getDescription()).append("\n");
@@ -55,7 +55,7 @@ public class ViewProjectCommand extends Command {
             output.append("  ").append(person.getEmail()).append("\n");
         });
 
-        return new CommandResult(output.toString(), false, false, false, true);
+        return new CommandResult(MESSAGE_PROJECT_SUCCESS, false, false, false, true);
 
     }
 
