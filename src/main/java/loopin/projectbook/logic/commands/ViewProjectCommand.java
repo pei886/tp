@@ -36,11 +36,7 @@ public class ViewProjectCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
-        System.out.println("DEBUG: Looking for project: '" + projectName.toString() + "'");
-
         Optional<Project> project = model.findProjectByName(projectName.toString());
-
-        System.out.println("DEBUG: Project found: " + project.isPresent());
 
         if (project.isEmpty()) {
             return new CommandResult(String.format(MESSAGE_PROJECT_NOT_FOUND, projectName));
@@ -59,7 +55,8 @@ public class ViewProjectCommand extends Command {
             output.append("  ").append(person.getEmail()).append("\n");
         });
 
-        return new CommandResult(output.toString());
+        return new CommandResult(output.toString(), false, false, false, true);
+
     }
 
     @Override
