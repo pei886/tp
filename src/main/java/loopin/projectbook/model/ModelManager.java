@@ -164,6 +164,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateFilteredProjectList(Predicate<Project> predicate) {
+        requireNonNull(predicate);
+        filteredProjects.setPredicate(predicate);
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
