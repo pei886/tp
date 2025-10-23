@@ -16,7 +16,7 @@ public class ProjectListCommand extends Command {
             "project list: Lists all current projects.\n"
                     + "Format: project list\n";
 
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS = "Listed all projects";
 
 
     @Override
