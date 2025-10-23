@@ -10,12 +10,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import loopin.projectbook.commons.exceptions.IllegalValueException;
-import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
+import loopin.projectbook.model.person.OrgMember;
+import loopin.projectbook.model.person.Organisation;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Volunteer;
 import loopin.projectbook.model.tag.Tag;
+import loopin.projectbook.model.teammember.Committee;
+import loopin.projectbook.model.teammember.TeamMember;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -29,6 +33,7 @@ class JsonAdaptedPerson {
     private final String email;
     //private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final String role;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -36,7 +41,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, //@JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -44,6 +49,7 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
+        this.role = role;
     }
 
     /**
@@ -57,6 +63,7 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        role = source.getRole();
     }
 
     /**
@@ -95,7 +102,7 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         //if (address == null) {
-        //    throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
+        // throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         //}
         //if (!Address.isValidAddress(address)) {
         //    throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
@@ -103,7 +110,30 @@ class JsonAdaptedPerson {
         //final Address modelAddress = new Address(address);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, /*modelAddress*/null, modelTags);
+
+        String[] modelRole = role.split(" ", 2);
+
+        Person modelPerson = null;
+
+        switch (modelRole[0]) {
+        case "Unknown":
+            modelPerson = new Person(modelName, modelPhone, modelEmail, /*modelAddress*/null, modelTags);
+            break;
+        case "Volunteer":
+            modelPerson = new Volunteer(modelName, modelPhone, modelEmail, modelTags);
+            break;
+        case "Committee:":
+            final Committee modelCommittee = new Committee(modelRole[1]);
+            modelPerson = new TeamMember(modelName, modelPhone, modelEmail, modelCommittee);
+            break;
+        case "Organisation:":
+            final Organisation modelOrganisation = new Organisation(modelRole[1]);
+            modelPerson = new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTags);
+            break;
+        default: assert false;
+        }
+
+        return modelPerson;
     }
 
 }

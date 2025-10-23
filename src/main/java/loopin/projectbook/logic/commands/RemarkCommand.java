@@ -1,6 +1,7 @@
 package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 
 import loopin.projectbook.commons.core.index.Index;
@@ -16,11 +17,13 @@ import loopin.projectbook.model.person.Remark; // The conceptual class from step
 public class RemarkCommand extends Command {
 
     public static final String COMMAND_WORD = "remark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a custom remark that a person needs to be contacted for an update.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Creates a custom remark that a person needs to be contacted for an update.\n"
             + "Parameters: INDEX u/UPDATE\n" // Use 'u/' prefix in description
             + "Example: " + COMMAND_WORD + " 1 u/funding has been secured";
 
-    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Remarked that %1$s needs to be updated on \"%2$s\" (pending).";
+    public static final String MESSAGE_ADD_REMARK_SUCCESS =
+            "Remarked that %1$s needs to be updated on \"%2$s\" (pending).";
     public static final String MESSAGE_DUPLICATE_REMARK = "This person is already marked with the specified remark.";
     public static final String MESSAGE_EMPTY_REMARK = "The remark content cannot be empty!";
 

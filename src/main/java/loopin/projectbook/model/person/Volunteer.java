@@ -20,11 +20,7 @@ public class Volunteer extends Person {
      * Returns true if both persons are volunteers and have the same name.
      * This defines a weaker notion of equality between two persons.
      */
-    public boolean isSamePerson(Person otherPerson) {
-        if (!(otherPerson instanceof Volunteer)) {
-            return false;
-        }
-
+    public boolean isSamePerson(Volunteer otherPerson) {
         return super.isSamePerson(otherPerson);
     }
 

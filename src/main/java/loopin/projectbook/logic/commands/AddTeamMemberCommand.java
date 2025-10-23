@@ -11,7 +11,13 @@ import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.teammember.TeamMember;
 
-public class AddTeamMemberCommand extends Command{
+/**
+ * Adds a {@code TeamMember} to the project book.
+ * The {@code AddTeamMemberCommand} creates and adds a new team member with the
+ * specified details (name, committee, phone, email) into the project book.
+ * If the member already exists, a {@code CommandException} is thrown.
+ */
+public class AddTeamMemberCommand extends Command {
 
     public static final String COMMAND_WORD = "addmember";
 
@@ -32,10 +38,16 @@ public class AddTeamMemberCommand extends Command{
 
     private final TeamMember toAdd;
 
+    /**
+     * Creates an {@code AddTeamMemberCommand} to add the specified {@code TeamMember}.
+     *
+     * @param member the team member to be added to the project book, must not be {@code null}
+     */
     public AddTeamMemberCommand(TeamMember member) {
         requireNonNull(member);
         this.toAdd = member;
     }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
