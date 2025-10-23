@@ -84,11 +84,17 @@ public class Person {
     public boolean isSamePerson(Person otherPerson) {
         if (otherPerson == this) {
             return true;
+        } else if (otherPerson == null) {
+            return false;
         }
 
-        return otherPerson != null
-                && (otherPerson.getName().equals(getName())
-                || otherPerson.getEmail().equals(getEmail()));
+        boolean isSameName = otherPerson.getName().equals(getName());
+        boolean isSameRole = otherPerson.getRole().equals(getRole());
+        boolean isSamePhone = otherPerson.getPhone().equals(getPhone());
+        boolean isSameEmail = otherPerson.getEmail().equals(getEmail());
+        boolean isSameTelegram = otherPerson.getTelegram().equals(getTelegram());
+
+        return (isSameName && isSameRole) || isSamePhone || isSameEmail || isSameTelegram;
     }
 
     // Add this method for duplicate checking in RemarkCommand
@@ -148,6 +154,7 @@ public class Person {
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
+                && telegram.equals(otherPerson.telegram)
                 && tags.equals(otherPerson.tags);
     }
 
