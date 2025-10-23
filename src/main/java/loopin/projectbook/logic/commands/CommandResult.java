@@ -29,7 +29,10 @@ public class CommandResult {
      * Constructs a {@code CommandResult} with the specified fields.
      */
     public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
-                         boolean showPersonList, boolean showProjectList) {
+                         boolean showPersonList, boolean showProjectList) throws IllegalArgumentException {
+        if (showPersonList && showProjectList) {
+            throw new IllegalArgumentException("You can only show one list at a time.");
+        }
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
