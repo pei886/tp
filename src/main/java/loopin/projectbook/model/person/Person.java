@@ -8,8 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.commons.util.ToStringBuilder;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -22,21 +25,27 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final Telegram telegram;
 
     // Data fields
-    private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final List<Remark> remarks = new ArrayList<>(); // empty by default. TODO: change implementation
+    private List<Project> projects = new ArrayList<>(); //list of projects the person is part of, empty by default
 
     /**
-     * Name, email and tags must be present and non null but phone and address can be null.
+     * Logger for Person class
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    private static final Logger logger = LogsCenter.getLogger(Person.class);
+
+    /**
+     * Name, email and tags must be present and non null but phone and telegram can be null.
+     */
+    public Person(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
         requireAllNonNull(name, email, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.telegram = telegram;
         this.tags.addAll(tags);
     }
 
@@ -52,8 +61,8 @@ public class Person {
         return email;
     }
 
-    public Address getAddress() {
-        return address;
+    public Telegram getTelegram() {
+        return telegram;
     }
 
     public String getRole() {
@@ -93,10 +102,26 @@ public class Person {
      */
     public Person withNewRemark(Remark newRemark) {
         // Implementation must create a copy of the existing person and add the new remark.
-        Person updatedPerson = new Person(name, phone, email, address, tags);
+        Person updatedPerson = new Person(name, phone, email, telegram, tags);
         updatedPerson.remarks.addAll(this.remarks);
         updatedPerson.remarks.add(newRemark);
         return updatedPerson;
+    }
+
+    /**
+     * Adds a project to the list of projects a person is part of
+     * @param p project to be added
+     */
+    public void addProject(Project p) {
+        if (this.projects.contains(p)) {
+            throw new IllegalStateException("Person is already in that project");
+        }
+        this.projects.add(p);
+        logger.fine("Project added to person.");
+    }
+
+    public int getNumberOfProjects() {
+        return this.projects.size();
     }
 
     // Add a getter for the UI
@@ -129,7 +154,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, telegram, tags);
     }
 
     @Override
@@ -138,7 +163,7 @@ public class Person {
                 .add("name", name)
                 .add("phone", phone)
                 .add("email", email)
-                .add("address", address)
+                .add("telegram", telegram)
                 .add("tags", tags)
                 .toString();
     }

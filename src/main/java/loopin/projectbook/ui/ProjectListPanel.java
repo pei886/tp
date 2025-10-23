@@ -11,11 +11,11 @@ import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.model.project.Project;
 
 /**
- * Panel containing the list of projects.
+ * Panel containing the list of project.
  */
 public class ProjectListPanel extends UiPart<Region> {
     private static final String FXML = "ProjectListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ProjectListPanel.class);
+    private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
     @FXML
     private ListView<Project> projectListView;
@@ -23,9 +23,9 @@ public class ProjectListPanel extends UiPart<Region> {
     /**
      * Creates a {@code ProjectListPanel} with the given {@code ObservableList}.
      */
-    public ProjectListPanel(ObservableList<Project> projectList) {
+    public ProjectListPanel(ObservableList<Project> personList) {
         super(FXML);
-        projectListView.setItems(projectList);
+        projectListView.setItems(personList);
         projectListView.setCellFactory(listView -> new ProjectListViewCell());
     }
 
@@ -45,4 +45,5 @@ public class ProjectListPanel extends UiPart<Region> {
             }
         }
     }
+
 }
