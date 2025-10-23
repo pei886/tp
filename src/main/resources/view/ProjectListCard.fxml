@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -21,7 +20,6 @@
             <HBox spacing="0.5" alignment="CENTER_LEFT">
                 <Label fx:id="id" styleClass="cell_big_label">
                     <minWidth>
-                        <!-- Ensures that the label text is never truncated -->
                         <Region fx:constant="USE_PREF_SIZE" />
                     </minWidth>
                 </Label>
@@ -29,7 +27,7 @@
             </HBox>
             <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
             <Label fx:id="createdAt" styleClass="cell_small_label" text="\$createdAt" />
-            <FlowPane fx:id="members" />
+            <VBox fx:id="membersContainer" spacing="3" />
         </VBox>
     </GridPane>
 </HBox>

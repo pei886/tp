@@ -1,13 +1,18 @@
 package loopin.projectbook.ui;
 
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import loopin.projectbook.model.project.Project;
+import loopin.projectbook.model.person.Person;
+
 
 /**
  * An UI component that displays information of a {@code Project}.
@@ -37,7 +42,7 @@ public class ProjectCard extends UiPart<Region> {
     @FXML
     private Label createdAt;
     @FXML
-    private FlowPane members;
+    private VBox membersContainer;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -50,12 +55,53 @@ public class ProjectCard extends UiPart<Region> {
         description.setText(project.getDescription().toString());
         createdAt.setText(project.getCreatedAt().toString());
 
-        project.getAllPeople().stream()
-                .sorted(Comparator.comparing(person -> person.getName().toString()))
-                .forEach(person -> {
-                    Label personLabel = new Label(person.getName().toString());
-                    members.getChildren().add(personLabel);
-                });
+        populateMembersByRole();
 
+    }
+    /**
+     * Populates the members section organized by their roles.
+     */
+    private void populateMembersByRole() {
+        // Get members categorized by role
+        List<Person> committee = project.getAllPeople().stream()
+                .filter(person -> person.getRole().equalsIgnoreCase("committee"))
+                .sorted(Comparator.comparing(person -> person.getName().toString()))
+                .collect(Collectors.toList());
+
+        List<Person> organisations = project.getAllPeople().stream()
+                .filter(person -> person.getRole().equalsIgnoreCase("organisation"))
+                .sorted(Comparator.comparing(person -> person.getName().toString()))
+                .collect(Collectors.toList());
+
+        List<Person> volunteers = project.getAllPeople().stream()
+                .filter(person -> person.getRole().equalsIgnoreCase("volunteer"))
+                .sorted(Comparator.comparing(person -> person.getName().toString()))
+                .collect(Collectors.toList());
+
+        if (!committee.isEmpty()) {
+            addRoleSection("Committee:", committee);
+        }
+
+        if (!organisations.isEmpty()) {
+            addRoleSection("Organisations:", organisations);
+        }
+
+        if (!volunteers.isEmpty()) {
+            addRoleSection("Volunteers:", volunteers);
+        }
+    }
+
+    /**
+     * Adds a section for a specific role with its members displayed as PersonCards.
+     */
+    private void addRoleSection(String roleLabel, List<Person> members) {
+        Label roleLabelNode = new Label(roleLabel);
+        membersContainer.getChildren().add(roleLabelNode);
+
+        int index = 1;
+        for (Person person : members) {
+            PersonCard personCard = new PersonCard(person, index++);
+            membersContainer.getChildren().add(personCard.getRoot());
+        }
     }
 }
