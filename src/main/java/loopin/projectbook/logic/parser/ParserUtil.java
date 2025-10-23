@@ -9,11 +9,11 @@ import java.util.Set;
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.commons.util.StringUtil;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
-import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Organisation;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.ProjectName;
 import loopin.projectbook.model.tag.Tag;
@@ -69,18 +69,18 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String address} into an {@code Address}.
+     * Parses a {@code String telegram} into a {@code Telegram}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code address} is invalid.
+     * @throws ParseException if the given {@code telegram} is invalid.
      */
-    public static Address parseAddress(String address) throws ParseException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
+    public static Telegram parseTelegram(String telegram) throws ParseException {
+        requireNonNull(telegram);
+        String trimmedTelegram = telegram.trim();
+        if (!Telegram.isValidTelegram(trimmedTelegram)) {
+            throw new ParseException(Telegram.MESSAGE_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new Telegram(trimmedTelegram);
     }
 
     /**

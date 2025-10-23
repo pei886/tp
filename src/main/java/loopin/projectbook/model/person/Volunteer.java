@@ -12,8 +12,8 @@ public class Volunteer extends Person {
     /**
      * Name, email and tags must be present and non null but phone can be null.
      */
-    public Volunteer(Name name, Phone phone, Email email, Set<Tag> tags) {
-        super(name, phone, email, null, tags);
+    public Volunteer(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
+        super(name, phone, email, telegram, tags);
     }
 
     /**
