@@ -6,12 +6,11 @@ import java.util.stream.Collectors;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 
 
 /**

@@ -16,8 +16,8 @@ import loopin.projectbook.model.person.OrgMember;
 import loopin.projectbook.model.person.Organisation;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
-import loopin.projectbook.model.person.Volunteer;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.Volunteer;
 import loopin.projectbook.model.tag.Tag;
 import loopin.projectbook.model.teammember.Committee;
 import loopin.projectbook.model.teammember.TeamMember;
@@ -103,7 +103,8 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         if (telegram == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Telegram.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Telegram.class.getSimpleName()));
         }
         if (!Telegram.isValidTelegram(telegram)) {
             throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);

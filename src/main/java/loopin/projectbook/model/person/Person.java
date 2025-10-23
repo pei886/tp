@@ -21,6 +21,11 @@ import loopin.projectbook.model.tag.Tag;
  */
 public class Person {
 
+    /**
+     * Logger for Person class
+     */
+    private static final Logger logger = LogsCenter.getLogger(Person.class);
+
     // Identity fields
     private final Name name;
     private final Phone phone;
@@ -31,11 +36,6 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final List<Remark> remarks = new ArrayList<>(); // empty by default. TODO: change implementation
     private List<Project> projects = new ArrayList<>(); //list of projects the person is part of, empty by default
-
-    /**
-     * Logger for Person class
-     */
-    private static final Logger logger = LogsCenter.getLogger(Person.class);
 
     /**
      * Name, email and tags must be present and non null but phone and telegram can be null.
