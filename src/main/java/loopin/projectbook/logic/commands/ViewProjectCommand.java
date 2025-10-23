@@ -24,7 +24,7 @@ public class ViewProjectCommand extends Command {
             + "Example: " + COMMAND_WORD + " project/Beach Cleanup";
 
     public static final String MESSAGE_PROJECT_NOT_FOUND = "Project \"%s\" not found.";
-    public static final String MESSAGE_PROJECT_DETAILS = "Project details are shown below.\n";
+    public static final String MESSAGE_PROJECT_SUCCESS = "Project details are shown below.\n";
 
     private final ProjectName projectName;
 
@@ -36,18 +36,14 @@ public class ViewProjectCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
-        System.out.println("DEBUG: Looking for project: '" + projectName.toString() + "'");
-
         Optional<Project> project = model.findProjectByName(projectName.toString());
-
-        System.out.println("DEBUG: Project found: " + project.isPresent());
 
         if (project.isEmpty()) {
             return new CommandResult(String.format(MESSAGE_PROJECT_NOT_FOUND, projectName));
         }
 
         Project p = project.get();
-        StringBuilder output = new StringBuilder(MESSAGE_PROJECT_DETAILS);
+        StringBuilder output = new StringBuilder(MESSAGE_PROJECT_SUCCESS);
 
         output.append("Description:\n");
         output.append(p.getDescription()).append("\n");
@@ -59,7 +55,8 @@ public class ViewProjectCommand extends Command {
             output.append("  ").append(person.getEmail()).append("\n");
         });
 
-        return new CommandResult(output.toString());
+        return new CommandResult(MESSAGE_PROJECT_SUCCESS, false, false, false, true);
+
     }
 
     @Override

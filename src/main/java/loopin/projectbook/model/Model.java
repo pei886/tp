@@ -86,9 +86,14 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /** Returns an unmodifiable view of the filtered person list */
+    ObservableList<Project> getFilteredProjectList();
+
+
     java.util.Optional<Project> findProjectByName(String name);
     void setProject(Project project);
 
     boolean hasProject(Project project);
     void addProject(Project project);
+
 }

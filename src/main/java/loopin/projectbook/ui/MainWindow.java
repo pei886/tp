@@ -32,6 +32,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private ProjectListPanel projectListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -111,6 +112,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        projectListPanel = new ProjectListPanel(logic.getFilteredProjectList());
+
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -121,6 +124,22 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+
+    /**
+     * Switches the view to show the person list.
+     */
+    private void showPersonList() {
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+    }
+
+    /**
+     * Switches the view to show the project list.
+     */
+    private void showProjectList() {
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(projectListPanel.getRoot());
     }
 
     /**
@@ -184,6 +203,13 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            // Handle view switching
+            if (commandResult.isShowProjectList()) {
+                showProjectList();
+            } else if (commandResult.isShowPersonList()) {
+                showPersonList();
             }
 
             return commandResult;
