@@ -8,8 +8,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
 
+import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.commons.util.ToStringBuilder;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -27,6 +30,12 @@ public class Person {
     // Data fields
     private final Set<Tag> tags = new HashSet<>();
     private final List<Remark> remarks = new ArrayList<>(); // empty by default. TODO: change implementation
+    private List<Project> projects = new ArrayList<>(); //list of projects the person is part of, empty by default
+
+    /**
+     * Logger for Person class
+     */
+    private static final Logger logger = LogsCenter.getLogger(Person.class);
 
     /**
      * Name, email and tags must be present and non null but phone and telegram can be null.
@@ -97,6 +106,22 @@ public class Person {
         updatedPerson.remarks.addAll(this.remarks);
         updatedPerson.remarks.add(newRemark);
         return updatedPerson;
+    }
+
+    /**
+     * Adds a project to the list of projects a person is part of
+     * @param p project to be added
+     */
+    public void addProject(Project p) {
+        if (this.projects.contains(p)) {
+            throw new IllegalStateException("Person is already in that project");
+        }
+        this.projects.add(p);
+        logger.fine("Project added to person.");
+    }
+
+    public int getNumberOfProjects() {
+        return this.projects.size();
     }
 
     // Add a getter for the UI

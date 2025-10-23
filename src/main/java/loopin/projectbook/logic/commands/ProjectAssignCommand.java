@@ -61,6 +61,7 @@ public final class ProjectAssignCommand extends Command {
         }
 
         project.assignPerson(target);
+        target.addProject(project);
         model.setProject(project);
         return new CommandResult(String.format(MESSAGE_SUCCESS, target.getName(), projectName));
     }
