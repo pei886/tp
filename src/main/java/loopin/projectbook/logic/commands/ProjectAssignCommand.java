@@ -98,6 +98,10 @@ public final class ProjectAssignCommand extends Command {
 
     /**
      * Resolves a person by case-insensitive exact name match across the full person list.
+     *
+     * @param model
+     * @param name
+     * @return
      */
     private Person resolveByName(Model model, String name) {
         String trimmedLowerName = name.trim().toLowerCase(Locale.ROOT);
