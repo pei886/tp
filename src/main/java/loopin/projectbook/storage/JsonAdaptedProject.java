@@ -1,11 +1,14 @@
 package loopin.projectbook.storage;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import loopin.projectbook.commons.exceptions.IllegalValueException;
+import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;
@@ -19,6 +22,7 @@ class JsonAdaptedProject {
 
     private final String name;
     private final String description;
+    private final List<String> members = new ArrayList<>();
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
@@ -44,6 +48,10 @@ class JsonAdaptedProject {
         description = source.getDescription().toString();
         createdAt = source.getCreatedAt();
         updatedAt = source.getUpdatedAt();
+
+        for (Person p : source.getAllPeople()) {
+            members.add(p.getEmail().value);
+        }
     }
 
     /**
