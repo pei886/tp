@@ -85,6 +85,33 @@ public class UniqueProjectList implements Iterable<Project> {
     }
 
     /**
+     * Removes the equivalent project from the list.
+     * The project must exist in the list.
+     *
+     * @throws ProjectNotFoundException if the project does not exist
+     */
+    public void remove(Project toRemove) {
+        requireNonNull(toRemove);
+        if (!internalList.remove(toRemove)) {
+            throw new ProjectNotFoundException();
+        }
+    }
+
+    /**
+     * Removes the project with the given name (case-insensitive, normalised).
+     *
+     * @param name name of the project to remove
+     * @throws ProjectNotFoundException if no project with the given name exists
+     */
+    public void removeByName(String name) {
+        Optional<Project> match = findByName(name);
+        if (match.isEmpty()) {
+            throw new ProjectNotFoundException();
+        }
+        internalList.remove(match.get());
+    }
+
+    /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
     public ObservableList<Project> asUnmodifiableObservableList() {
