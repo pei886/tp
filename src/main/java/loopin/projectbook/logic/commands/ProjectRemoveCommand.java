@@ -55,6 +55,12 @@ public final class ProjectRemoveCommand extends Command {
         this.projectName = projectName;
     }
 
+    /**
+     * Constructs a command to remove the person called {@code name} from the project named {@code projectName}.
+     *
+     * @param name name of the person
+     * @param projectName the validated project name value object
+     */
     public ProjectRemoveCommand(String name, ProjectName projectName) {
         requireNonNull(name);
         this.index = null;
