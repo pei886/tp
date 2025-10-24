@@ -67,16 +67,19 @@ public final class ProjectAssignCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        List<Person> lastShown = model.getFilteredPersonList();
-        if (index.getZeroBased() >= lastShown.size()) {
-            throw new CommandException(MESSAGE_INVALID_INDEX);
-        }
-
         String lookup = projectName.toString();
         Project project = model.findProjectByName(lookup)
                 .orElseThrow(() -> new CommandException(String.format(MESSAGE_NO_PROJECT, lookup)));
 
-        Person target = lastShown.get(index.getZeroBased());
+        final Person target;
+        if (name != null) {
+            target = resolveByName(model, name);
+        } else {
+            List<Person> lastShown = model.getFilteredPersonList();
+            if (index.getZeroBased() >= lastShown.size()) {
+                throw new CommandException(MESSAGE_INVALID_INDEX);
+            }
+            target = lastShown.get(index.getZeroBased());
         if (project.hasMember(target)) {
             throw new CommandException(String.format(MESSAGE_ALREADY, target.getName()));
         }
@@ -84,6 +87,7 @@ public final class ProjectAssignCommand extends Command {
         project.assignPerson(target);
         target.addProject(project);
         model.setProject(project);
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, target.getName(), projectName));
     }
 }
