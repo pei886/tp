@@ -33,6 +33,9 @@ public final class ProjectAssignCommand extends Command {
     public static final String MESSAGE_ALREADY = "%s is already in this project.";
     public static final String MESSAGE_NO_PROJECT = "Project '%s' does not exist.";
     public static final String MESSAGE_INVALID_INDEX = "The person index provided is invalid.";
+    public static final String MESSAGE_NOT_FOUND_BY_NAME = "No person found with the name %s.";
+    public static final String MESSAGE_AMBIGUOUS_NAME = "Multiple people share the name %s.\n"
+            + "Please use index-based assignment instead.";
 
     private final Index index;
     private final String name;
@@ -110,9 +113,11 @@ public final class ProjectAssignCommand extends Command {
         }
 
         if (matches.isEmpty()) {
+            throw new CommandException(String.format(MESSAGE_NOT_FOUND_BY_NAME, trimmedLowerName));
         }
 
         if (matches.size() > 1) {
+            throw new CommandException(String.format(MESSAGE_AMBIGUOUS_NAME, trimmedLowerName));
         }
 
         return matches.get(0);
