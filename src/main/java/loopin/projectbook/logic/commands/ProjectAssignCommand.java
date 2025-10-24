@@ -80,6 +80,8 @@ public final class ProjectAssignCommand extends Command {
                 throw new CommandException(MESSAGE_INVALID_INDEX);
             }
             target = lastShown.get(index.getZeroBased());
+        }
+
         if (project.hasMember(target)) {
             throw new CommandException(String.format(MESSAGE_ALREADY, target.getName()));
         }
@@ -89,5 +91,31 @@ public final class ProjectAssignCommand extends Command {
         model.setProject(project);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, target.getName(), projectName));
+    }
+
+    /**
+     * Resolves a person by case-insensitive exact name match across the full person list.
+     */
+    private Person resolveByName(Model model, String name) {
+        String trimmedLowerName = name.trim().toLowerCase(Locale.ROOT);
+
+        List<Person allPersons = model.getAddressBook().getPersonList();
+        List<Person> matches = new ArrayList<>();
+
+        for (Person p : allPersons) {
+            String candidate = p.getName();
+            if (candidate != null && candidate.trim().toLowerCase(Locale.ROOT).equals(trimmedLowerName)) {
+                matches.add(p);
+            }
+        }
+
+        if (matches.isEmpty()) {
+        }
+
+        if (matches.size() > 1) {
+        }
+
+        return matches.get(0);
+
     }
 }
