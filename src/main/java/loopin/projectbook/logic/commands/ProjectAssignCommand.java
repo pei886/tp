@@ -2,7 +2,9 @@ package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
@@ -97,20 +99,21 @@ public final class ProjectAssignCommand extends Command {
     }
 
     /**
-     * Resolves a person by case-insensitive exact name match across the full person list.
+     * Returns a Person whose name matches the specified {@code name}, using a case-insensitive exact match.
      *
-     * @param model
-     * @param name
-     * @return
+     * @param model the Model containing the list of persons to search through
+     * @param name the name of the person to look up
+     * @return the unique Person whose name matches the given {@code name}
+     * @throws CommandException if no matching person is found or if multiple persons share the same name
      */
-    private Person resolveByName(Model model, String name) {
+    private Person resolveByName(Model model, String name) throws CommandException {
         String trimmedLowerName = name.trim().toLowerCase(Locale.ROOT);
 
-        List<Person allPersons = model.getAddressBook().getPersonList();
+        List<Person> allPersons = model.getFilteredPersonList();
         List<Person> matches = new ArrayList<>();
 
         for (Person p : allPersons) {
-            String candidate = p.getName();
+            String candidate = p.getName().toString();
             if (candidate != null && candidate.trim().toLowerCase(Locale.ROOT).equals(trimmedLowerName)) {
                 matches.add(p);
             }

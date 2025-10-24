@@ -1,7 +1,10 @@
 package loopin.projectbook.logic.parser;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PROJECT;
+
+import java.util.Optional;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.ProjectAssignCommand;
@@ -33,7 +36,7 @@ public final class ProjectAssignCommandParser implements Parser<ProjectAssignCom
 
         String preamble = argMultimap.getPreamble().trim();
         Optional<String> name = argMultimap.getValue(PREFIX_NAME)
-                .mapString(::trim)
+                .map(String::trim)
                 .filter(s -> !s.isEmpty());
 
         int selectorCount = (preamble.isEmpty() ? 0 : 1) + (name.isPresent() ? 1 : 0);
@@ -62,4 +65,5 @@ public final class ProjectAssignCommandParser implements Parser<ProjectAssignCom
             throw new ParseException(String.format(
                     MESSAGE_INVALID_COMMAND_FORMAT, ProjectAssignCommand.MESSAGE_USAGE), pe);
         }
+    }
 }
