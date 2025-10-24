@@ -121,20 +121,41 @@ How the parsing works:
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
 
-The `Model` component,
+The **`Model`** component:
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+* stores all data of the application, i.e.,
+    - `Person` objects (contained in a `UniquePersonList`), and
+    - `Project` objects (contained in a `UniqueProjectList`).  
+      These lists are contained within the `ProjectBook`. 
 
-<box type="info" seamless>
+* keeps track of the currently _selected_ or _filtered_ lists of both `Person` and `Project` objects.  
+  These are exposed to other components as unmodifiable `ObservableList<Person>` and `ObservableList<Project>` objects, allowing the UI to automatically update when data changes.
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
+* stores a `UserPrefs` object that represents user preferences (e.g., GUI settings, file paths).  
+  These preferences are exposed externally as `ReadOnlyUserPrefs` to ensure immutability.
 
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
+* ensures data integrity by preventing duplicate entries through `UniquePersonList` and `UniqueProjectList`.
 
-</box>
+* defines relationships between people and projects:
+    - Each `Person` may be linked to multiple `Project` objects.
+    - Each `Project` contains one or more `Membership` entries that connect it back to the people involved.
+
+* distinguishes between different types of persons:
+    - `Volunteer`: a general member with basic contact info and tags.
+    - `TeamMember`: a person belonging to a committee within a project.
+    - `OrgMember`: a person associated with an external organisation.
+
+* does not depend on other major components (e.g., Logic, UI, or Storage).  
+  This separation ensures that the `Model` represents the core domain data and logic, independent of how the application interacts with users or files.
+
+[//]: # (<box type="info" seamless>)
+
+[//]: # (**Note:** An alternative &#40;arguably, a more OOP&#41; model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>)
+
+[//]: # ()
+[//]: # (<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />)
+
+[//]: # (</box>)
 
 
 ### Storage component
