@@ -19,7 +19,7 @@ import loopin.projectbook.model.teammember.TeamMember;
  */
 public class AddTeamMemberCommand extends Command {
 
-    public static final String COMMAND_WORD = "addm";
+    public static final String COMMAND_WORD = "addt";
 
     public static final String MESSAGE_SUCCESS = "New team member added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the project book";
