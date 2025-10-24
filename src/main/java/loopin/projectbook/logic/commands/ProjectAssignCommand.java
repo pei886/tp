@@ -70,6 +70,10 @@ public final class ProjectAssignCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        System.out.println("[DEBUG] Executing ProjectAssignCommand");
+        System.out.println("[DEBUG] name = " + name);
+        System.out.println("[DEBUG] index = " + index);
+        System.out.println("[DEBUG] projectName = " + projectName);
         requireNonNull(model);
 
         String lookup = projectName.toString();
@@ -109,8 +113,9 @@ public final class ProjectAssignCommand extends Command {
     private Person resolveByName(Model model, String name) throws CommandException {
         String trimmedLowerName = name.trim().toLowerCase(Locale.ROOT);
 
-        List<Person> allPersons = model.getFilteredPersonList();
+        List<Person> allPersons = model.getProjectBook().getPersonList();
         List<Person> matches = new ArrayList<>();
+        System.out.println(allPersons);
 
         for (Person p : allPersons) {
             String candidate = p.getName().toString();

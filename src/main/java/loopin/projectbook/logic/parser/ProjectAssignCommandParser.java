@@ -22,8 +22,27 @@ public final class ProjectAssignCommandParser implements Parser<ProjectAssignCom
 
     @Override
     public ProjectAssignCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PROJECT, PREFIX_NAME);
+        final String normalized = " " + args.trim();
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(normalized, PREFIX_NAME, PREFIX_PROJECT);
 
+        if (args.trim().startsWith(PREFIX_NAME.getPrefix())) {
+            //name-based assignment
+            String nameValue = argMultimap.getValue(PREFIX_NAME)
+                    .orElseThrow(() -> new ParseException(ProjectAssignCommand.MESSAGE_USAGE));
+            ProjectName projectName = argMultimap.getValue(PREFIX_PROJECT)
+                    .map(n -> {
+                        try {
+                            return ParserUtil.parseProjectName(n);
+                        } catch (ParseException e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .orElseThrow(() -> new ParseException(ProjectAssignCommand.MESSAGE_USAGE));
+
+            return new ProjectAssignCommand(nameValue.trim(), projectName);
+        }
+
+        String preamble = argMultimap.getPreamble().trim();
         ProjectName projectName = argMultimap.getValue(PREFIX_PROJECT)
                 .map(n -> {
                     try {
@@ -34,36 +53,13 @@ public final class ProjectAssignCommandParser implements Parser<ProjectAssignCom
                 })
                 .orElseThrow(() -> new ParseException(ProjectAssignCommand.MESSAGE_USAGE));
 
-        String preamble = argMultimap.getPreamble().trim();
-        Optional<String> name = argMultimap.getValue(PREFIX_NAME)
-                .map(String::trim)
-                .filter(s -> !s.isEmpty());
-
-        int selectorCount = (preamble.isEmpty() ? 0 : 1) + (name.isPresent() ? 1 : 0);
-
-        if (selectorCount != 1) {
-            throw new ParseException(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, ProjectAssignCommand.MESSAGE_USAGE
-            ));
+        if (!preamble.isEmpty()) {
+            // index-based assignment
+            Index index = ParserUtil.parseIndex(preamble);
+            return new ProjectAssignCommand(index, projectName);
         }
 
-        try {
-            if (!preamble.isEmpty()) {
-                // index-based assignment
-                Index index = ParserUtil.parseIndex(preamble);
-                return new ProjectAssignCommand(index, projectName);
-            } else {
-                // name-based assignment
-                return new ProjectAssignCommand(name.get(), projectName);
-            }
-        } catch (RuntimeException re) {
-            if (re.getCause() instanceof ParseException) {
-                throw (ParseException) re.getCause();
-            }
-            throw re;
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, ProjectAssignCommand.MESSAGE_USAGE), pe);
-        }
+        Index index = ParserUtil.parseIndex(preamble);
+        return new ProjectAssignCommand(index, projectName);
     }
 }
