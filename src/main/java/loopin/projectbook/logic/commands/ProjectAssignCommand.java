@@ -70,10 +70,6 @@ public final class ProjectAssignCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        System.out.println("[DEBUG] Executing ProjectAssignCommand");
-        System.out.println("[DEBUG] name = " + name);
-        System.out.println("[DEBUG] index = " + index);
-        System.out.println("[DEBUG] projectName = " + projectName);
         requireNonNull(model);
 
         String lookup = projectName.toString();
