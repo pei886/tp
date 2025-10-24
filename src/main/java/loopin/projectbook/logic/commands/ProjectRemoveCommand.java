@@ -2,7 +2,9 @@ package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
@@ -26,7 +28,7 @@ public final class ProjectRemoveCommand extends Command {
                     + "project remove INDEX project/PROJECT_NAME\n"
                     + "project remove n/NAME project/PROJECT_NAME\n"
                     + "Examples:\n"
-                    + "project remove 1 project/MyProject\n";
+                    + "project remove 1 project/MyProject\n"
                     + "project remove n/Alex Tan project/MyProject";
 
     public static final String MESSAGE_SUCCESS = "Removed %s from the project %s.";
@@ -49,7 +51,7 @@ public final class ProjectRemoveCommand extends Command {
      */
     public ProjectRemoveCommand(Index index, ProjectName projectName) {
         this.index = index;
-        this.name = name;
+        this.name = null;
         this.projectName = projectName;
     }
 
@@ -79,21 +81,20 @@ public final class ProjectRemoveCommand extends Command {
             target = lastShown.get(index.getZeroBased());
         }
 
-        if (project.hasMember(target)) {
-            throw new CommandException(String.format(MESSAGE_ALREADY, target.getName()));
+        if (!project.hasMember(target)) {
+            throw new CommandException(String.format(MESSAGE_NOT_IN, target.getName()));
         }
 
-        project.assignPerson(target);
-        target.addProject(project);
+        project.removePerson(target);
         model.setProject(project);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, target.getName(), projectName));
     }
 
-    /
-            * Returns a Person whose name matches the specified {@code name}, using a case-insensitive exact match.
+    /**
+     * Returns a Person whose name matches the specified {@code name}, using a case-insensitive exact match.
      *
-             * @param model the Model containing the list of persons to search through
+     * @param model the Model containing the list of persons to search through
      * @param name the name of the person to look up
      * @return the unique Person whose name matches the given {@code name}
      * @throws CommandException if no matching person is found or if multiple persons share the same name
