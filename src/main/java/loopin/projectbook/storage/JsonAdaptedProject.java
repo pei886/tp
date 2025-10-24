@@ -32,12 +32,17 @@ class JsonAdaptedProject {
     @JsonCreator
     public JsonAdaptedProject(@JsonProperty("name") String name,
                               @JsonProperty("description") String description,
+                              @JsonProperty("members") List<String> members,
                               @JsonProperty("createdAt") LocalDateTime createdAt,
                               @JsonProperty("updatedAt") LocalDateTime updatedAt) {
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+
+        if (members != null) {
+            this.members.addAll(members);
+        }
     }
 
     /**
@@ -50,7 +55,7 @@ class JsonAdaptedProject {
         updatedAt = source.getUpdatedAt();
 
         for (Person p : source.getAllPeople()) {
-            members.add(p.getEmail().value);
+            this.members.add(p.getEmail().value);
         }
     }
 
@@ -81,4 +86,6 @@ class JsonAdaptedProject {
         return new Project(modelName, modelDescription);
     }
 
+    public String getName() { return name; }
+    public List<String> getMembers() { return members; }
 }
