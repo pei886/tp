@@ -41,7 +41,7 @@ public class AddVolunteerCommand extends AddCommand {
     }
 
     @Override
-    protected String getSuccessMessage() {
+    public String getSuccessMessage() {
         return MESSAGE_SUCCESS;
     }
 

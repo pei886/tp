@@ -101,7 +101,7 @@ public class EditCommand extends Command {
         Telegram updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
     }
 
     @Override

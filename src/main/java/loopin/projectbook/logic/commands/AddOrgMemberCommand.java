@@ -10,12 +10,12 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import loopin.projectbook.model.person.orgmember.OrgMember;
 
 /**
- * Adds an organisation member to the project book.
+ * Adds an {@code OrgMember} to the project book.
  */
 public class AddOrgMemberCommand extends AddCommand {
 
     public static final String COMMAND_WORD = "addo";
-
+    public static final String MESSAGE_SUCCESS = "New Organisation Member added: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an organisation member to the project book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
@@ -23,17 +23,13 @@ public class AddOrgMemberCommand extends AddCommand {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_TELEGRAM + "TELEGRAM "
-            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_TELEGRAM + "johndoe123 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_NAME + "Shi Wei "
+            + PREFIX_ORGANISATION + "Eventive Solutions "
+            + PREFIX_PHONE + "98381263 "
+            + PREFIX_EMAIL + "shiwei@eventive.com "
+            + PREFIX_TELEGRAM + "ShiWei623";
 
-    public static final String MESSAGE_SUCCESS = "New Organisation Member added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the project book";
 
     /**
      * Creates an AddOrgMemberCommand to add the specified {@code OrgMember}
@@ -43,7 +39,7 @@ public class AddOrgMemberCommand extends AddCommand {
     }
 
     @Override
-    protected String getSuccessMessage() {
+    public String getSuccessMessage() {
         return MESSAGE_SUCCESS;
     }
 

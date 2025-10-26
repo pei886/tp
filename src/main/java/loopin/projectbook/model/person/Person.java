@@ -159,6 +159,7 @@ public abstract class Person {
 
         Person otherPerson = (Person) other;
         return name.equals(otherPerson.name)
+                && role.equals(otherPerson.role)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && telegram.equals(otherPerson.telegram)

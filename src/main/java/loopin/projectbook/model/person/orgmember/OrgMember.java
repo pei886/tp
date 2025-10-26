@@ -6,6 +6,8 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Role;
+import loopin.projectbook.model.person.RoleType;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.tag.Tag;
 
@@ -20,7 +22,7 @@ public class OrgMember extends Person {
      * Name, email and tags must be present and non null but phone can be null.
      */
     public OrgMember(Name name, Organisation organisation, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
-        super(name, phone, email, telegram, tags);
+        super(name, new Role(RoleType.ORGMEMBER, organisation.toString()), phone, email, telegram, tags);
         this.organisation = organisation;
     }
 
@@ -29,30 +31,7 @@ public class OrgMember extends Person {
     }
 
     @Override
-    public String getRole() {
-        return "Organisation: " + organisation.toString();
-    }
-
-    /**
-     * Returns true if both persons are Organisation Members with the same Organisation and have the same name.
-     * This defines a weaker notion of equality between two persons.
-     */
-    public boolean isSamePerson(OrgMember otherPerson) {
-        return this.getOrganisation().equals(otherPerson.getOrganisation()) && super.isSamePerson(otherPerson);
-    }
-
-    /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
-     */
-    @Override
-    public boolean equals(Object other) {
-        // instanceof handles nulls
-        if (!(other instanceof OrgMember)) {
-            return false;
-        }
-
-        Person otherPerson = (Person) other;
-        return super.equals(otherPerson);
+    public Person createCopy(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
+        return new OrgMember(name, organisation, phone, email, telegram, tags);
     }
 }

@@ -7,6 +7,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -31,7 +32,7 @@ public class AddVolunteerCommandParser implements Parser<AddVolunteerCommand> {
      */
     public AddVolunteerCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -43,7 +44,7 @@ public class AddVolunteerCommandParser implements Parser<AddVolunteerCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Set<Tag> tagList = new HashSet<Tag>();
 
         Volunteer volunteer = new Volunteer(name, phone, email, telegram, tagList);
 
