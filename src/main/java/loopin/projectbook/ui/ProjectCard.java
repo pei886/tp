@@ -63,17 +63,17 @@ public class ProjectCard extends UiPart<Region> {
     private void populateMembersByRole() {
         // Get members categorized by role
         List<Person> committee = project.getAllPeople().stream()
-                .filter(person -> person.getRole().toLowerCase().startsWith("committee"))
+                .filter(person -> person.getRole().fullRole.toLowerCase().startsWith("committee"))
                 .sorted(Comparator.comparing(person -> person.getName().toString()))
                 .collect(Collectors.toList());
 
         List<Person> organisations = project.getAllPeople().stream()
-                .filter(person -> person.getRole().toLowerCase().startsWith("organisation"))
+                .filter(person -> person.getRole().fullRole.toLowerCase().startsWith("organisation"))
                 .sorted(Comparator.comparing(person -> person.getName().toString()))
                 .collect(Collectors.toList());
 
         List<Person> volunteers = project.getAllPeople().stream()
-                .filter(person -> person.getRole().equalsIgnoreCase("volunteer"))
+                .filter(person -> person.getRole().fullRole.equalsIgnoreCase("volunteer"))
                 .sorted(Comparator.comparing(person -> person.getName().toString()))
                 .collect(Collectors.toList());
 
