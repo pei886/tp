@@ -1,4 +1,4 @@
-package loopin.projectbook.model.teammember;
+package loopin.projectbook.model.person.teammember;
 
 import java.util.HashSet;
 
