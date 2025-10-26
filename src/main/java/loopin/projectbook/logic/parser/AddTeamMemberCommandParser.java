@@ -16,8 +16,8 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Telegram;
-import loopin.projectbook.model.teammember.Committee;
-import loopin.projectbook.model.teammember.TeamMember;
+import loopin.projectbook.model.person.teammember.Committee;
+import loopin.projectbook.model.person.teammember.TeamMember;
 
 /**
  * Parses user input to create a new AddTeamMember object
