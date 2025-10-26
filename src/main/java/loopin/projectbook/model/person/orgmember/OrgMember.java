@@ -1,7 +1,12 @@
-package loopin.projectbook.model.person;
+package loopin.projectbook.model.person.orgmember;
 
 import java.util.Set;
 
+import loopin.projectbook.model.person.Email;
+import loopin.projectbook.model.person.Name;
+import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -43,7 +48,7 @@ public class OrgMember extends Person {
     @Override
     public boolean equals(Object other) {
         // instanceof handles nulls
-        if (!(other instanceof Volunteer)) {
+        if (!(other instanceof OrgMember)) {
             return false;
         }
 

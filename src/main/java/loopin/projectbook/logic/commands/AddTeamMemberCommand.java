@@ -9,7 +9,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
-import loopin.projectbook.model.teammember.TeamMember;
+import loopin.projectbook.model.person.teammember.TeamMember;
 
 /**
  * Adds a {@code TeamMember} to the project book.

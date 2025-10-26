@@ -7,7 +7,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
-import loopin.projectbook.model.person.OrgMember;
+import loopin.projectbook.model.person.orgmember.OrgMember;
 
 /**
  * Adds an organisation member to the project book.

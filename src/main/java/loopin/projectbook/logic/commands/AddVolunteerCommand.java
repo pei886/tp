@@ -6,7 +6,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
-import loopin.projectbook.model.person.Volunteer;
+import loopin.projectbook.model.person.volunteer.Volunteer;
 
 /**
  * Adds a volunteer to the project book.
