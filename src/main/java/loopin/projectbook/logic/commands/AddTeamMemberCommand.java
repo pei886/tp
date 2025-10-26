@@ -1,15 +1,11 @@
 package loopin.projectbook.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
-import loopin.projectbook.logic.Messages;
-import loopin.projectbook.logic.commands.exceptions.CommandException;
-import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.teammember.TeamMember;
 
 /**
@@ -28,13 +24,13 @@ public class AddTeamMemberCommand extends AddCommand {
             + PREFIX_COMMITEE + "COMMITTEE "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
-	    + PREFIX_TELEGRAM + "TELEGRAM "
+            + PREFIX_TELEGRAM + "TELEGRAM "
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_COMMITEE + "Operations"
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
-	    + PREFIX_TELEGRAM + "john_d";
+            + PREFIX_TELEGRAM + "john_d";
 
     /**
      * Creates an {@code AddTeamMemberCommand} to add the specified {@code TeamMember}.

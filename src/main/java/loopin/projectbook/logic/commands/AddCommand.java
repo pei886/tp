@@ -1,11 +1,6 @@
 package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.logic.Messages;

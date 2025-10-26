@@ -12,16 +12,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import loopin.projectbook.commons.exceptions.IllegalValueException;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.orgmember.OrgMember;
-import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
-import loopin.projectbook.model.person.RoleType;
 import loopin.projectbook.model.person.Telegram;
-import loopin.projectbook.model.person.volunteer.Volunteer;
-import loopin.projectbook.model.tag.Tag;
+import loopin.projectbook.model.person.orgmember.OrgMember;
+import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
+import loopin.projectbook.model.person.volunteer.Volunteer;
+import loopin.projectbook.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -119,7 +118,7 @@ class JsonAdaptedPerson {
         switch (modelRole[0]) {
         case "Volunteer":
             return new Volunteer(modelName, modelPhone, modelEmail, modelTelegram, modelTags);
-	case "Committee:":
+        case "Committee:":
             final Committee modelCommittee = new Committee(modelRole[1]);
             return new TeamMember(modelName, modelCommittee, modelPhone, modelEmail, modelTelegram, modelTags);
         case "Organisation":

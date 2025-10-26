@@ -8,11 +8,11 @@ public enum RoleType {
     VOLUNTEER("Volunteer", ""),
     ORGMEMBER("Organisation: ", "[^\\s].*");
 
-    public final String PREFIX;
-    public final String VALIDATION_REGEX;
+    public final String prefix;
+    public final String validationRegex;
 
     private RoleType(String prefix, String validationRegex) {
-        PREFIX = prefix;
-	VALIDATION_REGEX = validationRegex;
+        this.prefix = prefix;
+        this.validationRegex = validationRegex;
     }
 }

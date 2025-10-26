@@ -18,15 +18,15 @@ public class Role {
     public Role(RoleType roleType, String roleName) {
         assert (roleType != null && roleName != null);
         this.roleType = roleType;
-	assert (isValidRoleName(roleName));
-	fullRole = roleType.PREFIX + roleName;
+        assert (isValidRoleName(roleName));
+        fullRole = roleType.prefix + roleName;
     }
 
     /**
      * Returns true if a given string is a valid role name for the given role.
      */
     public boolean isValidRoleName(String test) {
-        return test.matches(roleType.VALIDATION_REGEX);
+        return test.matches(roleType.validationRegex);
     }
 
     public RoleType getRoleType() {

@@ -54,7 +54,7 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
-	Set<Tag> tags = new HashSet<Tag>();
+        Set<Tag> tags = new HashSet<Tag>();
 
         TeamMember member = new TeamMember(name, committee, phone, email, telegram, tags);
 
