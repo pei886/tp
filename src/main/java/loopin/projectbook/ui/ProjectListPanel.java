@@ -23,9 +23,9 @@ public class ProjectListPanel extends UiPart<Region> {
     /**
      * Creates a {@code ProjectListPanel} with the given {@code ObservableList}.
      */
-    public ProjectListPanel(ObservableList<Project> personList) {
+    public ProjectListPanel(ObservableList<Project> projectList) {
         super(FXML);
-        projectListView.setItems(personList);
+        projectListView.setItems(projectList);
         projectListView.setCellFactory(listView -> new ProjectListViewCell());
     }
 
