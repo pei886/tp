@@ -13,8 +13,8 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
 
-    // Define the prefix needed for the update content (u/UPDATE)
-    // In a real project, this would be defined in CliSyntax.
+    public static final String COMMAND_WORD = "resolve";
+
     private static final Prefix PREFIX_UPDATE = new Prefix("u/");
 
     /**

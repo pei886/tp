@@ -5,10 +5,10 @@ import java.util.Set;
 
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.volunteer.Volunteer;
+import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.tag.Tag;
 import loopin.projectbook.model.util.SampleDataUtil;
 
@@ -25,8 +25,9 @@ public class PersonBuilder {
     private Name name;
     private Phone phone;
     private Email email;
-    private Set<Tag> tags;
     private Telegram telegram;
+    private Set<Tag> tags;
+    private Set<Remark> remarks;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -37,6 +38,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         telegram = new Telegram(DEFAULT_TELEGRAM);
         tags = new HashSet<>();
+        remarks = new HashSet<>();
     }
 
     /**
@@ -48,6 +50,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         telegram = personToCopy.getTelegram();
         tags = new HashSet<>(personToCopy.getTags());
+        remarks = new HashSet<>(personToCopy.getRemarks());
     }
 
     /**
@@ -63,6 +66,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withTags(String... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
+    }
+
+    /**
+     * Parses the {@code remarks} into a {@code Set<Remark>} and set it to the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemarks(String ... remarks) {
+        this.remarks = SampleDataUtil.getRemarkSet(remarks);
         return this;
     }
 
@@ -91,9 +102,9 @@ public class PersonBuilder {
     }
 
     /**
-     * Returns a concrete {@code Person} object (TeamMember by default).
+     * Returns a concrete {@code Person} object (Volunteer by default).
      */
     public Person build() {
-        return new Volunteer(name, phone, email, telegram, tags);
+        return new Volunteer(name, phone, email, telegram, tags, remarks);
     }
 }
