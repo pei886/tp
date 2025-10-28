@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.commons.util.ToStringBuilder;
+import loopin.projectbook.model.project.LastUpdate;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
 
@@ -116,6 +117,12 @@ public abstract class Person {
         Person updatedPerson = createCopy(name, phone, email, telegram, tags);
         updatedPerson.remarks.addAll(this.remarks);
         updatedPerson.remarks.add(newRemark);
+
+        // Update all associated projects
+        for (Project project : this.projects) {
+            LastUpdate update = LastUpdate.remarkAdded(updatedPerson.getName(), newRemark.toString());
+            project.recordUpdate(update);
+        }
         return updatedPerson;
     }
 

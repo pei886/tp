@@ -1,5 +1,6 @@
 package loopin.projectbook.model.project;
 
+import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 
 import static java.util.Objects.requireNonNull;
@@ -55,7 +56,7 @@ public class LastUpdate {
     /**
      * Creates a LastUpdate for adding a remark to a member.
      */
-    public static LastUpdate remarkAdded(String personName, String remark) {
+    public static LastUpdate remarkAdded(Name personName, String remark) {
         String message = String.format("Added remark to %s: \"%s\"", personName, remark);
         return new LastUpdate(message);
     }
