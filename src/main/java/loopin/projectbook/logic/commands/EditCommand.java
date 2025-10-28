@@ -25,8 +25,8 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
-import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.Remark;
+import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
 
@@ -105,7 +105,8 @@ public class EditCommand extends Command {
         Set<Remark> remarks = personToEdit.getRemarks();
         List<Project> projects = personToEdit.getProjects();
 
-        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags, remarks, projects);
+        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram,
+                updatedTags, remarks, projects);
     }
 
     @Override

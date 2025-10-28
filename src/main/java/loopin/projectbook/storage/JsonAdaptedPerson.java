@@ -15,7 +15,6 @@ import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
-import loopin.projectbook.model.person.Role;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.orgmember.Organisation;
@@ -139,7 +138,7 @@ class JsonAdaptedPerson {
             modelRemarks.add(remark.toModelType());
         }
 
-	final List<Project> modelProjects = new ArrayList<>();
+        final List<Project> modelProjects = new ArrayList<>();
 
         // Role is guaranteed non-null by constructor (defaults to "Unknown")
         String[] modelRole = role.split(" ", 2);
@@ -148,7 +147,8 @@ class JsonAdaptedPerson {
         switch (modelRole[0]) {
         case "Unknown":
         case "Volunteer":
-            modelPerson = new Volunteer(modelName, modelPhone, modelEmail, modelTelegram, modelTags, modelRemarks, modelProjects);
+            modelPerson = new Volunteer(modelName, modelPhone, modelEmail, modelTelegram,
+                    modelTags, modelRemarks, modelProjects);
             break;
         case "Committee:":
             final Committee modelCommittee = new Committee(modelRole[1]);
