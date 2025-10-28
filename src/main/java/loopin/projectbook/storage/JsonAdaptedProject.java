@@ -24,7 +24,7 @@ class JsonAdaptedProject {
     private final String description;
     private final List<String> members = new ArrayList<>();
     private final LocalDateTime createdAt;
-    private final LocalDateTime updatedAt;
+//    private final LocalDateTime updatedAt;
 
     /**
      * Constructs a {@code JsonAdaptedProject} with the given project details.
@@ -38,7 +38,7 @@ class JsonAdaptedProject {
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+//        this.updatedAt = updatedAt;
 
         if (members != null) {
             this.members.addAll(members);
@@ -52,7 +52,7 @@ class JsonAdaptedProject {
         name = source.getName().toString();
         description = source.getDescription().toString();
         createdAt = source.getCreatedAt();
-        updatedAt = source.getUpdatedAt();
+//        updatedAt = source.getUpdatedAt();
 
         for (Person p : source.getAllPeople()) {
             this.members.add(p.getEmail().value);

@@ -23,7 +23,7 @@ public class Project {
     private final ProjectName name;
     private final Description description;
     private final LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LastUpdate lastUpdate;
 
     private final List<Membership> memberships = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public class Project {
         this.name = name;
         this.description = description;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
+        this.lastUpdate = new LastUpdate();
     }
 
     //    /** @return the unique ID of this project */
@@ -61,9 +61,12 @@ public class Project {
         return createdAt;
     }
 
-    /** @return the timestamp of the last update to this project */
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public void recordUpdate(LastUpdate lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public LastUpdate getLatestUpdate() {
+        return lastUpdate;
     }
 
     /**
@@ -79,13 +82,13 @@ public class Project {
         );
     }
 
-    /**
-     * Updates the timestamp indicating when this project was last modified.
-     *
-     */
-    public void touch() {
-        this.updatedAt = LocalDateTime.now();
-    }
+//    /**
+//     * Updates the timestamp indicating when this project was last modified.
+//     *
+//     */
+//    public void touch() {
+//        this.updatedAt = LocalDateTime.now();
+//    }
 
     /**
      * Adds a new membership (person) to this project.
@@ -134,7 +137,8 @@ public class Project {
             throw new IllegalStateException("Person is already in this project.");
         }
         memberships.add(new Membership(p));
-        touch();
+        LastUpdate update = LastUpdate.memberAdded(p);
+        recordUpdate(update);
     }
 
     /**
@@ -149,7 +153,8 @@ public class Project {
         if (!removed) {
             throw new IllegalStateException("Person is not in this project.");
         }
-        touch();
+        LastUpdate update = LastUpdate.memberRemoved(p);
+        recordUpdate(update);
     }
 
 }
