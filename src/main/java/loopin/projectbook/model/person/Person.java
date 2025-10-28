@@ -41,7 +41,8 @@ public abstract class Person {
     /**
      * Name, email and tags must be present and non null but phone and telegram can be null.
      */
-    protected Person(Name name, Role role, Phone phone, Email email, Telegram telegram, Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
+    protected Person(Name name, Role role, Phone phone, Email email, Telegram telegram,
+            Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
         requireAllNonNull(name, email, tags);
         this.name = name;
         this.role = role;
@@ -107,7 +108,8 @@ public abstract class Person {
     /**
      * Creates a copy of the existing person with the same role but updated fields.
      */
-    public abstract Person createCopy(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags, Set<Remark> remarks, List<Project> projects);
+    public abstract Person createCopy(Name name, Phone phone, Email email, Telegram telegram,
+            Set<Tag> tags, Set<Remark> remarks, List<Project> projects);
 
     public boolean hasRemark(Remark remark) {
         return remarks.contains(remark);
