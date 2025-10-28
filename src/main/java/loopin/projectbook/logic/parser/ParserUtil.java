@@ -15,6 +15,7 @@ import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.teammember.Committee;
+import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.ProjectName;
 import loopin.projectbook.model.tag.Tag;
@@ -144,6 +145,18 @@ public class ParserUtil {
         return tagSet;
     }
 
+    /**
+     * Parses {@code Collection<String> remarks} into a {@code Set<Remark>}.
+     */
+    public static Set<Remark> parseRemarks(Collection<String> remarks) throws ParseException {
+        requireNonNull(remarks);
+        final Set<Remark> remarkSet = new HashSet<>();
+        for (String remarkString : remarks) {
+            // Since remarks can be duplicate based on content, using a Set handles duplicates automatically
+            remarkSet.add(new Remark(remarkString));
+        }
+        return remarkSet;
+    }
 
     /**
      * Parses the given {@code String} into a {@code ProjectName} object.

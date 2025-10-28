@@ -24,6 +24,7 @@ import loopin.projectbook.logic.commands.ProjectAssignCommand;
 import loopin.projectbook.logic.commands.ProjectListCommand;
 import loopin.projectbook.logic.commands.ProjectRemoveCommand;
 import loopin.projectbook.logic.commands.RemarkCommand;
+import loopin.projectbook.logic.commands.ResolveRemarkCommand;
 import loopin.projectbook.logic.commands.ViewProjectCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
@@ -84,6 +85,9 @@ public class ProjectBookParser {
 
         case RemarkCommand.COMMAND_WORD:
             return new RemarkCommandParser().parse(arguments);
+
+        case ResolveRemarkCommand.COMMAND_WORD:
+            return new ResolveRemarkCommandParser().parse(arguments);
 
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommandParser().parse(arguments);

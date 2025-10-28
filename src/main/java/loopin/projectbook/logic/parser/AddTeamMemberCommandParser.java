@@ -6,9 +6,12 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -17,9 +20,11 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -42,7 +47,7 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE,
                 PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTeamMemberCommand.MESSAGE_USAGE));
         }
@@ -54,9 +59,12 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
-        Set<Tag> tags = new HashSet<Tag>();
+        Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Set<Remark> remarks = new HashSet<Remark>();
+        List<Project> projects = new ArrayList<Project>();
 
-        TeamMember member = new TeamMember(name, committee, phone, email, telegram, tags);
+        TeamMember member = new TeamMember(name, committee, phone, email, telegram, tags, remarks, projects);
+
 
         return new AddTeamMemberCommand(member);
     }

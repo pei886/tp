@@ -26,6 +26,8 @@ import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.Remark;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -100,8 +102,10 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Telegram updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Remark> remarks = personToEdit.getRemarks();
+        List<Project> projects = personToEdit.getProjects();
 
-        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags, remarks, projects);
     }
 
     @Override

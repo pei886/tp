@@ -11,7 +11,7 @@ public enum RoleType {
     public final String prefix;
     public final String validationRegex;
 
-    private RoleType(String prefix, String validationRegex) {
+    RoleType(String prefix, String validationRegex) {
         this.prefix = prefix;
         this.validationRegex = validationRegex;
     }
