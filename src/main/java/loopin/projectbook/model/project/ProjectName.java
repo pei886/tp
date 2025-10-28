@@ -5,7 +5,7 @@ import static loopin.projectbook.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents a Person's name in the project book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValidProjectName(String)}
  */
 public class ProjectName {
 
