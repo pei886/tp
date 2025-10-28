@@ -152,6 +152,18 @@ public abstract class Person {
         logger.fine("Project added to person.");
     }
 
+    /**
+     * Returns a list of the projects that the person is in
+     * @return
+     */
+    public List<Project> getProjects() {
+        return this.projects;
+    }
+
+    /**
+     * Returns number of projects the person has
+     * @return
+     */
     public int getNumberOfProjects() {
         return this.projects.size();
     }

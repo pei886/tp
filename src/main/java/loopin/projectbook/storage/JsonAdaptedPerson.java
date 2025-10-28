@@ -38,6 +38,7 @@ class JsonAdaptedPerson {
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String role;
     private final List<JsonAdaptedRemark> remarks = new ArrayList<>();
+    private final List<String> projectNames = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -54,10 +55,12 @@ class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
-        this.role = role != null ? role : "Unknown";
+        this.role = (role == null || role.isBlank()) ? "Unknown" : role;
         if (remarks != null) {
             this.remarks.addAll(remarks);
         }
+        if (projectNames != null) this.projectNames.addAll(projectNames);
+        
     }
 
     /**
@@ -74,6 +77,9 @@ class JsonAdaptedPerson {
                 .collect(Collectors.toList()));
         remarks.addAll(source.getRemarks().stream()
                 .map(JsonAdaptedRemark::new)
+        role = source.getRole();
+        projectNames.addAll(source.getProjects().stream()
+                .map(project -> project.getName().toString())
                 .collect(Collectors.toList()));
     }
 
