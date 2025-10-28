@@ -126,6 +126,14 @@ public class Person {
         logger.fine("Project added to person.");
     }
 
+    /**
+     * Returns the projects of a person
+     * @return
+     */
+    public List<Project> getProjects() {
+        return this.projects;
+    }
+
     public int getNumberOfProjects() {
         return this.projects.size();
     }
