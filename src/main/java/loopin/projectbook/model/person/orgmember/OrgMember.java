@@ -2,13 +2,7 @@ package loopin.projectbook.model.person.orgmember;
 
 import java.util.Set;
 
-import loopin.projectbook.model.person.Email;
-import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.Person;
-import loopin.projectbook.model.person.Phone;
-import loopin.projectbook.model.person.Role;
-import loopin.projectbook.model.person.RoleType;
-import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.*;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -21,8 +15,8 @@ public class OrgMember extends Person {
     /**
      * Name, email and tags must be present and non null but phone can be null.
      */
-    public OrgMember(Name name, Organisation organisation, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
-        super(name, new Role(RoleType.ORGMEMBER, organisation.toString()), phone, email, telegram, tags);
+    public OrgMember(Name name, Organisation organisation, Phone phone, Email email, Telegram telegram, Set<Tag> tags, Set<Remark> remarks) {
+        super(name, new Role(RoleType.ORGMEMBER, organisation.toString()), phone, email, telegram, tags, remarks);
         this.organisation = organisation;
     }
 
@@ -31,7 +25,7 @@ public class OrgMember extends Person {
     }
 
     @Override
-    public Person createCopy(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
-        return new OrgMember(name, organisation, phone, email, telegram, tags);
+    public Person createCopy(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags, Set<Remark> remarks) {
+        return new OrgMember(name, organisation, phone, email, telegram, tags, remarks);
     }
 }

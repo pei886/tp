@@ -1,7 +1,6 @@
 package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -22,7 +21,6 @@ import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
-import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
@@ -105,7 +103,7 @@ public class EditCommand extends Command {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Remark> updatedRemarks = personToEdit.getRemarks();
 
-        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags, updatedRemarks);
     }
 
     @Override

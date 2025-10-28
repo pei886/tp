@@ -80,7 +80,7 @@ public class ResolveRemarkCommandTest {
         Index invalidRemarkIndex = Index.fromOneBased(personWithRemark.getRemarks().size() + 1);
         ResolveRemarkCommand resolveCommand = new ResolveRemarkCommand(INDEX_FIRST_PERSON, invalidRemarkIndex);
 
-        assertCommandFailure(resolveCommand, model, ResolveRemarkCommand.MESSAGE_INVALID_REMARK_INDEX);
+        assertCommandFailure(resolveCommand, model, ResolveRemarkCommand.MESSAGE_INVALID_REMARK_DISPLAYED_INDEX);
     }
 
     @Test

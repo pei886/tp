@@ -11,7 +11,6 @@ import static loopin.projectbook.logic.parser.CliSyntax.*;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import loopin.projectbook.logic.commands.AddTeamMemberCommand;
@@ -20,8 +19,6 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
-import loopin.projectbook.model.teammember.Committee;
-import loopin.projectbook.model.teammember.TeamMember;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
@@ -62,8 +59,8 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         Set<Tag> tags = new HashSet<Tag>();
         Set<Remark> remarks = ParserUtil.parseRemarks(argMultimap.getAllValues(PREFIX_REMARK));
 
-        TeamMember member = new TeamMember(name, committee, phone, email, telegram, tags);
-        TeamMember member = new TeamMember(name, phone, email, committee, remarks);
+        TeamMember member = new TeamMember(name, committee, phone, email, telegram, tags, remarks);
+
 
         return new AddTeamMemberCommand(member);
     }

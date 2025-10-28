@@ -1,38 +1,39 @@
 package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static loopin.projectbook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Remark;
-import loopin.projectbook.model.person.Remark.Status;
 
 /**
- * Resolves (marks as COMPLETED) a specific remark for a person.
+ * Resolves (removes) a remark from an existing person in the project book.
  */
 public class ResolveRemarkCommand extends Command {
 
     public static final String COMMAND_WORD = "resolve";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Marks a pending remark of the person identified by the first index as resolved. \n"
-            + "The second index specifies the remark (e.g., if the person has two remarks, index '2' resolves the second one).\n"
-            + "Parameters: PERSON_INDEX REMARK_INDEX (both must be positive integers)\n"
-            + "Example: " + COMMAND_WORD + " 1 2";
 
-    public static final String MESSAGE_RESOLVE_REMARK_SUCCESS =
-            "Remark for %1$s resolved: \"%2$s\".";
-    public static final String MESSAGE_INVALID_REMARK_INDEX = "The remark index provided is invalid or the person has no remarks.";
-    public static final String MESSAGE_REMARK_ALREADY_RESOLVED = "The specified remark is already resolved (COMPLETED).";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Removes the remark identified by the remark index from the person identified by the person index.\n"
+            + "Parameters: PERSON_INDEX (must be a positive integer) REMARK_INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1 1";
+
+    public static final String MESSAGE_RESOLVE_REMARK_SUCCESS = "Removed remark for Person: %1$s";
+    public static final String MESSAGE_REMARK_ALREADY_RESOLVED = "Removed remark for Person: %1$s";
+    public static final String MESSAGE_INVALID_REMARK_DISPLAYED_INDEX = "The remark index provided is invalid.";
 
     private final Index personIndex;
-    private final Index remarkIndex; // 0-based index of the remark within the person's remarks list
+    private final Index remarkIndex;
 
     /**
-     * @param personIndex of the person in the filtered list
+     * @param personIndex of the person in the filtered person list
      * @param remarkIndex of the remark in the person's remark list
      */
     public ResolveRemarkCommand(Index personIndex, Index remarkIndex) {
@@ -53,32 +54,24 @@ public class ResolveRemarkCommand extends Command {
 
         Person personToEdit = lastShownList.get(personIndex.getZeroBased());
 
-        // Use an ArrayList conversion of the Set for indexed access
-        List<Remark> currentRemarks = List.copyOf(personToEdit.getRemarks());
+        // Remarks are stored as a Set (no order), but displayed to the user as a list.
+        // We convert the Set to a List to find the remark by its "displayed index".
+        List<Remark> remarksList = new ArrayList<>(personToEdit.getRemarks());
 
-        if (remarkIndex.getZeroBased() >= currentRemarks.size() || currentRemarks.isEmpty()) {
-            throw new CommandException(MESSAGE_INVALID_REMARK_INDEX);
+        if (remarkIndex.getZeroBased() >= remarksList.size()) {
+            throw new CommandException(MESSAGE_INVALID_REMARK_DISPLAYED_INDEX);
         }
 
-        Remark remarkToResolve = currentRemarks.get(remarkIndex.getZeroBased());
+        Remark remarkToRemove = remarksList.get(remarkIndex.getZeroBased());
 
-        if (remarkToResolve.status == Status.COMPLETED) {
-            throw new CommandException(MESSAGE_REMARK_ALREADY_RESOLVED);
-        }
+        // We create a new person with the remark removed.
+        // This requires the .withRemarkRemoved() method (see Fix #2 below)
+        Person editedPerson = personToEdit.withRemarkRemoved(remarkToRemove);
 
-        // 1. Create the resolved remark (new object with COMPLETED status)
-        Remark resolvedRemark = remarkToResolve.resolve();
+        model.setPerson(personToEdit, editedPerson);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        // 2. Create a new Person with the updated remark set
-        Person resolvedPerson = personToEdit.withResolvedRemark(remarkToResolve, resolvedRemark);
-
-        // 3. Update the model (model.setPerson handles the replacement)
-        model.setPerson(personToEdit, resolvedPerson);
-
-        // 4. Success Output
-        return new CommandResult(String.format(MESSAGE_RESOLVE_REMARK_SUCCESS,
-                resolvedPerson.getName().fullName,
-                resolvedRemark.content));
+        return new CommandResult(String.format(MESSAGE_RESOLVE_REMARK_SUCCESS, Messages.formatPerson(editedPerson)));
     }
 
     @Override
@@ -86,13 +79,11 @@ public class ResolveRemarkCommand extends Command {
         if (other == this) {
             return true;
         }
-
         if (!(other instanceof ResolveRemarkCommand)) {
             return false;
         }
-
-        ResolveRemarkCommand otherResolveCommand = (ResolveRemarkCommand) other;
-        return personIndex.equals(otherResolveCommand.personIndex)
-                && remarkIndex.equals(otherResolveCommand.remarkIndex);
+        ResolveRemarkCommand otherCommand = (ResolveRemarkCommand) other;
+        return personIndex.equals(otherCommand.personIndex)
+                && remarkIndex.equals(otherCommand.remarkIndex);
     }
 }

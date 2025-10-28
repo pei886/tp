@@ -7,7 +7,6 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -17,7 +16,6 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
-import loopin.projectbook.model.person.Volunteer;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.tag.Tag;
@@ -47,12 +45,10 @@ public class AddVolunteerCommandParser implements Parser<AddVolunteerCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
-        Set<Tag> tagList = new HashSet<Tag>();
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Remark> remarks = ParserUtil.parseRemarks(argMultimap.getAllValues(PREFIX_REMARK));
 
-        Volunteer volunteer = new Volunteer(name, phone, email, telegram, tagList);
-        Volunteer volunteer = new Volunteer(name, phone, email, tagList, remarks);
+        Volunteer volunteer = new Volunteer(name, phone, email, telegram, tagList, remarks);
 
         return new AddVolunteerCommand(volunteer);
     }
