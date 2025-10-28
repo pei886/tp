@@ -1,4 +1,4 @@
-package loopin.projectbook.model.teammember;
+package loopin.projectbook.model.person.teammember;
 
 /**
  * Represents a committee to which a {@code TeamMember} belongs in the project book.

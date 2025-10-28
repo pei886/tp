@@ -16,6 +16,7 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ReadOnlyProjectBook;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.storage.Storage;
 
 /**
@@ -69,6 +70,11 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<Project> getFilteredProjectList() {
+        return model.getFilteredProjectList();
     }
 
     @Override
