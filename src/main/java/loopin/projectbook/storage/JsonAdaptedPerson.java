@@ -35,18 +35,17 @@ class JsonAdaptedPerson {
     private final String telegram;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String role;
-    private final List<String> projectNames = new ArrayList<>();
+    private final List<JsonAdaptedProject> projects = new ArrayList<>();  // Renamed for clarity
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("telegram") String telegram,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role,
-                             @JsonProperty("projects") List<String> projectNames) {
+                             @JsonProperty("email") String email, @JsonProperty("telegram") String telegram,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role,
+                             @JsonProperty("projects") List<JsonAdaptedProject> projects) {
         this.name = name;
-        this.role = role;
         this.phone = phone;
         this.email = email;
         this.telegram = telegram;
@@ -54,7 +53,9 @@ class JsonAdaptedPerson {
             this.tags.addAll(tags);
         }
         this.role = (role == null || role.isBlank()) ? "Unknown" : role;
-        if (projectNames != null) this.projectNames.addAll(projectNames);
+        if (projects != null) {
+            this.projects.addAll(projects);
+        }
     }
 
     /**
@@ -69,9 +70,8 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        role = source.getRole();
-        projectNames.addAll(source.getProjects().stream()
-                .map(project -> project.getName().toString())
+        projects.addAll(source.getProjects().stream()
+                .map(JsonAdaptedProject::new)
                 .collect(Collectors.toList()));
     }
 
