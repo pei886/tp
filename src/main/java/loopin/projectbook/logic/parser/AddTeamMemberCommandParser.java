@@ -45,10 +45,10 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE,
-                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
+                        PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE,
-                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG)
+                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTeamMemberCommand.MESSAGE_USAGE));
         }
@@ -60,7 +60,10 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
-        Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Set<Tag> tags = null;
+        if (arePrefixesPresent(argMultimap, PREFIX_TAG)) {
+            tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        }
         Set<Remark> remarks = new HashSet<Remark>();
         List<Project> projects = new ArrayList<Project>();
 
