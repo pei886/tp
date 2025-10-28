@@ -88,10 +88,12 @@ class JsonSerializableProjectBook {
                 if (p != null) {
                     if (!project.hasMember(p)) {
                         project.assignPerson(p);
+                        p.addProject(project);
                     }
                 }
             }
         }
+
 
         return projectBook;
     }

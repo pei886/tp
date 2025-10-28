@@ -35,6 +35,7 @@ class JsonAdaptedPerson {
     private final String telegram;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String role;
+    private final List<String> projectNames = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -42,7 +43,8 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("telegram") String telegram,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role,
+                             @JsonProperty("projects") List<String> projectNames) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -51,6 +53,7 @@ class JsonAdaptedPerson {
             this.tags.addAll(tags);
         }
         this.role = (role == null || role.isBlank()) ? "Unknown" : role;
+        if (projectNames != null) this.projectNames.addAll(projectNames);
     }
 
     /**
@@ -65,6 +68,9 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         role = source.getRole();
+        projectNames.addAll(source.getProjects().stream()
+                .map(project -> project.getName().toString())
+                .collect(Collectors.toList()));
     }
 
     /**
