@@ -2,8 +2,15 @@ package loopin.projectbook.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import static loopin.projectbook.logic.parser.CliSyntax.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -15,6 +22,10 @@ import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.teammember.Committee;
 import loopin.projectbook.model.teammember.TeamMember;
+import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.teammember.Committee;
+import loopin.projectbook.model.person.teammember.TeamMember;
+import loopin.projectbook.model.tag.Tag;
 
 /**
  * Parses user input to create a new AddTeamMember object
@@ -24,7 +35,7 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
     /**
      * Parses the given {@code String} of arguments and constructs an {@code AddTeamMemberCommand}.
      * The input string is tokenized using the defined prefixes {@code n/}, {@code c/}, {@code p/},
-     * {@code e/} corresponding to the team memmber's name, committee, phone, and email.
+     * {@code e/} {@code t/} corresponding to the team memmber's name, committee, phone, email, and telegram.
      *
      * @param args the full command arguments string to parse
      * @return an {@code AddTeamMemberCommand} object representing the parsed input
@@ -33,20 +44,25 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
     public AddTeamMemberCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_REMARK);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE,
+                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_REMARK, PREFIX_TELEGRAM);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTeamMemberCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_COMMITEE, PREFIX_PHONE, PREFIX_EMAIL);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_COMMITEE,
+                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
+        Set<Tag> tags = new HashSet<Tag>();
         Set<Remark> remarks = ParserUtil.parseRemarks(argMultimap.getAllValues(PREFIX_REMARK));
 
+        TeamMember member = new TeamMember(name, committee, phone, email, telegram, tags);
         TeamMember member = new TeamMember(name, phone, email, committee, remarks);
 
         return new AddTeamMemberCommand(member);

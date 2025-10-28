@@ -23,6 +23,7 @@ public class ModelManager implements Model {
     private final ProjectBook projectBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Project> filteredProjects;
 
     /**
      * Initializes a ModelManager with the given projectBook and userPrefs.
@@ -35,6 +36,7 @@ public class ModelManager implements Model {
         this.projectBook = new ProjectBook(projectBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.projectBook.getPersonList());
+        filteredProjects = new FilteredList<>(this.projectBook.getProjectList());
     }
 
     public ModelManager() {
@@ -112,6 +114,15 @@ public class ModelManager implements Model {
         projectBook.setPerson(target, editedPerson);
     }
 
+    /**
+     * Returns an unmodifiable view of the list of {@code Project} backed by the internal list of
+     * {@code versionedProjectBook}
+     */
+    @Override
+    public ObservableList<Project> getFilteredProjectList() {
+        return filteredProjects;
+    }
+
     @Override
     public void addProject(Project project) {
         requireNonNull(project);
@@ -150,6 +161,12 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void updateFilteredProjectList(Predicate<Project> predicate) {
+        requireNonNull(predicate);
+        filteredProjects.setPredicate(predicate);
     }
 
     @Override

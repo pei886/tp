@@ -19,13 +19,25 @@ public class CommandResult {
     /** The application should exit. */
     private final boolean exit;
 
+    /** Person list should be shown to the user. */
+    private final boolean showPersonList;
+
+    /** Project list should be shown to the user. */
+    private final boolean showProjectList;
+
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit,
+                         boolean showPersonList, boolean showProjectList) throws IllegalArgumentException {
+        if (showPersonList && showProjectList) {
+            throw new IllegalArgumentException("You can only show one list at a time.");
+        }
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.showHelp = showHelp;
         this.exit = exit;
+        this.showPersonList = showPersonList;
+        this.showProjectList = showProjectList;
     }
 
     /**
@@ -33,7 +45,15 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, false, false, false, false);
+    }
+
+    /**
+     * Constructs a {@code CommandResult} with the specified fields,
+     * and view switching fields set to their default value.
+     */
+    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
+        this(feedbackToUser, showHelp, exit, false, false);
     }
 
     public String getFeedbackToUser() {
@@ -46,6 +66,14 @@ public class CommandResult {
 
     public boolean isExit() {
         return exit;
+    }
+
+    public boolean isShowPersonList() {
+        return showPersonList;
+    }
+
+    public boolean isShowProjectList() {
+        return showProjectList;
     }
 
     @Override
@@ -62,12 +90,14 @@ public class CommandResult {
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
                 && showHelp == otherCommandResult.showHelp
-                && exit == otherCommandResult.exit;
+                && exit == otherCommandResult.exit
+                && showPersonList == otherCommandResult.showPersonList
+                && showProjectList == otherCommandResult.showProjectList;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, showHelp, exit, showPersonList, showProjectList);
     }
 
     @Override
@@ -76,6 +106,8 @@ public class CommandResult {
                 .add("feedbackToUser", feedbackToUser)
                 .add("showHelp", showHelp)
                 .add("exit", exit)
+                .add("showPersonList", showPersonList)
+                .add("showProjectList", showProjectList)
                 .toString();
     }
 

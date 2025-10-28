@@ -8,6 +8,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import loopin.projectbook.commons.core.LogsCenter;
+import loopin.projectbook.logic.commands.AddOrgMemberCommand;
+import loopin.projectbook.logic.commands.AddProjectCommand;
+import loopin.projectbook.logic.commands.AddTeamMemberCommand;
+import loopin.projectbook.logic.commands.AddVolunteerCommand;
+import loopin.projectbook.logic.commands.ClearCommand;
+import loopin.projectbook.logic.commands.Command;
+import loopin.projectbook.logic.commands.DeleteCommand;
+import loopin.projectbook.logic.commands.EditCommand;
+import loopin.projectbook.logic.commands.ExitCommand;
+import loopin.projectbook.logic.commands.FindCommand;
+import loopin.projectbook.logic.commands.HelpCommand;
+import loopin.projectbook.logic.commands.ListCommand;
+import loopin.projectbook.logic.commands.ProjectAssignCommand;
+import loopin.projectbook.logic.commands.ProjectListCommand;
+import loopin.projectbook.logic.commands.ProjectRemoveCommand;
+import loopin.projectbook.logic.commands.RemarkCommand;
+import loopin.projectbook.logic.commands.ViewProjectCommand;
 import loopin.projectbook.logic.commands.*;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
@@ -44,9 +61,6 @@ public class ProjectBookParser {
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
         switch (commandWord) {
-
-        case AddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
 
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
@@ -104,6 +118,9 @@ public class ProjectBookParser {
                 return new ProjectRemoveCommandParser().parse(rest);
             case ViewProjectCommand.SUBCOMMAND:
                 return new ViewProjectCommandParser().parse(" " + rest);
+            case ProjectListCommand.SUBCOMMAND:
+                logger.info("Projects listed");
+                return new ProjectListCommand();
             default:
                 throw new ParseException("Unknown project subcommand. Try:\n"
                         + ProjectAssignCommand.MESSAGE_USAGE + "\n"

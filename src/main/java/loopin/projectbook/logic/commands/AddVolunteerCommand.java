@@ -4,8 +4,9 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
-import loopin.projectbook.model.person.Volunteer;
+import loopin.projectbook.model.person.volunteer.Volunteer;
 
 /**
  * Adds a volunteer to the project book.
@@ -19,11 +20,13 @@ public class AddVolunteerCommand extends AddCommand {
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
+            + PREFIX_TELEGRAM + "TELEGRAM "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_TELEGRAM + "johndoe123 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 
@@ -38,7 +41,7 @@ public class AddVolunteerCommand extends AddCommand {
     }
 
     @Override
-    protected String getSuccessMessage() {
+    public String getSuccessMessage() {
         return MESSAGE_SUCCESS;
     }
 

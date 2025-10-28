@@ -20,11 +20,8 @@ public class ViewProjectCommandParser implements Parser<ViewProjectCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ViewProjectCommand parse(String args) throws ParseException {
-        System.out.println("DEBUG Parser: args = '" + args + "'");
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_PROJECT);
-        System.out.println("DEBUG Parser: preamble = '" + argMultimap.getPreamble() + "'");
-        System.out.println("DEBUG Parser: PREFIX_PROJECT present = " + arePrefixesPresent(argMultimap, PREFIX_PROJECT));
 
         if (!arePrefixesPresent(argMultimap, PREFIX_PROJECT)
                 || !argMultimap.getPreamble().isEmpty()) {
