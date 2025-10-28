@@ -1,6 +1,6 @@
 package loopin.projectbook.ui;
 
-import java.util.Comparator;
+import  java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -54,10 +54,9 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
-        role.setText(person.getRole());
+        role.setText(person.getRole().fullRole);
         telegram.setText("@" + person.getTelegram().value);
         email.setText(person.getEmail().value);
-        numberOfProjects.setText(Integer.toString(person.getNumberOfProjects()) + " project(s)");
 
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
@@ -70,5 +69,12 @@ public class PersonCard extends UiPart<Region> {
                     remarkLabel.getStyleClass().add("remark_tag");
                     tags.getChildren().add(remarkLabel);
                 });
+
+        String projectNames = person.getProjects().stream()
+                .map(project -> project.getName().toString())
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("");
+
+        numberOfProjects.setText(Integer.toString(person.getNumberOfProjects()) + " project(s): " + projectNames);
     }
 }

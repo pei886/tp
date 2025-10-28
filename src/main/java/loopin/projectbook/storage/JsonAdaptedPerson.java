@@ -12,15 +12,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import loopin.projectbook.commons.exceptions.IllegalValueException;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.OrgMember;
-import loopin.projectbook.model.person.Organisation;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
-import loopin.projectbook.model.person.Volunteer;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.orgmember.OrgMember;
+import loopin.projectbook.model.person.orgmember.Organisation;
+import loopin.projectbook.model.person.teammember.Committee;
+import loopin.projectbook.model.person.teammember.TeamMember;
+import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.tag.Tag;
-import loopin.projectbook.model.teammember.Committee;
-import loopin.projectbook.model.teammember.TeamMember;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -35,6 +35,7 @@ class JsonAdaptedPerson {
     private final String telegram;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String role;
+    private final List<String> projectNames = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -42,8 +43,10 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("telegram") String telegram,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role,
+                             @JsonProperty("projects") List<String> projectNames) {
         this.name = name;
+        this.role = role;
         this.phone = phone;
         this.email = email;
         this.telegram = telegram;
@@ -51,6 +54,7 @@ class JsonAdaptedPerson {
             this.tags.addAll(tags);
         }
         this.role = (role == null || role.isBlank()) ? "Unknown" : role;
+        if (projectNames != null) this.projectNames.addAll(projectNames);
     }
 
     /**
@@ -58,6 +62,7 @@ class JsonAdaptedPerson {
      */
     public JsonAdaptedPerson(Person source) {
         name = source.getName().fullName;
+        role = source.getRole().fullRole;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         telegram = source.getTelegram().value;
@@ -65,6 +70,9 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         role = source.getRole();
+        projectNames.addAll(source.getProjects().stream()
+                .map(project -> project.getName().toString())
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -103,7 +111,8 @@ class JsonAdaptedPerson {
         final Email modelEmail = new Email(email);
 
         if (telegram == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Telegram.class.getSimpleName()));
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Telegram.class.getSimpleName()));
         }
         if (!Telegram.isValidTelegram(telegram)) {
             throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);
@@ -114,27 +123,20 @@ class JsonAdaptedPerson {
 
         String[] modelRole = role.split(" ", 2);
 
-        Person modelPerson = null;
-
         switch (modelRole[0]) {
-        case "Unknown":
-            modelPerson = new Person(modelName, modelPhone, modelEmail, modelTelegram, modelTags);
-            break;
         case "Volunteer":
-            modelPerson = new Volunteer(modelName, modelPhone, modelEmail, modelTelegram, modelTags);
-            break;
+            return new Volunteer(modelName, modelPhone, modelEmail, modelTelegram, modelTags);
         case "Committee:":
             final Committee modelCommittee = new Committee(modelRole[1]);
-            modelPerson = new TeamMember(modelName, modelPhone, modelEmail, modelTelegram, modelCommittee);
-            break;
-        case "Organisation:":
+            return new TeamMember(modelName, modelCommittee, modelPhone, modelEmail, modelTelegram, modelTags);
+        case "Organisation":
             final Organisation modelOrganisation = new Organisation(modelRole[1]);
-            modelPerson = new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTelegram, modelTags);
-            break;
-        default: assert false;
+            return new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTelegram, modelTags);
+        default:
+            assert false;
+            throw new IllegalValueException("Unknown role");
         }
 
-        return modelPerson;
     }
 
 }

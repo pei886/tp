@@ -1,4 +1,4 @@
-package loopin.projectbook.model.person;
+package loopin.projectbook.model.person.orgmember;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.commons.util.AppUtil.checkArgument;

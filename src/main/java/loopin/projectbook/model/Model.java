@@ -16,6 +16,11 @@ public interface Model {
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
     /**
+     * {@code Predicate} for projects that always evaluate to true
+     */
+    Predicate<Project> PREDICATE_SHOW_ALL_PROJECTS = unused -> true;
+
+    /**
      * Replaces user prefs data with the data in {@code userPrefs}.
      */
     void setUserPrefs(ReadOnlyUserPrefs userPrefs);
@@ -86,9 +91,14 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Updates the filter of the filtered projects list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredProjectList(Predicate<Project> predicate);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Project> getFilteredProjectList();
-
 
     java.util.Optional<Project> findProjectByName(String name);
     void setProject(Project project);

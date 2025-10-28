@@ -10,13 +10,14 @@ import static loopin.projectbook.commons.util.AppUtil.checkArgument;
 public class Telegram {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Telegram username must be 5 to 32 characters long and can only contain alphanumeric characters and underscores";
+            "Telegram username must be 5 to 32 characters long and "
+            + "can only contain alphanumeric characters and underscores";
 
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[a-zA-Z_]{5,32}";
+    public static final String VALIDATION_REGEX = "[a-zA-Z0-9_]{5,32}";
 
     public final String value;
 
