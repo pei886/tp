@@ -3,6 +3,7 @@ package loopin.projectbook.storage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
+import loopin.projectbook.model.person.Role;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.orgmember.Organisation;
@@ -32,11 +34,11 @@ class JsonAdaptedPerson {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     private final String name;
+    private final String role;
     private final String phone;
     private final String email;
     private final String telegram;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
-    private final String role;
     private final List<JsonAdaptedProject> projects = new ArrayList<>(); // Renamed for clarity
     private final List<JsonAdaptedRemark> remarks = new ArrayList<>();
 
@@ -44,19 +46,22 @@ class JsonAdaptedPerson {
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email, @JsonProperty("telegram") String telegram,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role,
+    public JsonAdaptedPerson(@JsonProperty("name") String name,
+                             @JsonProperty("role") String role,
+                             @JsonProperty("phone") String phone,
+                             @JsonProperty("email") String email,
+                             @JsonProperty("telegram") String telegram,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
                              @JsonProperty("projects") List<JsonAdaptedProject> projects,
                              @JsonProperty("remarks") List<JsonAdaptedRemark> remarks) {
         this.name = name;
+        this.role = role;
         this.phone = phone;
         this.email = email;
         this.telegram = telegram;
         if (tags != null) {
             this.tags.addAll(tags);
         }
-        this.role = (role == null || role.isBlank()) ? "Unknown" : role;
         if (projects != null) {
             this.projects.addAll(projects);
         }
@@ -71,9 +76,9 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(Person source) {
         name = source.getName().fullName;
         role = source.getRole().fullRole;
-        phone = source.getPhone() != null ? source.getPhone().value : null;
+        phone = source.getPhone().map(phone -> phone.value).orElse(null);
         email = source.getEmail().value;
-        telegram = source.getTelegram() != null ? source.getTelegram().value : null;
+        telegram = source.getTelegram().map(telegram -> telegram.value).orElse(null);
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -104,13 +109,13 @@ class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
-        final Phone modelPhone;
+        final Optional<Phone> modelPhone;
         if (phone == null) {
-            modelPhone = null; // Person allows null phone
+            modelPhone = Optional.empty(); // Person allows null phone
         } else if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         } else {
-            modelPhone = new Phone(phone);
+            modelPhone = Optional.of(new Phone(phone));
         }
 
         if (email == null) {
@@ -121,13 +126,13 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        final Telegram modelTelegram;
+        final Optional<Telegram> modelTelegram;
         if (telegram == null) {
-            modelTelegram = null; // Person allows null telegram
+            modelTelegram = Optional.empty(); // Person allows null telegram
         } else if (!Telegram.isValidTelegram(telegram)) {
             throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);
         } else {
-            modelTelegram = new Telegram(telegram);
+            modelTelegram = Optional.of(new Telegram(telegram));
         }
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
@@ -140,32 +145,28 @@ class JsonAdaptedPerson {
 
         final List<Project> modelProjects = new ArrayList<>();
 
-        // Role is guaranteed non-null by constructor (defaults to "Unknown")
+        if (role == null) {
+            throw new IllegalValueException(Role.MESSAGE_CONSTRAINTS);
+        }
         String[] modelRole = role.split(" ", 2);
-        Person modelPerson = null;
 
         switch (modelRole[0]) {
-        case "Unknown":
         case "Volunteer":
-            modelPerson = new Volunteer(modelName, modelPhone, modelEmail, modelTelegram,
+            return new Volunteer(modelName, modelPhone, modelEmail, modelTelegram,
                     modelTags, modelRemarks, modelProjects);
-            break;
         case "Committee:":
             final Committee modelCommittee = new Committee(modelRole[1]);
-            modelPerson = new TeamMember(modelName, modelCommittee, modelPhone, modelEmail, modelTelegram,
+            return new TeamMember(modelName, modelCommittee, modelPhone, modelEmail, modelTelegram,
                     modelTags, modelRemarks, modelProjects);
-            break;
         case "Organisation:":
             final Organisation modelOrganisation = new Organisation(modelRole[1]);
-            modelPerson = new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTelegram,
+            return new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTelegram,
                     modelTags, modelRemarks, modelProjects);
-            break;
         default:
             assert false;
             throw new IllegalValueException("Unknown role: " + role);
         }
 
-        return modelPerson;
     }
 
 }

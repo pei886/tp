@@ -53,9 +53,9 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
+        phone.setText(person.getPhone().map(phone -> phone.value).orElse("Phone: nil"));
         role.setText(person.getRole().fullRole);
-        telegram.setText("@" + person.getTelegram().value);
+        telegram.setText(person.getTelegram().map(telegram -> "@" + telegram.value).orElse("Telegram: nil"));
         email.setText(person.getEmail().value);
 
         person.getTags().stream()
