@@ -75,6 +75,6 @@ public class PersonCard extends UiPart<Region> {
                 .reduce((a, b) -> a + ", " + b)
                 .orElse("");
 
-        numberOfProjects.setText(Integer.toString(person.getNumberOfProjects()) + " project(s): ");
+        numberOfProjects.setText(Integer.toString(person.getNumberOfProjects()) + " project(s): " + projectNames);
     }
 }
