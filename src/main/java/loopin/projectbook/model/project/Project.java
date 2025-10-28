@@ -38,6 +38,7 @@ public class Project {
         this.name = name;
         this.description = description;
         this.createdAt = LocalDateTime.now();
+        this.lastUpdate = new LastUpdate();
     }
 
     //    /** @return the unique ID of this project */
