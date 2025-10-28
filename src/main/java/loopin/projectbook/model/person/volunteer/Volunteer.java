@@ -6,6 +6,8 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Role;
+import loopin.projectbook.model.person.RoleType;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.tag.Tag;
 
@@ -18,34 +20,11 @@ public class Volunteer extends Person {
      * Name, email and tags must be present and non null but phone can be null.
      */
     public Volunteer(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
-        super(name, phone, email, telegram, tags);
-    }
-
-    /**
-     * Returns true if both persons are volunteers and have the same name.
-     * This defines a weaker notion of equality between two persons.
-     */
-    public boolean isSamePerson(Volunteer otherPerson) {
-        return super.isSamePerson(otherPerson);
+        super(name, new Role(RoleType.VOLUNTEER, ""), phone, email, telegram, tags);
     }
 
     @Override
-    public String getRole() {
-        return "Volunteer";
-    }
-
-    /**
-     * Returns true if both persons have the same identity and data fields.
-     * This defines a stronger notion of equality between two persons.
-     */
-    @Override
-    public boolean equals(Object other) {
-        // instanceof handles nulls
-        if (!(other instanceof Volunteer)) {
-            return false;
-        }
-
-        Person otherPerson = (Person) other;
-        return super.equals(otherPerson);
+    public Person createCopy(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
+        return new Volunteer(name, phone, email, telegram, tags);
     }
 }

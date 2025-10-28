@@ -17,9 +17,9 @@ import loopin.projectbook.model.tag.Tag;
 
 /**
  * Represents a Person in the project book.
- * Guarantees: details are present and not null, field values are validated, immutable.
+ * Guarantees: name is present and not null, field values are validated, immutable.
  */
-public class Person {
+public abstract class Person {
 
     /**
      * Logger for Person class
@@ -31,6 +31,7 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Telegram telegram;
+    private final Role role;
 
     // Data fields
     private final Set<Tag> tags = new HashSet<>();
@@ -40,9 +41,10 @@ public class Person {
     /**
      * Name, email and tags must be present and non null but phone and telegram can be null.
      */
-    public Person(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
+    protected Person(Name name, Role role, Phone phone, Email email, Telegram telegram, Set<Tag> tags) {
         requireAllNonNull(name, email, tags);
         this.name = name;
+        this.role = role;
         this.phone = phone;
         this.email = email;
         this.telegram = telegram;
@@ -51,6 +53,10 @@ public class Person {
 
     public Name getName() {
         return name;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public Phone getPhone() {
@@ -65,10 +71,6 @@ public class Person {
         return telegram;
     }
 
-    public String getRole() {
-        return "Unknown Role";
-    }
-
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -78,7 +80,7 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same phone, email or telegram.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePerson(Person otherPerson) {
@@ -88,14 +90,17 @@ public class Person {
             return false;
         }
 
-        boolean isSameName = otherPerson.getName().equals(getName());
-        boolean isSameRole = otherPerson.getRole().equals(getRole());
         boolean isSamePhone = otherPerson.getPhone().equals(getPhone());
         boolean isSameEmail = otherPerson.getEmail().equals(getEmail());
         boolean isSameTelegram = otherPerson.getTelegram().equals(getTelegram());
 
-        return (isSameName && isSameRole) || isSamePhone || isSameEmail || isSameTelegram;
+        return isSamePhone || isSameEmail || isSameTelegram;
     }
+
+    /**
+     * Creates a copy of the existing person with the same role but updated fields.
+     */
+    public abstract Person createCopy(Name name, Phone phone, Email email, Telegram telegram, Set<Tag> tags);
 
     // Add this method for duplicate checking in RemarkCommand
     public boolean hasRemark(Remark remark) {
@@ -108,7 +113,7 @@ public class Person {
      */
     public Person withNewRemark(Remark newRemark) {
         // Implementation must create a copy of the existing person and add the new remark.
-        Person updatedPerson = new Person(name, phone, email, telegram, tags);
+        Person updatedPerson = createCopy(name, phone, email, telegram, tags);
         updatedPerson.remarks.addAll(this.remarks);
         updatedPerson.remarks.add(newRemark);
         return updatedPerson;
@@ -164,6 +169,7 @@ public class Person {
 
         Person otherPerson = (Person) other;
         return name.equals(otherPerson.name)
+                && role.equals(otherPerson.role)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && telegram.equals(otherPerson.telegram)
