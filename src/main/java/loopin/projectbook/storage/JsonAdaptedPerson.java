@@ -35,7 +35,7 @@ class JsonAdaptedPerson {
     private final String telegram;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String role;
-    private final List<JsonAdaptedProject> projects = new ArrayList<>();  // Renamed for clarity
+    private final List<JsonAdaptedProject> projects = new ArrayList<>(); // Renamed for clarity
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.

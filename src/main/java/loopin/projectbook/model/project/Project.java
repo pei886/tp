@@ -82,14 +82,6 @@ public class Project {
         );
     }
 
-//    /**
-//     * Updates the timestamp indicating when this project was last modified.
-//     *
-//     */
-//    public void touch() {
-//        this.updatedAt = LocalDateTime.now();
-//    }
-
     /**
      * Adds a new membership (person) to this project.
      *

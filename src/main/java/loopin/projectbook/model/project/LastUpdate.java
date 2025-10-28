@@ -1,12 +1,12 @@
 package loopin.projectbook.model.project;
 
-import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.Person;
-
 import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import loopin.projectbook.model.person.Name;
+import loopin.projectbook.model.person.Person;
 
 /**
  * Represents the last update made to a Project in the project book.

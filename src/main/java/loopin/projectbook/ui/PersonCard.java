@@ -1,6 +1,6 @@
 package loopin.projectbook.ui;
 
-import  java.util.Comparator;
+import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
