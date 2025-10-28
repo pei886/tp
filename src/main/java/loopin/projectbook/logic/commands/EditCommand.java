@@ -178,7 +178,7 @@ public class EditCommand extends Command {
         }
 
         public Optional<Optional<Phone>> getPhone() {
-            return Optional.ofNullable(phone);
+            return Optional.of(phone);
         }
 
         public void setEmail(Email email) {
@@ -186,7 +186,7 @@ public class EditCommand extends Command {
         }
 
         public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+            return Optional.of(email);
         }
 
         public void setTelegram(Optional<Telegram> telegram) {

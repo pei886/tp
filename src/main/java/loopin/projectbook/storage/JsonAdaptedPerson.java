@@ -52,8 +52,8 @@ class JsonAdaptedPerson {
                              @JsonProperty("email") String email,
                              @JsonProperty("telegram") String telegram,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
-                             @JsonProperty("projects") List<JsonAdaptedProject> projects,
-                             @JsonProperty("remarks") List<JsonAdaptedRemark> remarks) {
+                             @JsonProperty("remarks") List<JsonAdaptedRemark> remarks,
+                             @JsonProperty("projects") List<JsonAdaptedProject> projects) {
         this.name = name;
         this.role = role;
         this.phone = phone;
