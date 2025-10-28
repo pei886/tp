@@ -1,10 +1,7 @@
 package loopin.projectbook.logic.parser;
 
-import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PROJECT;
-
-import java.util.Optional;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.ProjectRemoveCommand;

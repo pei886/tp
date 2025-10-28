@@ -3,11 +3,12 @@ package loopin.projectbook.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
-import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.tag.Tag;
 import loopin.projectbook.model.util.SampleDataUtil;
 
@@ -19,13 +20,13 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_TELEGRAM = "amybee";
 
     private Name name;
     private Phone phone;
     private Email email;
-    private Address address;
     private Set<Tag> tags;
+    private Telegram telegram;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -34,7 +35,7 @@ public class PersonBuilder {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
+        telegram = new Telegram(DEFAULT_TELEGRAM);
         tags = new HashSet<>();
     }
 
@@ -45,7 +46,7 @@ public class PersonBuilder {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
-        address = personToCopy.getAddress();
+        telegram = personToCopy.getTelegram();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -60,16 +61,16 @@ public class PersonBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
+    public PersonBuilder withTags(String... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
+     * Sets the {@code Telegram} of the {@code Person} that we are building.
      */
-    public PersonBuilder withAddress(String address) {
-        this.address = new Address(address);
+    public PersonBuilder withTelegram(String telegram) {
+        this.telegram = new Telegram(telegram);
         return this;
     }
 
@@ -89,8 +90,10 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Returns a concrete {@code Person} object (TeamMember by default).
+     */
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Volunteer(name, phone, email, telegram, tags);
     }
-
 }

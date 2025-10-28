@@ -12,6 +12,7 @@ import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.UserPrefs;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.testutil.PersonBuilder;
 
 /**
@@ -33,15 +34,15 @@ public class AddCommandIntegrationTest {
         Model expectedModel = new ModelManager(model.getProjectBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);
 
-        assertCommandSuccess(new AddCommand(validPerson), model,
-                String.format(AddCommand.MESSAGE_SUCCESS, Messages.formatPerson(validPerson)),
+        assertCommandSuccess(new AddVolunteerCommand((Volunteer) validPerson), model,
+                String.format(AddVolunteerCommand.MESSAGE_SUCCESS, Messages.formatPerson(validPerson)),
                 expectedModel);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
         Person personInList = model.getProjectBook().getPersonList().get(0);
-        assertCommandFailure(new AddCommand(personInList), model,
+        assertCommandFailure(new AddVolunteerCommand((Volunteer)personInList), model,
                 AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 
