@@ -5,9 +5,9 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -15,10 +15,10 @@ import loopin.projectbook.logic.commands.AddOrgMemberCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.orgmember.OrgMember;
-import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.orgmember.OrgMember;
+import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -34,7 +34,7 @@ public class AddOrgMemberCommandParser implements Parser<AddOrgMemberCommand> {
     public AddOrgMemberCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ORGANISATION,
-                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG);
+                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ORGANISATION,
                 PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM)
@@ -48,9 +48,9 @@ public class AddOrgMemberCommandParser implements Parser<AddOrgMemberCommand> {
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        Set<Tag> tags = new HashSet<Tag>();
 
-        OrgMember orgMember = new OrgMember(name, organisation, phone, email, telegram, tagList);
+        OrgMember orgMember = new OrgMember(name, organisation, phone, email, telegram, tags);
 
         return new AddOrgMemberCommand(orgMember);
     }
