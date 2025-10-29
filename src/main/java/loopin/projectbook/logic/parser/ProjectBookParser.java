@@ -20,7 +20,9 @@ import loopin.projectbook.logic.commands.ExitCommand;
 import loopin.projectbook.logic.commands.personcommands.FindCommand;
 import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
+import loopin.projectbook.logic.commands.personcommands.FindRoleCommand;
 import loopin.projectbook.logic.commands.projectcommands.ProjectAssignCommand;
+import loopin.projectbook.logic.commands.projectcommands.ProjectFindCommand;
 import loopin.projectbook.logic.commands.projectcommands.ProjectListCommand;
 import loopin.projectbook.logic.commands.projectcommands.ProjectRemoveCommand;
 import loopin.projectbook.logic.commands.personcommands.RemarkCommand;
@@ -32,9 +34,11 @@ import loopin.projectbook.logic.parser.person.AddProjectCommandParser;
 import loopin.projectbook.logic.parser.person.AddTeamMemberCommandParser;
 import loopin.projectbook.logic.parser.person.AddVolunteerCommandParser;
 import loopin.projectbook.logic.parser.person.FindCommandParser;
+import loopin.projectbook.logic.parser.person.FindRoleCommandParser;
 import loopin.projectbook.logic.parser.person.RemarkCommandParser;
 import loopin.projectbook.logic.parser.person.ResolveRemarkCommandParser;
 import loopin.projectbook.logic.parser.project.ProjectAssignCommandParser;
+import loopin.projectbook.logic.parser.project.ProjectFindCommandParser;
 import loopin.projectbook.logic.parser.project.ProjectRemoveCommandParser;
 import loopin.projectbook.logic.parser.project.ViewProjectCommandParser;
 
@@ -105,6 +109,9 @@ public class ProjectBookParser {
         case AddOrgMemberCommand.COMMAND_WORD:
             return new AddOrgMemberCommandParser().parse(arguments);
 
+        case FindRoleCommand.COMMAND_WORD:
+            return new FindRoleCommandParser().parse(arguments);
+
         case "project": {
             final String trimmed = arguments.trim();
             if (trimmed.isEmpty()) {
@@ -130,10 +137,16 @@ public class ProjectBookParser {
             case ProjectListCommand.SUBCOMMAND:
                 logger.info("Projects listed");
                 return new ProjectListCommand();
+            case ProjectFindCommand.SUBCOMMAND:
+                logger.info("Finding Projects, going to parse keywords now");
+                return new ProjectFindCommandParser().parse("" + rest);
             default:
                 throw new ParseException("Unknown project subcommand. Try:\n"
+                        + ProjectFindCommand.MESSAGE_USAGE + "\n"
+                        + ProjectListCommand.MESSAGE_USAGE + "\n"
                         + ProjectAssignCommand.MESSAGE_USAGE + "\n"
-                        + ProjectRemoveCommand.MESSAGE_USAGE);
+                        + ProjectRemoveCommand.MESSAGE_USAGE + "\n"
+                        + ViewProjectCommand.MESSAGE_USAGE);
             }
         }
         case AddVolunteerCommand.COMMAND_WORD:
