@@ -2,9 +2,11 @@ package loopin.projectbook.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
@@ -27,12 +29,17 @@ public class EditCommandParser implements Parser<EditCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the EditCommand
      * and returns an EditCommand object for execution.
+     *
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG);
+                ArgumentTokenizer.tokenize(
+                        args,
+                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG,
+                        PREFIX_COMMITEE, PREFIX_ORGANISATION
+                );
 
         Index index;
 
@@ -42,7 +49,10 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
+        argMultimap.verifyNoDuplicatePrefixesFor(
+                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM,
+                PREFIX_COMMITEE, PREFIX_ORGANISATION
+                );
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -58,6 +68,17 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_TELEGRAM).isPresent()) {
             editPersonDescriptor.setTelegram(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()));
         }
+        if (argMultimap.getValue(PREFIX_COMMITEE).isPresent()) {
+            editPersonDescriptor.setCommittee(ParserUtil.parseCommittee(
+                    argMultimap.getValue(PREFIX_COMMITEE).get()
+            ));
+        }
+        if (argMultimap.getValue(PREFIX_ORGANISATION).isPresent()) {
+            editPersonDescriptor.setOrganisation(ParserUtil.parseOrganisation(
+                    argMultimap.getValue(PREFIX_ORGANISATION).get()
+            ));
+        }
+
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
