@@ -51,16 +51,16 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE,
-                        PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
+                        PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE,
-                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTeamMemberCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_COMMITEE,
                 PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
+
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Optional<Phone> phone =
                 argMultimap.getValue(PREFIX_PHONE).isPresent()
@@ -72,10 +72,7 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
                 ? Optional.of(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()))
                 : Optional.empty();
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
-        Set<Tag> tags = null;
-        if (arePrefixesPresent(argMultimap, PREFIX_TAG)) {
-            tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        }
+        Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Remark> remarks = new HashSet<Remark>();
         List<Project> projects = new ArrayList<Project>();
 

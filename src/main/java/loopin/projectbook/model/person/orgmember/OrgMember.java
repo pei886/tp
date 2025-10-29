@@ -1,5 +1,7 @@
 package loopin.projectbook.model.person.orgmember;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -30,6 +32,7 @@ public class OrgMember extends Person {
             Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
         super(name, new Role(RoleType.ORGMEMBER, organisation.toString()), phone, email, telegram,
                 tags, remarks, projects);
+        requireNonNull(organisation);
         this.organisation = organisation;
     }
 

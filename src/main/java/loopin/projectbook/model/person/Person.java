@@ -98,8 +98,10 @@ public abstract class Person {
 
         // email is guaranteed non-null
         boolean isSameEmail = getEmail().equals(otherPerson.getEmail());
-        boolean isSamePhone = getPhone().equals(otherPerson.getPhone());
-        boolean isSameTelegram = getTelegram().equals(otherPerson.getTelegram());
+
+        // If phone and telegram are empty, they are not considered as duplicates
+        boolean isSamePhone = getPhone().isPresent() && getPhone().equals(otherPerson.getPhone());
+        boolean isSameTelegram = getTelegram().isPresent() && getTelegram().equals(otherPerson.getTelegram());
 
         return isSamePhone || isSameEmail || isSameTelegram;
     }
@@ -220,9 +222,9 @@ public abstract class Person {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("name", name)
-                .add("phone", phone)
+                .add("phone", phone.map(p -> p.value).orElse("nil"))
                 .add("email", email)
-                .add("telegram", telegram)
+                .add("telegram", telegram.map(t -> t.value).orElse("nil"))
                 .add("tags", tags)
                 .add("remarks", remarks)
                 .toString();

@@ -1,5 +1,7 @@
 package loopin.projectbook.model.person.teammember;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,6 +31,7 @@ public class TeamMember extends Person {
             Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
         super(name, new Role(RoleType.TEAMMEMBER, committee.getCommitteeName()), phone, email, telegram,
                 tags, remarks, projects);
+        requireNonNull(committee);
         this.committee = committee;
     }
 

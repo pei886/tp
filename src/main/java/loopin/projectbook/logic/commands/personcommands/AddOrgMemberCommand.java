@@ -29,7 +29,7 @@ public class AddOrgMemberCommand extends AddCommand {
             + PREFIX_ORGANISATION + "Eventive Solutions "
             + PREFIX_PHONE + "98381263 "
             + PREFIX_EMAIL + "shiwei@eventive.com "
-            + PREFIX_TELEGRAM + "ShiWei623"
+            + PREFIX_TELEGRAM + "ShiWei623 "
             + PREFIX_TAG + "NonTechnical";
 
 
