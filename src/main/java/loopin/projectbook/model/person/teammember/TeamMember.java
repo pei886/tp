@@ -27,7 +27,7 @@ public class TeamMember extends Person {
      */
     public TeamMember(Name name, Committee committee, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
             Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
-        super(name, new Role(RoleType.TEAMMEMBER, committee.toString()), phone, email, telegram,
+        super(name, new Role(RoleType.TEAMMEMBER, committee.getCommitteeName()), phone, email, telegram,
                 tags, remarks, projects);
         this.committee = committee;
     }
