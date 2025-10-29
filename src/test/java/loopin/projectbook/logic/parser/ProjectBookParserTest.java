@@ -11,6 +11,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import loopin.projectbook.logic.commands.personcommands.AddCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
+import loopin.projectbook.logic.commands.personcommands.FindCommand;
 import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.logic.commands.*;

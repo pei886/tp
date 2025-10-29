@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.projectcommands;
 
 import static java.util.Objects.requireNonNull;
 
@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Locale;
 
 import loopin.projectbook.commons.core.index.Index;
+import loopin.projectbook.logic.commands.Command;
+import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Person;
@@ -14,25 +16,25 @@ import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;
 
 /**
- * Removes a person (by index in the current person list) from an existing project.
+ * Assigns a person to an existing project.
  * Usage:
- * {@code project remove INDEX project/PROJECT_NAME}
- * {@code project remove n/NAME project/PROJECT_NAME}
+ * {@code project assign INDEX project/PROJECT_NAME}
+ * {@code project assign n/NAME project/PROJECT_NAME}
  */
-public final class ProjectRemoveCommand extends Command {
+public final class ProjectAssignCommand extends Command {
     public static final String COMMAND_WORD = "project";
-    public static final String SUBCOMMAND = "remove";
+    public static final String SUBCOMMAND = "assign";
     public static final String MESSAGE_USAGE =
-            "project remove: Remove a person from a project.\n"
+            "project assign: Assign a person to a project.\n"
                     + "Formats:\n"
-                    + "project remove INDEX project/PROJECT_NAME\n"
-                    + "project remove n/NAME project/PROJECT_NAME\n"
+                    + "project assign INDEX project/PROJECT_NAME\n"
+                    + "project assign n/NAME project/PROJECT_NAME\n"
                     + "Examples:\n"
-                    + "project remove 1 project/MyProject\n"
-                    + "project remove n/Alex Tan project/MyProject";
+                    + "project assign 1 project/MyProject\n"
+                    + "project assign n/Alex Tan project/MyProject";
 
-    public static final String MESSAGE_SUCCESS = "Removed %s from the project %s.";
-    public static final String MESSAGE_NOT_IN = "%s is not in this project.";
+    public static final String MESSAGE_SUCCESS = "Assigned %s to the project %s.";
+    public static final String MESSAGE_ALREADY = "%s is already in this project.";
     public static final String MESSAGE_NO_PROJECT = "Project '%s' does not exist.";
     public static final String MESSAGE_INVALID_INDEX = "The person index provided is invalid.";
     public static final String MESSAGE_NOT_FOUND_BY_NAME = "No person found with the name %s.";
@@ -44,24 +46,24 @@ public final class ProjectRemoveCommand extends Command {
     private final ProjectName projectName;
 
     /**
-     * Constructs a command to remove the person at {@code index} from the project named {@code projectName}.
+     * Constructs a command to assign the person at {@code index} to the project named {@code projectName}.
      *
      * @param index index of the person in the current filtered person list
      * @param projectName the validated project name value object
      */
-    public ProjectRemoveCommand(Index index, ProjectName projectName) {
+    public ProjectAssignCommand(Index index, ProjectName projectName) {
         this.index = index;
         this.name = null;
         this.projectName = projectName;
     }
 
     /**
-     * Constructs a command to remove the person called {@code name} from the project named {@code projectName}.
+     * Constructs a command to assign the person called {@code name} to the project named {@code projectName}.
      *
      * @param name name of the person
      * @param projectName the validated project name value object
      */
-    public ProjectRemoveCommand(String name, ProjectName projectName) {
+    public ProjectAssignCommand(String name, ProjectName projectName) {
         requireNonNull(name);
         this.index = null;
         this.name = name;
@@ -87,11 +89,12 @@ public final class ProjectRemoveCommand extends Command {
             target = lastShown.get(index.getZeroBased());
         }
 
-        if (!project.hasMember(target)) {
-            throw new CommandException(String.format(MESSAGE_NOT_IN, target.getName()));
+        if (project.hasMember(target)) {
+            throw new CommandException(String.format(MESSAGE_ALREADY, target.getName()));
         }
 
-        project.removePerson(target);
+        project.assignPerson(target);
+        target.addProject(project);
         model.setProject(project);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, target.getName(), projectName));

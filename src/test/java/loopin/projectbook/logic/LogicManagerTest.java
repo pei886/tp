@@ -15,7 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import loopin.projectbook.logic.commands.AddVolunteerCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.ListCommand;
 import loopin.projectbook.logic.commands.exceptions.CommandException;

@@ -1,4 +1,4 @@
-package loopin.projectbook.ui;
+package loopin.projectbook.ui.person;
 
 import java.util.Comparator;
 
@@ -8,6 +8,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.ui.UiPart;
 
 /**
  * An UI component that displays information of a {@code Person}.

@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
+import loopin.projectbook.logic.commands.personcommands.AddCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;

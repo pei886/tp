@@ -4,9 +4,9 @@ import static loopin.projectbook.logic.parser.CliSyntax.*;
 
 import java.util.Set;
 
-import loopin.projectbook.logic.commands.AddOrgMemberCommand;
-import loopin.projectbook.logic.commands.AddTeamMemberCommand;
-import loopin.projectbook.logic.commands.AddVolunteerCommand;
+import loopin.projectbook.logic.commands.personcommands.AddOrgMemberCommand;
+import loopin.projectbook.logic.commands.personcommands.AddTeamMemberCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.orgmember.OrgMember;

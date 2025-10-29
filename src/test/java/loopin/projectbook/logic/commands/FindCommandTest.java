@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
 import java.util.Collections;
 
+import loopin.projectbook.logic.commands.personcommands.FindCommand;
 import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.model.Model;
