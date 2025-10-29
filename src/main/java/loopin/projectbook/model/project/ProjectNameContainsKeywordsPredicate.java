@@ -3,7 +3,6 @@ package loopin.projectbook.model.project;
 import java.util.List;
 import java.util.function.Predicate;
 
-import loopin.projectbook.commons.util.StringUtil;
 import loopin.projectbook.commons.util.ToStringBuilder;
 
 /**
