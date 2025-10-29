@@ -99,10 +99,17 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a new {@code Person} object (or one of its subclasses with updated field values based on
+     * the provided {@code EditPersonDescriptor}.
+     *
+     * @param personToEdit the existing {@code Person} to be edited
+     * @param editPersonDescriptor the {@code EditPersonDescriptor} containing optional updated values
+     * @return a new {@code Person} (or subclass) instance with applied edits
+     * @throws CommandException if a field inappropriate for the person’s role is supplied
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(
+            Person personToEdit, EditPersonDescriptor editPersonDescriptor
+    ) throws CommandException {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -195,7 +202,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, telegram, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, telegram, tags, committee, organisation);
         }
 
         public void setName(Name name) {
@@ -230,7 +237,7 @@ public class EditCommand extends Command {
             return Optional.ofNullable(telegram);
         }
 
-        public void setCommittee(Organisation organisation) { this.organisation = organisation; }
+        public void setCommittee(Committee committee) { this.committee = committee; }
 
         public Optional<Committee> getCommittee() { return Optional.ofNullable(committee); }
 
