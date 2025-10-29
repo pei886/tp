@@ -271,7 +271,9 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(telegram, otherEditPersonDescriptor.telegram)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(committee, otherEditPersonDescriptor.committee)
+                    && Objects.equals(organisation, otherEditPersonDescriptor.organisation);
         }
 
         @Override
@@ -282,6 +284,8 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("telegram", telegram)
                     .add("tags", tags)
+                    .add("committee", committee)
+                    .add("organisation", organisation)
                     .toString();
         }
     }
