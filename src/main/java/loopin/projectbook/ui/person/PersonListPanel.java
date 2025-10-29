@@ -1,4 +1,4 @@
-package loopin.projectbook.ui;
+package loopin.projectbook.ui.person;
 
 import java.util.logging.Logger;
 
@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.ui.UiPart;
 
 /**
  * Panel containing the list of persons.

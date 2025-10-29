@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.parser.person;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -16,7 +16,12 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import loopin.projectbook.logic.commands.AddTeamMemberCommand;
+import loopin.projectbook.logic.commands.personcommands.AddTeamMemberCommand;
+import loopin.projectbook.logic.parser.ArgumentMultimap;
+import loopin.projectbook.logic.parser.ArgumentTokenizer;
+import loopin.projectbook.logic.parser.Parser;
+import loopin.projectbook.logic.parser.ParserUtil;
+import loopin.projectbook.logic.parser.Prefix;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;

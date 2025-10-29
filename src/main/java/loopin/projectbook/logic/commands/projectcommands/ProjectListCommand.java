@@ -1,8 +1,10 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.projectcommands;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.model.Model.PREDICATE_SHOW_ALL_PROJECTS;
 
+import loopin.projectbook.logic.commands.Command;
+import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.model.Model;
 
 /**
