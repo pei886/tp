@@ -1,11 +1,16 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.parser.person;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CliSyntax.*;
 
 import java.util.stream.Stream;
 
-import loopin.projectbook.logic.commands.AddProjectCommand;
+import loopin.projectbook.logic.commands.personcommands.AddProjectCommand;
+import loopin.projectbook.logic.parser.ArgumentMultimap;
+import loopin.projectbook.logic.parser.ArgumentTokenizer;
+import loopin.projectbook.logic.parser.Parser;
+import loopin.projectbook.logic.parser.ParserUtil;
+import loopin.projectbook.logic.parser.Prefix;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.Project;

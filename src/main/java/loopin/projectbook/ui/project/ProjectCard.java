@@ -1,4 +1,4 @@
-package loopin.projectbook.ui;
+package loopin.projectbook.ui.project;
 
 import java.util.Comparator;
 import java.util.List;
@@ -11,6 +11,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Project;
+import loopin.projectbook.ui.UiPart;
+import loopin.projectbook.ui.person.PersonCard;
 
 
 /**

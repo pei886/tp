@@ -1,6 +1,7 @@
 package loopin.projectbook.model.person.volunteer;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import loopin.projectbook.model.person.Email;
@@ -22,13 +23,13 @@ public class Volunteer extends Person {
     /**
      * Name, email and tags must be present and non null but phone can be null.
      */
-    public Volunteer(Name name, Phone phone, Email email, Telegram telegram,
+    public Volunteer(Name name, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
             Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
         super(name, new Role(RoleType.VOLUNTEER, ""), phone, email, telegram, tags, remarks, projects);
     }
 
     @Override
-    public Person createCopy(Name name, Phone phone, Email email, Telegram telegram,
+    public Person createCopy(Name name, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
             Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
         return new Volunteer(name, phone, email, telegram, tags, remarks, projects);
     }

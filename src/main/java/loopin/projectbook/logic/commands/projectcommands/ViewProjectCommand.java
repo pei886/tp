@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.projectcommands;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.parser.CliSyntax.*;
@@ -6,6 +6,8 @@ import static loopin.projectbook.logic.parser.CliSyntax.*;
 import java.util.Optional;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
+import loopin.projectbook.logic.commands.Command;
+import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;

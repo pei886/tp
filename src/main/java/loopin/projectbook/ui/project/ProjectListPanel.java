@@ -1,4 +1,4 @@
-package loopin.projectbook.ui;
+package loopin.projectbook.ui.project;
 
 import java.util.logging.Logger;
 
@@ -9,6 +9,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.model.project.Project;
+import loopin.projectbook.ui.UiPart;
+import loopin.projectbook.ui.person.PersonListPanel;
 
 /**
  * Panel containing the list of project.

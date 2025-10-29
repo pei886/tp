@@ -1,6 +1,7 @@
 package loopin.projectbook.model.person.teammember;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import loopin.projectbook.model.person.Email;
@@ -24,7 +25,7 @@ public class TeamMember extends Person {
     /**
      * Name, phome, email and committee must be present and non null.
      */
-    public TeamMember(Name name, Committee committee, Phone phone, Email email, Telegram telegram,
+    public TeamMember(Name name, Committee committee, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
             Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
         super(name, new Role(RoleType.TEAMMEMBER, committee.getCommitteeName()), phone, email, telegram,
                 tags, remarks, projects);
@@ -36,7 +37,7 @@ public class TeamMember extends Person {
     }
 
     @Override
-    public Person createCopy(Name name, Phone phone, Email email, Telegram telegram,
+    public Person createCopy(Name name, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
             Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
         return new TeamMember(name, committee, phone, email, telegram, tags, remarks, projects);
     }

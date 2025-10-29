@@ -1,7 +1,7 @@
 package loopin.projectbook.model.person;
 
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TELEGRAM_BOB;
 import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TELEGRAM_BOB;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.ALICE;
 import static loopin.projectbook.testutil.TypicalPersons.BOB;

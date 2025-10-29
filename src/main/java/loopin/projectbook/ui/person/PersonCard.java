@@ -1,4 +1,4 @@
-package loopin.projectbook.ui;
+package loopin.projectbook.ui.person;
 
 import java.util.Comparator;
 
@@ -8,6 +8,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.ui.UiPart;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -53,9 +54,9 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
+        phone.setText(person.getPhone().map(phone -> phone.value).orElse("Phone: nil"));
         role.setText(person.getRole().fullRole);
-        telegram.setText("@" + person.getTelegram().value);
+        telegram.setText(person.getTelegram().map(telegram -> "@" + telegram.value).orElse("Telegram: nil"));
         email.setText(person.getEmail().value);
 
         person.getTags().stream()

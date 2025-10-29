@@ -1,9 +1,10 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
 import loopin.projectbook.model.person.teammember.TeamMember;
@@ -22,15 +23,17 @@ public class AddTeamMemberCommand extends AddCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_COMMITEE + "COMMITTEE "
-            + PREFIX_PHONE + "PHONE "
+            + "[" + PREFIX_PHONE + "PHONE] "
             + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_TELEGRAM + "TELEGRAM "
+            + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
+            + PREFIX_NAME + "Jane Doe "
             + PREFIX_COMMITEE + "Operations"
             + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_TELEGRAM + "john_d";
+            + PREFIX_EMAIL + "janed@example.com "
+            + PREFIX_TELEGRAM + "jane_d"
+            + PREFIX_TAG + "UniStudent";
 
     /**
      * Creates an {@code AddTeamMemberCommand} to add the specified {@code TeamMember}.

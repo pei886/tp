@@ -5,7 +5,8 @@ package loopin.projectbook.model.person;
  * Guarantees: immutable
  */
 public class Role {
-
+    public static final String MESSAGE_CONSTRAINTS =
+            "Roles should be either \"Volunteer\", \"Committee: COMMITTEE\" or \"Organisation: ORGANISATION\"";
     public final RoleType roleType;
     public final String fullRole;
 

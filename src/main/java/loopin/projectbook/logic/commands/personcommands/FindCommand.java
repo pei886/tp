@@ -1,9 +1,11 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static java.util.Objects.requireNonNull;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.logic.Messages;
+import loopin.projectbook.logic.commands.Command;
+import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
 

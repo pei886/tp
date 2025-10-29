@@ -33,10 +33,11 @@ import static loopin.projectbook.logic.parser.CommandParserTestUtil.assertParseS
 import static loopin.projectbook.testutil.TypicalPersons.AMY;
 import static loopin.projectbook.testutil.TypicalPersons.BOB;
 
+import loopin.projectbook.logic.parser.person.AddVolunteerCommandParser;
 import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.logic.Messages;
-import loopin.projectbook.logic.commands.AddVolunteerCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;

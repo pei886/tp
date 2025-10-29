@@ -1,9 +1,10 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
 import loopin.projectbook.model.person.orgmember.OrgMember;
@@ -19,15 +20,17 @@ public class AddOrgMemberCommand extends AddCommand {
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_ORGANISATION + "ORGANISATION "
-            + PREFIX_PHONE + "PHONE "
+            + "[" + PREFIX_PHONE + "PHONE] "
             + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_TELEGRAM + "TELEGRAM "
+            + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Shi Wei "
             + PREFIX_ORGANISATION + "Eventive Solutions "
             + PREFIX_PHONE + "98381263 "
             + PREFIX_EMAIL + "shiwei@eventive.com "
-            + PREFIX_TELEGRAM + "ShiWei623";
+            + PREFIX_TELEGRAM + "ShiWei623"
+            + PREFIX_TAG + "NonTechnical";
 
 
     /**

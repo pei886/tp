@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.parser.person;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -12,10 +12,16 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import loopin.projectbook.logic.commands.AddTeamMemberCommand;
+import loopin.projectbook.logic.commands.personcommands.AddTeamMemberCommand;
+import loopin.projectbook.logic.parser.ArgumentMultimap;
+import loopin.projectbook.logic.parser.ArgumentTokenizer;
+import loopin.projectbook.logic.parser.Parser;
+import loopin.projectbook.logic.parser.ParserUtil;
+import loopin.projectbook.logic.parser.Prefix;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
@@ -56,9 +62,15 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_COMMITEE,
                 PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+        Optional<Phone> phone =
+                argMultimap.getValue(PREFIX_PHONE).isPresent()
+                ? Optional.of(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()))
+                : Optional.empty();
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
+        Optional<Telegram> telegram =
+                argMultimap.getValue(PREFIX_TELEGRAM).isPresent()
+                ? Optional.of(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()))
+                : Optional.empty();
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
         Set<Tag> tags = null;
         if (arePrefixesPresent(argMultimap, PREFIX_TAG)) {

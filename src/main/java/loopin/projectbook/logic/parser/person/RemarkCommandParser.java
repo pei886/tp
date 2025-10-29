@@ -1,9 +1,14 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.parser.person;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import loopin.projectbook.commons.core.index.Index;
-import loopin.projectbook.logic.commands.RemarkCommand;
+import loopin.projectbook.logic.commands.personcommands.RemarkCommand;
+import loopin.projectbook.logic.parser.ArgumentMultimap;
+import loopin.projectbook.logic.parser.ArgumentTokenizer;
+import loopin.projectbook.logic.parser.Parser;
+import loopin.projectbook.logic.parser.ParserUtil;
+import loopin.projectbook.logic.parser.Prefix;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 // Assuming Prefix, ArgumentTokenizer, and ParserUtil exist
 // import java.util.stream.Stream;

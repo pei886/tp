@@ -18,6 +18,9 @@ import java.util.List;
 import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.person.Person;
 
+/**
+ * Typical persons to be used for testing.
+ */
 public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")

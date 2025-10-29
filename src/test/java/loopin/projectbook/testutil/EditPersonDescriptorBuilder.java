@@ -1,5 +1,6 @@
 package loopin.projectbook.testutil;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -51,7 +52,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
+        descriptor.setPhone(Optional.of(new Phone(phone)));
         return this;
     }
 
@@ -64,18 +65,10 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
-     */
-    public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setTelegram(new Telegram(address));
-        return this;
-    }
-
-    /**
      * Sets the {@code Telegram} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withTelegram(String telegram) {
-        descriptor.setTelegram(new Telegram(telegram));
+        descriptor.setTelegram(Optional.of(new Telegram(telegram)));
         return this;
     }
 

@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
@@ -6,6 +6,8 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.logic.Messages;
+import loopin.projectbook.logic.commands.Command;
+import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.project.Project;

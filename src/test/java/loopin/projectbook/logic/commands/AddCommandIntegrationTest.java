@@ -4,6 +4,8 @@ import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandFai
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
 
+import loopin.projectbook.logic.commands.personcommands.AddCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,7 +44,7 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
         Person personInList = model.getProjectBook().getPersonList().get(0);
-        assertCommandFailure(new AddVolunteerCommand((Volunteer)personInList), model,
+        assertCommandFailure(new AddVolunteerCommand((Volunteer) personInList), model,
                 AddCommand.MESSAGE_DUPLICATE_PERSON);
     }
 

@@ -1,10 +1,11 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.parser.person;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 
-import loopin.projectbook.logic.commands.FindCommand;
+import loopin.projectbook.logic.commands.personcommands.FindCommand;
+import loopin.projectbook.logic.parser.Parser;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
 
