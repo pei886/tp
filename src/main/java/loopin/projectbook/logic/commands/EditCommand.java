@@ -1,9 +1,11 @@
 package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import static loopin.projectbook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -23,10 +25,15 @@ import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
+import loopin.projectbook.model.person.Organisation;
+import loopin.projectbook.model.person.OrgMember;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.Volunteer;
 import loopin.projectbook.model.tag.Tag;
+import loopin.projectbook.model.teammember.Committee;
+import loopin.projectbook.model.teammember.TeamMember;
 
 /**
  * Edits the details of an existing person in the project book.
