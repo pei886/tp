@@ -11,14 +11,14 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import loopin.projectbook.logic.commands.personcommands.AddCommand;
-import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import loopin.projectbook.commons.core.GuiSettings;
 import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
+import loopin.projectbook.logic.commands.personcommands.AddCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.ReadOnlyProjectBook;
