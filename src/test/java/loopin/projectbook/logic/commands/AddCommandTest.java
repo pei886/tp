@@ -13,7 +13,6 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import loopin.projectbook.commons.core.GuiSettings;
 import loopin.projectbook.logic.Messages;

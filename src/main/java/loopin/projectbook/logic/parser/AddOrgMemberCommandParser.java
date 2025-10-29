@@ -11,6 +11,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -41,8 +42,7 @@ public class AddOrgMemberCommandParser implements Parser<AddOrgMemberCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ORGANISATION,
                 PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ORGANISATION,
-                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ORGANISATION, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddOrgMemberCommand.MESSAGE_USAGE));
         }
@@ -50,9 +50,15 @@ public class AddOrgMemberCommandParser implements Parser<AddOrgMemberCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_ORGANISATION, PREFIX_PHONE, PREFIX_EMAIL);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Organisation organisation = ParserUtil.parseOrganisation(argMultimap.getValue(PREFIX_ORGANISATION).get());
-        Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
+        Optional<Phone> phone =
+                argMultimap.getValue(PREFIX_PHONE).isPresent()
+                ? Optional.of(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()))
+                : Optional.empty();
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Telegram telegram = ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get());
+        Optional<Telegram> telegram =
+                argMultimap.getValue(PREFIX_TELEGRAM).isPresent()
+                ? Optional.of(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()))
+                : Optional.empty();
         Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Remark> remarks = new HashSet<>();
         List<Project> projects = new ArrayList<>();
