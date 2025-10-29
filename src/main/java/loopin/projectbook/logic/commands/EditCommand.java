@@ -60,6 +60,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the project book.";
+    public static final String MESSAGE_NOT_PERMITTED_FOR_ROLE = "This field does not exist for this role.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -110,7 +111,31 @@ public class EditCommand extends Command {
         Telegram updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+        if (personToEdit instanceof TeamMember teamMember) {
+            // person is a team member
+            if (editPersonDescriptor.getOrganisation().isPresent()) {
+                throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
+            }
+            Committee updatedCommittee = editPersonDescriptor.getCommittee().orElse(teamMember.getCommittee());
+
+            return new TeamMember(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedCommittee);
+
+        } else if (personToEdit instanceof OrgMember orgMember) {
+            // person is an organisation member
+            if (editPersonDescriptor.getCommittee().isPresent()) {
+                throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
+            }
+            Organisation updatedOrganisation =
+                    editPersonDescriptor.getOrganisation().orElse(orgMember.getOrganisation());
+
+            return new OrgMember(
+                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram, updatedTags
+            );
+        }
+
+        // person is a volunteer
+        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+
     }
 
     @Override
@@ -147,6 +172,8 @@ public class EditCommand extends Command {
         private Email email;
         private Telegram telegram;
         private Set<Tag> tags;
+        private Committee committee;
+        private Organisation organisation;
 
         public EditPersonDescriptor() {}
 
@@ -160,6 +187,8 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setTelegram(toCopy.telegram);
             setTags(toCopy.tags);
+            setCommittee(toCopy.committee);
+            setOrganisation(toCopy.organisation);
         }
 
         /**
@@ -200,6 +229,14 @@ public class EditCommand extends Command {
         public Optional<Telegram> getTelegram() {
             return Optional.ofNullable(telegram);
         }
+
+        public void setCommittee(Organisation organisation) { this.organisation = organisation; }
+
+        public Optional<Committee> getCommittee() { return Optional.ofNullable(committee); }
+
+        public void setOrganisation(Organisation organisation) { this.organisation = organisation; }
+
+        public Optional<Organisation> getOrganisation() { return Optional.ofNullable(organisation); }
 
         /**
          * Sets {@code tags} to this object's {@code tags}.
