@@ -3,7 +3,6 @@ package loopin.projectbook.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import loopin.projectbook.commons.util.StringUtil;
 import loopin.projectbook.commons.util.ToStringBuilder;
 
 /**
@@ -18,8 +17,8 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-//        return keywords.stream()
-//                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+        //        return keywords.stream()
+        //                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
         return keywords.stream().allMatch(word -> person.getName().fullName.toLowerCase().contains(word));
     }
 

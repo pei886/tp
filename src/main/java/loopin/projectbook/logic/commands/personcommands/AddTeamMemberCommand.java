@@ -29,16 +29,16 @@ public class AddTeamMemberCommand extends AddCommand {
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Jane Doe "
-            + PREFIX_COMMITEE + "Operations"
+            + PREFIX_COMMITEE + "Operations "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "janed@example.com "
-            + PREFIX_TELEGRAM + "jane_d"
+            + PREFIX_TELEGRAM + "jane_d "
             + PREFIX_TAG + "UniStudent";
 
     /**
      * Creates an {@code AddTeamMemberCommand} to add the specified {@code TeamMember}.
      *
-     * @param member the team member to be added to the project book, must not be {@code null}
+     * @param member the team member to be added to the project book, must not be {@code null}.
      */
     public AddTeamMemberCommand(TeamMember teamMember) {
         super(teamMember);

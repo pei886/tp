@@ -40,11 +40,11 @@ public class Messages {
         final StringBuilder builder = new StringBuilder();
         builder.append(person.getName())
                 .append("; Phone: ")
-                .append(person.getPhone())
+                .append(person.getPhone().map(p -> p.value).orElse("nil"))
                 .append("; Email: ")
                 .append(person.getEmail())
-                //.append("; Address: ")
-                //.append(person.getAddress())
+                .append("; Telegram: ")
+                .append(person.getTelegram().map(p -> p.value).orElse("nil"))
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();

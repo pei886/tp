@@ -6,12 +6,12 @@ import static loopin.projectbook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import loopin.projectbook.logic.commands.personcommands.ResolveRemarkCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.Messages;
+import loopin.projectbook.logic.commands.personcommands.ResolveRemarkCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.UserPrefs;
