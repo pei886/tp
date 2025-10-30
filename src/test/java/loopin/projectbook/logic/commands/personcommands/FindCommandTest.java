@@ -15,7 +15,6 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import loopin.projectbook.logic.commands.personcommands.FindCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.UserPrefs;
