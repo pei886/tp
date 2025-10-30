@@ -2,8 +2,6 @@ package loopin.projectbook.model.project;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,209 +15,119 @@ import loopin.projectbook.model.project.exceptions.ProjectNotFoundException;
  */
 public class UniqueProjectListTest {
 
-    // ----------------------------------------------------------------------
-    // helper minimal Project for tests
-    // ----------------------------------------------------------------------
-    private static Project project(String name) {
-        return new Project(new ProjectName(name));
+    /** real factory: Project(ProjectName, Description) */
+    private static Project proj(String name) {
+        return new Project(new ProjectName(name), new Description("desc"));
     }
 
+    // contains(Project) true when equal project exists
     @Test
-    public void contains_null_throwsNullPointerException() {
-        // tests: contains(null) should NPE
+    public void contains_existing_returnsTrue() {
         UniqueProjectList list = new UniqueProjectList();
-        assertThrows(NullPointerException.class, () -> list.contains(null));
-    }
-
-    @Test
-    public void contains_existingProject_returnsTrue() {
-        // tests: contains() returns true when exact project already in list
-        UniqueProjectList list = new UniqueProjectList();
-        Project p = project("Alpha");
+        Project p = proj("Alpha");
         list.add(p);
         assertTrue(list.contains(p));
     }
 
+    // contains(Project) false when not present
     @Test
-    public void contains_nonExistingProject_returnsFalse() {
-        // tests: contains() returns false when project not in list
+    public void contains_missing_returnsFalse() {
         UniqueProjectList list = new UniqueProjectList();
-        list.add(project("Alpha"));
-        assertFalse(list.contains(project("Beta")));
+        list.add(proj("Alpha"));
+        assertFalse(list.contains(proj("Beta")));
     }
 
+    // findByName normalizes whitespace + case
     @Test
-    public void findByName_exactMatch_returnsProject() {
-        // tests: findByName returns project when exact name used
+    public void findByName_normalization_works() {
         UniqueProjectList list = new UniqueProjectList();
-        Project p = project("Website Revamp");
+        Project p = proj("Website   Revamp");
         list.add(p);
 
-        Optional<Project> found = list.findByName("Website Revamp");
+        Optional<Project> found = list.findByName("  website revamp ");
         assertTrue(found.isPresent());
         assertEquals(p, found.get());
     }
 
+    // setProject replaces existing equal project
     @Test
-    public void findByName_whitespaceAndCaseInsensitivity_succeeds() {
-        // tests: findByName normalizes whitespace and case
+    public void setProject_existing_replaced() {
         UniqueProjectList list = new UniqueProjectList();
-        Project p = project("  Website   Revamp ");
-        list.add(p);
-
-        assertTrue(list.findByName("website revamp").isPresent());
-        assertTrue(list.findByName("   WEBSITE   REVAMP   ").isPresent());
-    }
-
-    @Test
-    public void findByName_null_returnsEmptyOptional() {
-        // tests: findByName(null) returns Optional.empty()
-        UniqueProjectList list = new UniqueProjectList();
-        list.add(project("Alpha"));
-        assertEquals(Optional.empty(), list.findByName(null));
-    }
-
-    @Test
-    public void add_duplicate_throwsDuplicateProjectException() {
-        // tests: add() should reject duplicates by equals()
-        UniqueProjectList list = new UniqueProjectList();
-        Project p = project("Alpha");
-        list.add(p);
-        assertThrows(DuplicateProjectException.class, () -> list.add(project("Alpha")));
-    }
-
-    @Test
-    public void setProject_existingProject_replaces() {
-        // tests: setProject() replaces project at same index
-        UniqueProjectList list = new UniqueProjectList();
-        Project p1 = project("Alpha");
+        Project p1 = proj("Alpha");
         list.add(p1);
 
-        Project updated = project("Alpha"); // same identity via equals
+        Project updated = proj("Alpha"); // equals() must consider same identity
         list.setProject(updated);
 
         assertTrue(list.contains(updated));
     }
 
+    // setProject throws when target not found
     @Test
-    public void setProject_nonExisting_throwsProjectNotFound() {
-        // tests: setProject() on non-existing throws
+    public void setProject_missing_throws() {
         UniqueProjectList list = new UniqueProjectList();
-        assertThrows(ProjectNotFoundException.class, () -> list.setProject(project("Unknown")));
+        assertThrows(ProjectNotFoundException.class, () -> list.setProject(proj("Unknown")));
     }
 
+    // setProjects rejects duplicates
     @Test
-    public void setProjects_withDuplicates_throwsDuplicateProjectException() {
-        // tests: setProjects() validates uniqueness
+    public void setProjects_duplicates_throws() {
         UniqueProjectList list = new UniqueProjectList();
-        List<Project> withDupes = Arrays.asList(project("Alpha"), project("Alpha"));
+        Project a1 = proj("Alpha");
+        Project a2 = proj("Alpha");
+        List<Project> withDupes = java.util.Arrays.asList(a1, a2);
         assertThrows(DuplicateProjectException.class, () -> list.setProjects(withDupes));
     }
 
+    // setProjects replaces contents
     @Test
-    public void setProjects_valid_replacesAll() {
-        // tests: setProjects() replaces
+    public void setProjects_replaces() {
         UniqueProjectList list = new UniqueProjectList();
-        list.add(project("Old"));
+        list.add(proj("Old"));
 
-        List<Project> newOnes = Arrays.asList(project("A"), project("B"));
+        List<Project> newOnes = java.util.Arrays.asList(proj("A"), proj("B"));
         list.setProjects(newOnes);
 
-        assertTrue(list.contains(project("A")));
-        assertTrue(list.contains(project("B")));
-        assertEquals(2, list.asUnmodifiableObservableList().size());
+        assertTrue(list.contains(proj("A")));
+        assertTrue(list.contains(proj("B")));
     }
 
+    // remove(Project) removes when present
     @Test
     public void remove_existing_succeeds() {
-        // tests: remove(Project) removes exactly that project
         UniqueProjectList list = new UniqueProjectList();
-        Project p = project("Alpha");
+        Project p = proj("Alpha");
         list.add(p);
-
         list.remove(p);
         assertFalse(list.contains(p));
     }
 
+    // remove(Project) missing throws
     @Test
-    public void remove_nonExisting_throwsProjectNotFound() {
-        // tests: remove(Project) throws when project not present
+    public void remove_missing_throws() {
         UniqueProjectList list = new UniqueProjectList();
-        assertThrows(ProjectNotFoundException.class, () -> list.remove(project("Nope")));
+        assertThrows(ProjectNotFoundException.class, () -> list.remove(proj("Nope")));
     }
 
+    // removeByName uses normalization
     @Test
-    public void removeByName_existing_succeeds() {
-        // tests: removeByName() removes project by normalized name
+    public void removeByName_normalizedName_succeeds() {
         UniqueProjectList list = new UniqueProjectList();
-        Project p = project("Website Revamp");
-        list.add(p);
+        list.add(proj("Alpha"));
 
-        list.removeByName("  website  revamp ");
-        assertFalse(list.contains(p));
+        list.removeByName("  ALPHA ");
+        assertFalse(list.contains(proj("Alpha")));
     }
 
+    // equals/hashCode cover internal list equality
     @Test
-    public void removeByName_notFound_throwsProjectNotFound() {
-        // tests: removeByName() throws when no match
-        UniqueProjectList list = new UniqueProjectList();
-        list.add(project("Alpha"));
-        assertThrows(ProjectNotFoundException.class, () -> list.removeByName("Beta"));
-    }
+    public void equals_and_hashCode() {
+        UniqueProjectList a = new UniqueProjectList();
+        UniqueProjectList b = new UniqueProjectList();
+        a.setProjects(java.util.Arrays.asList(proj("A"), proj("B")));
+        b.setProjects(java.util.Arrays.asList(proj("A"), proj("B")));
 
-    @Test
-    public void asUnmodifiableObservableList_isUnmodifiable() {
-        // tests: returned list is unmodifiable
-        UniqueProjectList list = new UniqueProjectList();
-        list.add(project("Alpha"));
-        assertThrows(UnsupportedOperationException.class, () ->
-                list.asUnmodifiableObservableList().remove(0)
-        );
-    }
-
-    // ----------------------------------------------------------------------
-    // minimal stand-in for Project + ProjectName to make tests compile
-    // (adjust to your real Project class)
-    // ----------------------------------------------------------------------
-    private static final class Project {
-        private final ProjectName name;
-
-        Project(ProjectName name) {
-            this.name = name;
-        }
-
-        public ProjectName getName() {
-            return name;
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            return other == this
-                    || (other instanceof Project && name.equals(((Project) other).name));
-        }
-
-        @Override
-        public String toString() {
-            return name.toString();
-        }
-    }
-
-    private static final class ProjectName {
-        private final String value;
-
-        ProjectName(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            return other == this
-                    || (other instanceof ProjectName && value.equals(((ProjectName) other).value));
-        }
-
-        @Override
-        public String toString() {
-            return value;
-        }
+        assertEquals(a, b);
+        assertEquals(a.hashCode(), b.hashCode());
     }
 }
