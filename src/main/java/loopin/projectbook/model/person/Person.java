@@ -126,7 +126,7 @@ public abstract class Person {
 
         // Update all associated projects
         for (Project project : this.projects) {
-            LastUpdate update = LastUpdate.remarkAdded(updatedPerson.getName(), newRemark.toString());
+            LastUpdate update = new LastUpdate().remarkAdded(name, newRemark.toString());
             project.recordUpdate(update);
         }
         return updatedPerson;

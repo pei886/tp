@@ -28,6 +28,21 @@ public class Project {
     private final List<Membership> memberships = new ArrayList<>();
 
     /**
+     * Creates a new Project with the given name and description.
+     * Uses current time as createdAt and default "no updates yet" status.
+     *
+     * @param name        name of the project
+     * @param description short description of the project
+     */
+    public Project(ProjectName name, Description description) {
+        requireAllNonNull(name, description);
+        this.name = name;
+        this.description = description;
+        this.createdAt = LocalDateTime.now();
+        this.lastUpdate = new LastUpdate();
+    }
+
+    /**
      * Creates a new Project with the given id, name, and description.
      *
      * @param name        name of the project
@@ -67,6 +82,10 @@ public class Project {
 
     public LastUpdate getLastUpdate() {
         return lastUpdate;
+    }
+
+    public String getLastUpdateAsString() {
+        return lastUpdate.toString();
     }
 
     /**

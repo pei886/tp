@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.parser.person;
+package loopin.projectbook.logic.parser.project;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CliSyntax.*;
