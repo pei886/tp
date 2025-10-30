@@ -143,8 +143,8 @@ The **`Model`** component:
     - Each `Project` contains one or more `Membership` entries that connect it back to the people involved.
 
 * distinguishes between different types of persons:
-    - `Volunteer`: a general member with basic contact info and tags.
-    - `TeamMember`: a person belonging to a committee within a project.
+    - `Volunteer`: a volunteer with basic contact info and tags.
+    - `TeamMember`: a team member belonging to a committee.
     - `OrgMember`: a person associated with an external organisation.
 
 * does not depend on other major components (e.g., Logic, UI, or Storage).  
