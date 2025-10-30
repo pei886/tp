@@ -22,6 +22,7 @@ import loopin.projectbook.logic.commands.FindCommand;
 import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
 import loopin.projectbook.logic.commands.ProjectAssignCommand;
+import loopin.projectbook.logic.commands.ProjectDeleteCommand;
 import loopin.projectbook.logic.commands.ProjectListCommand;
 import loopin.projectbook.logic.commands.ProjectRemoveCommand;
 import loopin.projectbook.logic.commands.RemarkCommand;
@@ -115,6 +116,8 @@ public class ProjectBookParser {
                 return new ProjectAssignCommandParser().parse(rest);
             case ProjectRemoveCommand.SUBCOMMAND:
                 return new ProjectRemoveCommandParser().parse(rest);
+            case ProjectDeleteCommand.SUBCOMMAND:
+                return new ProjectDeleteCommandParser().parse(" " + rest);
             case ViewProjectCommand.SUBCOMMAND:
                 return new ViewProjectCommandParser().parse(" " + rest);
             case ProjectListCommand.SUBCOMMAND:
