@@ -41,6 +41,18 @@ public class Project {
         this.lastUpdate = new LastUpdate();
     }
 
+    /**
+     * Constructs a {@code Project} with the specified name, description, and creation timestamp.
+     * Used when loading projects from persistent storage to preserve original creation dates.
+     */
+    public Project(ProjectName name, Description description, LocalDateTime createdAt, LastUpdate lastUpdate) {
+        requireAllNonNull(name, description, createdAt, lastUpdate);
+        this.name = name;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.lastUpdate = lastUpdate;
+    }
+
     //    /** @return the unique ID of this project */
     //    public UUID getId() {
     //        return id;

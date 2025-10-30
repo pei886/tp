@@ -64,10 +64,14 @@ public class Messages {
     public static String formatProject(Project project) {
         final StringBuilder builder = new StringBuilder();
         builder.append(project.getName())
-                .append("; Description: ")
+                .append("\n")
                 .append(project.getDescription())
-                .append("; Created at: ")
-                .append(project.getCreatedAt());
+                .append("\n")
+                .append(project.getCreatedAt().format(
+                        java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm")
+                ))
+                .append("\n")
+                .append(project.getLatestUpdate().toString());
         return builder.toString();
     }
 }

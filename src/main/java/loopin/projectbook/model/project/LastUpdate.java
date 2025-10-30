@@ -104,6 +104,14 @@ public class LastUpdate {
         return timestamp != null;
     }
 
+    /**
+     * Returns the formatted timestamp string for display purposes.
+     * If there is no timestamp, returns an empty string.
+     */
+    public String getFormattedTimestamp() {
+        return hasUpdate() ? timestamp.format(FORMATTER) : "";
+    }
+
     @Override
     public String toString() {
         if (!hasUpdate()) {
