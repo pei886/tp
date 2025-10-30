@@ -19,6 +19,7 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_PROJECTS_LISTED_OVERVIEW = "%1$d project(s) listed!";
 
     /**
      * Returns an error message indicating the duplicate prefixes.
@@ -39,11 +40,11 @@ public class Messages {
         final StringBuilder builder = new StringBuilder();
         builder.append(person.getName())
                 .append("; Phone: ")
-                .append(person.getPhone())
+                .append(person.getPhone().map(p -> p.value).orElse("nil"))
                 .append("; Email: ")
                 .append(person.getEmail())
-                //.append("; Address: ")
-                //.append(person.getAddress())
+                .append("; Telegram: ")
+                .append(person.getTelegram().map(p -> p.value).orElse("nil"))
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();

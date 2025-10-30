@@ -2,7 +2,10 @@ package loopin.projectbook.logic;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static loopin.projectbook.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static loopin.projectbook.logic.commands.CommandTestUtil.*;
+import static loopin.projectbook.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static loopin.projectbook.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static loopin.projectbook.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static loopin.projectbook.logic.commands.CommandTestUtil.TELEGRAM_DESC_AMY;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.AMY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,10 +18,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import loopin.projectbook.logic.commands.AddCommand;
 import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.ListCommand;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
@@ -162,8 +165,8 @@ public class LogicManagerTest {
         logic = new LogicManager(model, storage);
 
         // Triggers the saveProjectBook method by executing an add command
-        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        String addCommand = AddVolunteerCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + TELEGRAM_DESC_AMY;
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);
