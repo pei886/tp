@@ -24,6 +24,7 @@ import loopin.projectbook.logic.commands.personcommands.FindRoleCommand;
 import loopin.projectbook.logic.commands.personcommands.RemarkCommand;
 import loopin.projectbook.logic.commands.personcommands.ResolveRemarkCommand;
 import loopin.projectbook.logic.commands.projectcommands.ProjectAssignCommand;
+import loopin.projectbook.logic.commands.projectcommands.ProjectRemoveCommand;
 import loopin.projectbook.logic.commands.projectcommands.ProjectFindCommand;
 import loopin.projectbook.logic.commands.projectcommands.ProjectListCommand;
 import loopin.projectbook.logic.commands.projectcommands.ProjectRemoveCommand;
@@ -132,6 +133,8 @@ public class ProjectBookParser {
                 return new ProjectAssignCommandParser().parse(rest);
             case ProjectRemoveCommand.SUBCOMMAND:
                 return new ProjectRemoveCommandParser().parse(rest);
+            case ProjectDeleteCommand.SUBCOMMAND:
+                return new ProjectDeleteCommandParser().parse(" " + rest);
             case ViewProjectCommand.SUBCOMMAND:
                 return new ViewProjectCommandParser().parse(" " + rest);
             case ProjectListCommand.SUBCOMMAND:

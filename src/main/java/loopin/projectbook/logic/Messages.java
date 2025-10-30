@@ -19,6 +19,8 @@ public class Messages {
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
+    public static final String MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX = "The project index provided is invalid";
+    public static final String MESSAGE_PROJECT_NOT_FOUND_BY_NAME = "No project found with name: %s";
     public static final String MESSAGE_PROJECTS_LISTED_OVERVIEW = "%1$d project(s) listed!";
 
     /**
