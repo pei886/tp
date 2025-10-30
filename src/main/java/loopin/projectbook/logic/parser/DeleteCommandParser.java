@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.project.parser;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
