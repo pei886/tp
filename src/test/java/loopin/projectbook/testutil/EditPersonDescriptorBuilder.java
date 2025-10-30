@@ -2,7 +2,7 @@ package loopin.projectbook.testutil;
 
 import java.util.Optional;
 
-import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
+import loopin.projectbook.logic.commands.personcommands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;

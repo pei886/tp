@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.testutil.Assert.assertThrows;
@@ -16,9 +16,8 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import loopin.projectbook.commons.core.GuiSettings;
 import loopin.projectbook.logic.Messages;
+import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
-import loopin.projectbook.logic.commands.personcommands.AddCommand;
-import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.ReadOnlyProjectBook;

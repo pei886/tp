@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static loopin.projectbook.logic.commands.CommandTestUtil.*;
 import static loopin.projectbook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.Messages;
-import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
+import loopin.projectbook.logic.commands.ClearCommand;
+import loopin.projectbook.logic.commands.personcommands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.ProjectBook;

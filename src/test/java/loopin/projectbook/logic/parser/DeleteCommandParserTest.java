@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.parser.person;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -7,7 +7,7 @@ import static loopin.projectbook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
-import loopin.projectbook.logic.commands.DeleteCommand;
+import loopin.projectbook.logic.commands.personcommands.DeleteCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
