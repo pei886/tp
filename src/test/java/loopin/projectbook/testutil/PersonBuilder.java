@@ -14,7 +14,6 @@ import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 import loopin.projectbook.model.util.SampleDataUtil;
 
 /**
@@ -31,7 +30,6 @@ public class PersonBuilder {
     private Optional<Phone> phone;
     private Email email;
     private Optional<Telegram> telegram;
-    private Set<Tag> tags;
     private Set<Remark> remarks;
     private List<Project> projects;
 
@@ -43,7 +41,6 @@ public class PersonBuilder {
         phone = Optional.of(new Phone(DEFAULT_PHONE));
         email = new Email(DEFAULT_EMAIL);
         telegram = Optional.of(new Telegram(DEFAULT_TELEGRAM));
-        tags = new HashSet<>();
         remarks = new HashSet<>();
         projects = new ArrayList();
     }
@@ -56,7 +53,6 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         telegram = personToCopy.getTelegram();
-        tags = new HashSet<>(personToCopy.getTags());
         remarks = new HashSet<>(personToCopy.getRemarks());
         projects = new ArrayList(personToCopy.getProjects());
     }
@@ -94,14 +90,6 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
-     */
-    public PersonBuilder withTags(String... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
-        return this;
-    }
-
-    /**
      * Parses the {@code remarks} into a {@code Set<Remark>} and set it to the {@code Person} that we are building.
      */
     public PersonBuilder withRemarks(String ... remarks) {
@@ -113,6 +101,6 @@ public class PersonBuilder {
      * Returns a concrete {@code Person} object (Volunteer by default).
      */
     public Person build() {
-        return new Volunteer(name, phone, email, telegram, tags, remarks, projects);
+        return new Volunteer(name, phone, email, telegram, remarks, projects);
     }
 }
