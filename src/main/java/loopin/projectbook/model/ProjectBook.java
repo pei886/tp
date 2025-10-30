@@ -98,6 +98,11 @@ public class ProjectBook implements ReadOnlyProjectBook {
         requireNonNull(editedPerson);
 
         persons.setPerson(target, editedPerson);
+
+        // Automatically update all projects
+        for (Project project : target.getProjects()) {
+            project.updatePersonReference(target, editedPerson);
+        }
     }
 
     /**

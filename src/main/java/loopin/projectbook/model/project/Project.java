@@ -168,4 +168,20 @@ public class Project {
         recordUpdate(update);
     }
 
+    /**
+     * Updates the reference to a person in this project's memberships.
+     * Used when a person object is replaced (e.g., when editing).
+     *
+     * @param oldPerson the old person reference
+     * @param newPerson the new person reference
+     */
+    public void updatePersonReference(Person oldPerson, Person newPerson) {
+        for (int i = 0; i < memberships.size(); i++) {
+            if (memberships.get(i).getPerson().isSamePerson(oldPerson)) {
+                memberships.set(i, new Membership(newPerson));
+                break;
+            }
+        }
+    }
+
 }
