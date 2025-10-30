@@ -207,6 +207,8 @@ Format: `project delete project/PROJECTNAME`
 Example:
 `project delete project/Fundraising Drive
 
+* Deleting a project does not delete its associated persons.
+
 ### Viewing a project: `project view`
 
 Views the summary of an existing project and its participants.
@@ -216,9 +218,9 @@ Format: `project view project/PROJECTNAME`
 Example:
 `project view project/Beach Cleanup`
 Views a project named "Beach Cleanup" and lists:
-* Description of project
-* Contacts of volunteers, team members, and organisations
+* Name and description of project
 * Latest project updates
+* Contacts of volunteers, team members, and organisations
 
 ### Assigning a person to a project: `project assign`
 
