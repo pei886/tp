@@ -28,9 +28,9 @@ public class TeamMember extends Person {
      * Name, phome, email and committee must be present and non null.
      */
     public TeamMember(Name name, Committee committee, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
-            Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
+            Set<Remark> remarks, List<Project> projects) {
         super(name, new Role(RoleType.TEAMMEMBER, committee.getCommitteeName()), phone, email, telegram,
-                tags, remarks, projects);
+                remarks, projects);
         requireNonNull(committee);
         this.committee = committee;
     }
@@ -41,7 +41,7 @@ public class TeamMember extends Person {
 
     @Override
     public Person createCopy(Name name, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
-            Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
-        return new TeamMember(name, committee, phone, email, telegram, tags, remarks, projects);
+            Set<Remark> remarks, List<Project> projects) {
+        return new TeamMember(name, committee, phone, email, telegram, remarks, projects);
     }
 }
