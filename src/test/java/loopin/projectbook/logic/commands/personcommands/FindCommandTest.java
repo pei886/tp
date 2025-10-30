@@ -24,7 +24,6 @@ import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
 public class FindCommandTest {
-    private static final boolean IS_PERSON_VIEW = true;
     private Model model = new ModelManager(getTypicalProjectBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalProjectBook(), new UserPrefs());
 
@@ -61,7 +60,7 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredPersonList());
     }
 
@@ -71,7 +70,7 @@ public class FindCommandTest {
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
-        assertCommandSuccess(command, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredPersonList());
     }
 

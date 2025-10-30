@@ -19,7 +19,6 @@ import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Remark.Status;
 
 public class ResolveRemarkCommandTest {
-    private static final boolean IS_PERSON_VIEW = true;
 
     private Model model;
     private Person personWithRemark;
@@ -59,7 +58,7 @@ public class ResolveRemarkCommandTest {
         Person resolvedExpectedPerson = expectedPerson.withResolvedRemark(oldRemark, resolvedRemark);
         expectedModel.setPerson(expectedPerson, resolvedExpectedPerson);
 
-        assertCommandSuccess(resolveCommand, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
+        assertCommandSuccess(resolveCommand, model, expectedMessage, expectedModel);
 
         // Final check: the remark status in the actual model must be COMPLETED
         Person actualResolvedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());

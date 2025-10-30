@@ -20,7 +20,6 @@ import loopin.projectbook.model.person.Person;
  * {@code DeleteCommand}.
  */
 public class DeleteCommandTest {
-    private static final boolean IS_PERSON_VIEW = true;
 
     private Model model = new ModelManager(getTypicalProjectBook(), new UserPrefs());
 
@@ -35,7 +34,7 @@ public class DeleteCommandTest {
         ModelManager expectedModel = new ModelManager(model.getProjectBook(), new UserPrefs());
         expectedModel.deletePerson(personToDelete);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -60,7 +59,7 @@ public class DeleteCommandTest {
         expectedModel.deletePerson(personToDelete);
         showNoPerson(expectedModel);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
+        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
