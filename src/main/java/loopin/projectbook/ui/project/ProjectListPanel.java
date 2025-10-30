@@ -48,4 +48,8 @@ public class ProjectListPanel extends UiPart<Region> {
         }
     }
 
+    public void refresh() {
+        projectListView.refresh();
+    }
+
 }

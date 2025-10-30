@@ -126,7 +126,7 @@ public abstract class Person {
 
         // Update all associated projects
         for (Project project : this.projects) {
-            LastUpdate update = LastUpdate.remarkAdded(updatedPerson.getName(), newRemark.toString());
+            LastUpdate update = new LastUpdate().remarkAdded(name, newRemark.toString());
             project.recordUpdate(update);
         }
         return updatedPerson;
@@ -139,6 +139,12 @@ public abstract class Person {
         updatedPerson.remarks.addAll(this.remarks);
         updatedPerson.remarks.remove(oldRemark);
         updatedPerson.remarks.add(resolvedRemark);
+
+        // Update all associated projects
+        for (Project project : this.projects) {
+            LastUpdate update = LastUpdate.remarkResolved(updatedPerson.getName(), oldRemark.toString());
+            project.recordUpdate(update);
+        }
         return updatedPerson;
     }
 
@@ -148,7 +154,14 @@ public abstract class Person {
     public Person withRemarkRemoved(Remark remarkToRemove) {
         Set<Remark> updatedRemarks = new HashSet<>(this.remarks);
         updatedRemarks.remove(remarkToRemove);
-        return createCopy(name, phone, email, telegram, tags, updatedRemarks, projects);
+        Person updatedPerson = createCopy(name, phone, email, telegram, tags, updatedRemarks, projects);
+
+        // Update all associated projects
+        for (Project project : this.projects) {
+            LastUpdate update = LastUpdate.remarkResolved(updatedPerson.getName(), remarkToRemove.toString());
+            project.recordUpdate(update);
+        }
+        return updatedPerson;
     }
 
     /**

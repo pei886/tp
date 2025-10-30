@@ -214,6 +214,9 @@ public class MainWindow extends UiPart<Stage> {
                 showPersonList();
             }
 
+            //Refresh project list
+            projectListPanel.refresh();
+
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
