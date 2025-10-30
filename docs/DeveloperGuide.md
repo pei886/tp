@@ -658,8 +658,8 @@ testers are expected to do more *exploratory* testing.
 
 1. Adding a project while all projects are being shown
 
-    1. Test case: `project add n/Clean Beach`<br>
-       Expected: A new project named Clean Beach is added to the list with the correct timestamp. No last update and description is available.
+    1. Test case: `project add n/Clean Beach d/Cleaning the beach`<br>
+       Expected: A new project named Clean Beach is added to the list with the correct timestamp. No last update is available.
     2. Test case: `project add d/No name provided`<br>
        Expected: No project is added. Error message shown indicating that the name field is required. Status bar remains unchanged.
 
