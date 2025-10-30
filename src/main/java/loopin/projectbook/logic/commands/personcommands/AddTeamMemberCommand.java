@@ -54,4 +54,5 @@ public class AddTeamMemberCommand extends AddCommand {
             return super.equals(other);
         }
     }
+
 }
