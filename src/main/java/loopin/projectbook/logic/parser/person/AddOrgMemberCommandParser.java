@@ -5,7 +5,6 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ public class AddOrgMemberCommandParser implements Parser<AddOrgMemberCommand> {
     public AddOrgMemberCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ORGANISATION,
-                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG);
+                PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ORGANISATION, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {

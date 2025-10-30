@@ -15,7 +15,6 @@ import loopin.projectbook.model.person.Role;
 import loopin.projectbook.model.person.RoleType;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Represents a team member in the ProjectBook.
