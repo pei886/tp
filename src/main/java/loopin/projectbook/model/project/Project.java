@@ -28,7 +28,8 @@ public class Project {
     private final List<Membership> memberships = new ArrayList<>();
 
     /**
-     * Creates a new Project with the given id, name, and description.
+     * Creates a new Project with the given name and description.
+     * Uses current time as createdAt and default "no updates yet" status.
      *
      * @param name        name of the project
      * @param description short description of the project
@@ -39,6 +40,20 @@ public class Project {
         this.description = description;
         this.createdAt = LocalDateTime.now();
         this.lastUpdate = new LastUpdate();
+    }
+
+    /**
+     * Creates a new Project with the given id, name, and description.
+     *
+     * @param name        name of the project
+     * @param description short description of the project
+     */
+    public Project(ProjectName name, Description description, LocalDateTime createdAt, LastUpdate lastUpdate) {
+        requireAllNonNull(name, description);
+        this.name = name;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.lastUpdate = lastUpdate;
     }
 
     //    /** @return the unique ID of this project */
@@ -65,8 +80,12 @@ public class Project {
         this.lastUpdate = lastUpdate;
     }
 
-    public LastUpdate getLatestUpdate() {
+    public LastUpdate getLastUpdate() {
         return lastUpdate;
+    }
+
+    public String getLastUpdateAsString() {
+        return lastUpdate.toString();
     }
 
     /**
@@ -183,5 +202,21 @@ public class Project {
         return java.util.Objects.hash(getName(), getDescription());
     }
 
+
+    /**
+     * Updates the reference to a person in this project's memberships.
+     * Used when a person object is replaced (e.g., when editing).
+     *
+     * @param oldPerson the old person reference
+     * @param newPerson the new person reference
+     */
+    public void updatePersonReference(Person oldPerson, Person newPerson) {
+        for (int i = 0; i < memberships.size(); i++) {
+            if (memberships.get(i).getPerson().isSamePerson(oldPerson)) {
+                memberships.set(i, new Membership(newPerson));
+                break;
+            }
+        }
+    }
 
 }

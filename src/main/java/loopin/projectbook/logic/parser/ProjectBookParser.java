@@ -31,7 +31,7 @@ import loopin.projectbook.logic.commands.projectcommands.ProjectRemoveCommand;
 import loopin.projectbook.logic.commands.projectcommands.ViewProjectCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.logic.parser.person.AddOrgMemberCommandParser;
-import loopin.projectbook.logic.parser.person.AddProjectCommandParser;
+import loopin.projectbook.logic.parser.project.AddProjectCommandParser;
 import loopin.projectbook.logic.parser.person.AddTeamMemberCommandParser;
 import loopin.projectbook.logic.parser.person.AddVolunteerCommandParser;
 import loopin.projectbook.logic.parser.person.FindCommandParser;

@@ -43,7 +43,7 @@ public class ProjectCard extends UiPart<Region> {
     @FXML
     private Label createdAt;
     @FXML
-    private Label lastUpdate;
+    private Label lastUpdateMessage;
     @FXML
     private VBox membersContainer;
 
@@ -57,7 +57,7 @@ public class ProjectCard extends UiPart<Region> {
         name.setText(project.getName().fullName);
         description.setText(project.getDescription().toString());
         createdAt.setText(project.getCreatedAt().toString());
-        lastUpdate.setText(project.getLatestUpdate().toString());
+        lastUpdateMessage.setText(project.getLastUpdateAsString());
 
         populateMembersByRole();
 
