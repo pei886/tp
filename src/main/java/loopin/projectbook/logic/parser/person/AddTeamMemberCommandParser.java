@@ -31,7 +31,6 @@ import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Parses user input to create a new AddTeamMember object
@@ -72,11 +71,10 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
                 ? Optional.of(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()))
                 : Optional.empty();
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
-        Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Remark> remarks = new HashSet<Remark>();
         List<Project> projects = new ArrayList<Project>();
 
-        TeamMember member = new TeamMember(name, committee, phone, email, telegram, tags, remarks, projects);
+        TeamMember member = new TeamMember(name, committee, phone, email, telegram, remarks, projects);
 
 
         return new AddTeamMemberCommand(member);

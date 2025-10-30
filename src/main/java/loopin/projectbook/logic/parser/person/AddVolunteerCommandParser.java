@@ -28,7 +28,6 @@ import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddVolunteerCommand object
@@ -60,11 +59,10 @@ public class AddVolunteerCommandParser implements Parser<AddVolunteerCommand> {
                 argMultimap.getValue(PREFIX_TELEGRAM).isPresent()
                 ? Optional.of(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()))
                 : Optional.empty();
-        Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Remark> remarks = new HashSet<>();
         List<Project> projects = new ArrayList<>();
 
-        Volunteer volunteer = new Volunteer(name, phone, email, telegram, tags, remarks, projects);
+        Volunteer volunteer = new Volunteer(name, phone, email, telegram, remarks, projects);
 
         return new AddVolunteerCommand(volunteer);
     }

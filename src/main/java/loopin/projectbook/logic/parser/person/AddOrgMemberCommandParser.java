@@ -30,7 +30,6 @@ import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddOrgMemberCommand object
@@ -66,11 +65,10 @@ public class AddOrgMemberCommandParser implements Parser<AddOrgMemberCommand> {
                 argMultimap.getValue(PREFIX_TELEGRAM).isPresent()
                 ? Optional.of(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()))
                 : Optional.empty();
-        Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Remark> remarks = new HashSet<>();
         List<Project> projects = new ArrayList<>();
 
-        OrgMember orgMember = new OrgMember(name, organisation, phone, email, telegram, tags, remarks, projects);
+        OrgMember orgMember = new OrgMember(name, organisation, phone, email, telegram, remarks, projects);
 
         return new AddOrgMemberCommand(orgMember);
     }
