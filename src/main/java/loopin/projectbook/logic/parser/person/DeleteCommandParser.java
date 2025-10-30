@@ -3,7 +3,9 @@ package loopin.projectbook.logic.parser.person;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import loopin.projectbook.commons.core.index.Index;
-import loopin.projectbook.logic.commands.DeleteCommand;
+import loopin.projectbook.logic.commands.personcommands.DeleteCommand;
+import loopin.projectbook.logic.parser.Parser;
+import loopin.projectbook.logic.parser.ParserUtil;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
 /**

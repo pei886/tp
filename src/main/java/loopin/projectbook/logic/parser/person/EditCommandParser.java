@@ -12,8 +12,13 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import java.util.Optional;
 
 import loopin.projectbook.commons.core.index.Index;
-import loopin.projectbook.logic.commands.EditCommand;
-import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
+import loopin.projectbook.logic.commands.personcommands.EditCommand;
+import loopin.projectbook.logic.commands.personcommands.EditCommand.EditPersonDescriptor;
+import loopin.projectbook.logic.parser.ArgumentMultimap;
+import loopin.projectbook.logic.parser.ArgumentTokenizer;
+import loopin.projectbook.logic.parser.Parser;
+import loopin.projectbook.logic.parser.ParserUtil;
+import loopin.projectbook.logic.parser.Prefix;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
 /**

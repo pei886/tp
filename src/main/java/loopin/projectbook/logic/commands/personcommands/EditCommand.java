@@ -18,6 +18,8 @@ import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.commons.util.CollectionUtil;
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.logic.Messages;
+import loopin.projectbook.logic.commands.Command;
+import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Email;
