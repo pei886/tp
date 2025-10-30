@@ -14,7 +14,6 @@ import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.UserPrefs;
 import loopin.projectbook.model.person.RoleMatchesPredicate;
-import loopin.projectbook.model.person.Person;
 
 public class FindRoleCommandTest {
 
