@@ -56,7 +56,7 @@ public class LastUpdate {
     /**
      * Creates a LastUpdate for adding a remark to a member.
      */
-    public static LastUpdate remarkAdded(Name personName, String remark) {
+    public LastUpdate remarkAdded(Name personName, String remark) {
         String message = String.format("Added remark to %s: \"%s\"", personName, remark);
         return new LastUpdate(message);
     }
@@ -64,8 +64,8 @@ public class LastUpdate {
     /**
      * Creates a LastUpdate for completing a remark of a member.
      */
-    public static LastUpdate remarkCompleted(String personName, String remark) {
-        String message = String.format("Completed remark for %s: \"%s\"", personName, remark);
+    public static LastUpdate remarkResolved(Name personName, String remark) {
+        String message = String.format("Resolved remark for %s: \"%s\"", personName, remark);
         return new LastUpdate(message);
     }
 

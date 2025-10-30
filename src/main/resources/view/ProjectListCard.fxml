@@ -27,7 +27,7 @@
             </HBox>
             <Label fx:id="description" styleClass="cell_small_label" text="\$description" />
             <Label fx:id="createdAt" styleClass="cell_small_label" text="\$createdAt" />
-            <Label fx:id="lastUpdate" styleClass="cell_small_label" text="\$createdAt" />
+            <Label fx:id="lastUpdateMessage" styleClass="cell_small_label" text="\$lastUpdate" />
             <VBox fx:id="membersContainer" spacing="3" />
         </VBox>
     </GridPane>

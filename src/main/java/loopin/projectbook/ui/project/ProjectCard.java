@@ -43,7 +43,7 @@ public class ProjectCard extends UiPart<Region> {
     @FXML
     private Label createdAt;
     @FXML
-    private Label lastUpdate;
+    private Label lastUpdateMessage;
     @FXML
     private VBox membersContainer;
 
