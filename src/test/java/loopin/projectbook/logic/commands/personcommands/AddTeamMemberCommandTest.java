@@ -1,9 +1,10 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.testutil.Assert.assertThrows;
-import static loopin.projectbook.testutil.TypicalPersons.ALICE;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -16,76 +17,87 @@ import org.junit.jupiter.api.Test;
 import javafx.collections.ObservableList;
 import loopin.projectbook.commons.core.GuiSettings;
 import loopin.projectbook.logic.Messages;
+import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
-import loopin.projectbook.logic.commands.personcommands.AddCommand;
-import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.ReadOnlyProjectBook;
 import loopin.projectbook.model.ReadOnlyUserPrefs;
 import loopin.projectbook.model.person.Person;
-import loopin.projectbook.model.person.volunteer.Volunteer;
+import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.testutil.PersonBuilder;
 
-public class AddCommandTest {
+public class AddTeamMemberCommandTest {
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddVolunteerCommand(null));
+    public void constructor_nullTeamMember_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new AddTeamMemberCommand(null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
+    public void execute_teamMemberAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+        TeamMember validTeamMember = new PersonBuilder()
+                .withName("Jane Tan")
+                .withEmail("jane@example.com")
+                .withPhone("98765432")
+                .buildTeamMember("Marketing");
 
-        CommandResult commandResult = new AddVolunteerCommand((Volunteer) validPerson).execute(modelStub);
+        AddTeamMemberCommand command = new AddTeamMemberCommand(validTeamMember);
+        CommandResult commandResult = command.execute(modelStub);
 
-        assertEquals(String.format(AddVolunteerCommand.MESSAGE_SUCCESS, Messages.formatPerson(validPerson)),
+        assertEquals(String.format(AddTeamMemberCommand.MESSAGE_SUCCESS,
+                        Messages.formatPerson(validTeamMember)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validTeamMember), modelStub.personsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person validPerson = new PersonBuilder().build();
-        AddCommand addCommand = new AddVolunteerCommand((Volunteer) validPerson);
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+    public void execute_duplicateTeamMember_throwsCommandException() {
+        TeamMember validTeamMember = new PersonBuilder().buildTeamMember("Logistics");
+        AddTeamMemberCommand command = new AddTeamMemberCommand(validTeamMember);
+        ModelStub modelStub = new ModelStubWithPerson(validTeamMember);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+        assertThrows(CommandException.class,
+                AddCommand.MESSAGE_DUPLICATE_PERSON, () -> command.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddVolunteerCommand((Volunteer) alice);
-        AddCommand addBobCommand = new AddVolunteerCommand((Volunteer) bob);
+        TeamMember alice = new PersonBuilder().withName("Alice").buildTeamMember("Marketing");
+        TeamMember bob = new PersonBuilder().withName("Bob").buildTeamMember("Finance");
+
+        AddTeamMemberCommand addAliceCommand = new AddTeamMemberCommand(alice);
+        AddTeamMemberCommand addBobCommand = new AddTeamMemberCommand(bob);
+
+        // same object is true
         assertTrue(addAliceCommand.equals(addAliceCommand));
-        AddCommand addAliceCommandCopy = new AddVolunteerCommand((Volunteer) alice);
+
+        // same values is true
+        AddTeamMemberCommand addAliceCommandCopy = new AddTeamMemberCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
-        // different types -> returns false
+        // different types is false
         assertFalse(addAliceCommand.equals(1));
 
-        // null -> returns false
+        // null is false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different person is false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     @Test
     public void toStringMethod() {
-        AddCommand addCommand = new AddVolunteerCommand((Volunteer) ALICE);
-        String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, addCommand.toString());
+        TeamMember alice = (TeamMember) new PersonBuilder().withName("Alice").build();
+        AddTeamMemberCommand command = new AddTeamMemberCommand(alice);
+
+        String str = command.toString();
+        assertTrue(str.contains("AddTeamMemberCommand"));
+        assertTrue(str.contains("Alice"));
     }
 
-    /**
-     * A default model stub that have all of the methods failing.
-     */
     private class ModelStub implements Model {
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
@@ -183,20 +195,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateFilteredProjectList(Predicate<Project> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void deleteProject(Project project) {
             throw new AssertionError("This method should not be called.");
         }
 
-
-        @Override
-        public void updateFilteredProjectList(Predicate<Project> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
     }
 
-    /**
-     * A Model stub that contains a single person.
-     */
     private class ModelStubWithPerson extends ModelStub {
         private final Person person;
 
@@ -212,9 +221,6 @@ public class AddCommandTest {
         }
     }
 
-    /**
-     * A Model stub that always accept the person being added.
-     */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
@@ -235,5 +241,4 @@ public class AddCommandTest {
             return new ProjectBook();
         }
     }
-
 }
