@@ -1,7 +1,6 @@
 package loopin.projectbook.model.person;
 
 import static loopin.projectbook.logic.commands.CommandTestUtil.*;
-import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.ALICE;
 import static loopin.projectbook.testutil.TypicalPersons.BOB;
 import static org.junit.jupiter.api.Assertions.*;

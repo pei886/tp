@@ -5,8 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 import java.util.Optional;
 
-import loopin.projectbook.logic.Messages;
 import loopin.projectbook.commons.core.index.Index;
+import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.Command;
 import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
@@ -73,8 +73,12 @@ public class ProjectDeleteCommand extends Command {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) { return true; }
-        if (!(other instanceof ProjectDeleteCommand)) { return false; }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof ProjectDeleteCommand)) {
+            return false;
+        }
         ProjectDeleteCommand o = (ProjectDeleteCommand) other;
         return java.util.Objects.equals(targetIndex, o.targetIndex)
                 && java.util.Objects.equals(targetName, o.targetName);

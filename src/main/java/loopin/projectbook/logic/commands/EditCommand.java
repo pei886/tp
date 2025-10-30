@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import static loopin.projectbook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -22,16 +22,17 @@ import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.orgmember.Organisation;
-import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
-import loopin.projectbook.model.person.volunteer.Volunteer;
-import loopin.projectbook.model.project.Project;
+import loopin.projectbook.model.person.orgmember.OrgMember;
+import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
+import loopin.projectbook.model.person.volunteer.Volunteer;
+import loopin.projectbook.model.project.Project;
+
 
 /**
  * Edits the details of an existing person in the project book.
@@ -238,13 +239,21 @@ public class EditCommand extends Command {
             return Optional.ofNullable(telegram);
         }
 
-        public void setCommittee(Committee committee) { this.committee = committee; }
+        public void setCommittee(Committee committee) {
+            this.committee = committee;
+        }
 
-        public Optional<Committee> getCommittee() { return Optional.ofNullable(committee); }
+        public Optional<Committee> getCommittee() {
+            return Optional.ofNullable(committee);
+        }
 
-        public void setOrganisation(Organisation organisation) { this.organisation = organisation; }
+        public void setOrganisation(Organisation organisation) {
+            this.organisation = organisation;
+        }
 
-        public Optional<Organisation> getOrganisation() { return Optional.ofNullable(organisation); }
+        public Optional<Organisation> getOrganisation() {
+            return Optional.ofNullable(organisation);
+        }
 
         @Override
         public boolean equals(Object other) {
