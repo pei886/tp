@@ -129,7 +129,10 @@ public class EditCommand extends Command {
             }
             Committee updatedCommittee = editPersonDescriptor.getCommittee().orElse(teamMember.getCommittee());
 
-            return new TeamMember(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedCommittee);
+            return new TeamMember(
+                    updatedName, updatedCommittee, updatedPhone, updatedEmail, updatedTelegram, updatedTags,
+                    remarks, projects
+            );
 
         } else if (personToEdit instanceof OrgMember orgMember) {
             // person is an organisation member
@@ -140,12 +143,13 @@ public class EditCommand extends Command {
                     editPersonDescriptor.getOrganisation().orElse(orgMember.getOrganisation());
 
             return new OrgMember(
-                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram, updatedTags
+                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram, updatedTags,
+                    remarks, projects
             );
         }
 
         // person is a volunteer
-        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags, remarks, projects);
 
     }
 
