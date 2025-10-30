@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;

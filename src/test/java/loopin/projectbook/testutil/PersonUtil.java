@@ -9,7 +9,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 
 import java.util.Optional;
 
-import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
+import loopin.projectbook.logic.commands.personcommands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.orgmember.Organisation;

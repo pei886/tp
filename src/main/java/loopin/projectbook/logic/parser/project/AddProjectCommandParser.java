@@ -5,7 +5,7 @@ import static loopin.projectbook.logic.parser.CliSyntax.*;
 
 import java.util.stream.Stream;
 
-import loopin.projectbook.logic.commands.personcommands.AddProjectCommand;
+import loopin.projectbook.logic.commands.projectcommands.AddProjectCommand;
 import loopin.projectbook.logic.parser.ArgumentMultimap;
 import loopin.projectbook.logic.parser.ArgumentTokenizer;
 import loopin.projectbook.logic.parser.Parser;

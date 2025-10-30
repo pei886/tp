@@ -1,10 +1,10 @@
 package loopin.projectbook.logic.commands.projectcommands;
 
 import static java.util.Objects.requireNonNull;
+import static loopin.projectbook.logic.Messages.MESSAGE_AMBIGUOUS_NAME;
+import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static loopin.projectbook.logic.Messages.MESSAGE_NO_PERSON;
 import static loopin.projectbook.logic.Messages.MESSAGE_NO_PROJECT;
-import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static loopin.projectbook.logic.Messages.MESSAGE_AMBIGUOUS_NAME;
 
 import java.util.List;
 import java.util.Locale;

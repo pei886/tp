@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
