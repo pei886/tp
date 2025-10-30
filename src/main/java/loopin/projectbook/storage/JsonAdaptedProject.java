@@ -57,7 +57,7 @@ class JsonAdaptedProject {
         this.description = source.getDescription().toString();
         this.createdAt = source.getCreatedAt().toString();
 
-        LastUpdate lu = source.getLatestUpdate();
+        LastUpdate lu = source.getLastUpdate();
         if (lu != null && lu.hasUpdate()) {
             this.lastUpdateMessage = lu.getUpdateMessage();
             this.lastUpdateTimestamp = lu.getTimestamp().toString();
