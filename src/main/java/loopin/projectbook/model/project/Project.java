@@ -149,4 +149,39 @@ public class Project {
         recordUpdate(update);
     }
 
+    public boolean isSameProject(Project other) {
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        return normalizeName(this.getName().fullName)
+                .equals(normalizeName(other.getName().fullName));
+    }
+
+    /** Normalizes a name for identity comparison: trim, collapse spaces, lowercase. */
+    private static String normalizeName(String s) {
+        return s == null ? "" : s.trim().replaceAll("\\s+", " ").toLowerCase();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Project)) {
+            return false;
+        }
+        Project other = (Project) o;
+        return this.getName().equals(other.getName())
+                && this.getDescription().equals(other.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(getName(), getDescription());
+    }
+
+
 }
