@@ -46,8 +46,7 @@ public class Messages {
                 .append("; Email: ")
                 .append(person.getEmail())
                 .append("; Telegram: ")
-                .append(person.getTelegram().map(p -> p.value).orElse("nil"))
-                .append("; Tags: ");
+                .append(person.getTelegram().map(p -> p.value).orElse("nil"));
         return builder.toString();
     }
 
