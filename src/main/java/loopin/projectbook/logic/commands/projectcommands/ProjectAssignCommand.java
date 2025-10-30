@@ -2,12 +2,7 @@ package loopin.projectbook.logic.commands.projectcommands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import loopin.projectbook.commons.core.index.Index;
-import loopin.projectbook.logic.commands.Command;
 import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;

@@ -14,6 +14,11 @@ public class Committee {
 
     public final String committeeName;
 
+    /**
+     * Constructs a {@code Committee}.
+     *
+     * @param committee A valid committee.
+     */
     public Committee(String committee) {
         requireNonNull(committee);
         this.committeeName = committee;

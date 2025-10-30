@@ -12,7 +12,6 @@ import static loopin.projectbook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.commons.util.CollectionUtil;
@@ -26,15 +25,12 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
-import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.person.volunteer.Volunteer;
-import loopin.projectbook.model.project.Project;
-
 
 /**
  * Edits fields of an existing {@link Person} in the project book.
@@ -233,18 +229,6 @@ public class EditCommand extends Command {
 
         public EditPersonDescriptor() {}
 
-        /** Returns updated value if the descriptor specifies it; otherwise returns current. */
-        public Optional<Phone> phoneOr(Optional<Phone> current) { return phone != null ? phone : current; }
-
-        /** Returns updated value if the descriptor specifies it; otherwise returns current. */
-        public Optional<Telegram> telegramOr(Optional<Telegram> current) {
-            return telegram != null ? telegram : current;
-        }
-
-        public Name nameOr(Name current) { return name != null ? name : current; }
-
-        public Email emailOr(Email current) { return email != null ? email : current; }
-
         /**
          * Copy constructor.
          */
@@ -255,6 +239,24 @@ public class EditCommand extends Command {
             setTelegram(toCopy.telegram);
             setCommittee(toCopy.committee);
             setOrganisation(toCopy.organisation);
+        }
+
+        /** Returns updated value if the descriptor specifies it; otherwise returns current. */
+        public Optional<Phone> phoneOr(Optional<Phone> current) {
+            return phone != null ? phone : current;
+        }
+
+        /** Returns updated value if the descriptor specifies it; otherwise returns current. */
+        public Optional<Telegram> telegramOr(Optional<Telegram> current) {
+            return telegram != null ? telegram : current;
+        }
+
+        public Name nameOr(Name current) {
+            return name != null ? name : current;
+        }
+
+        public Email emailOr(Email current) {
+            return email != null ? email : current;
         }
 
         /**
@@ -285,20 +287,27 @@ public class EditCommand extends Command {
         }
 
         /** Returns true iff the descriptor explicitly includes a phone edit (present or explicit removal). */
-        public boolean hasPhoneEdit() { return phone != null; }
+        public boolean hasPhoneEdit() {
+            return phone != null;
+        }
 
         /** Returns the edited phone value when present; empty = explicit removal. Undefined if !hasPhoneEdit(). */
-        public Optional<Phone> editedPhone() { return phone; }
+        public Optional<Phone> editedPhone() {
+            return phone;
+        }
 
         /** Returns true iff the descriptor explicitly includes a telegram edit (present or explicit removal). */
-        public boolean hasTelegramEdit() { return telegram != null; }
+        public boolean hasTelegramEdit() {
+            return telegram != null;
+        }
 
         /**
          * Returns the edited telegram value when present;
          * empty = explicit removal. Undefined if !hasTelegramEdit().
          */
-        public Optional<Telegram> editedTelegram() { return telegram; }
-
+        public Optional<Telegram> editedTelegram() {
+            return telegram;
+        }
 
         public void setTelegram(Optional<Telegram> telegram) {
             this.telegram = telegram;

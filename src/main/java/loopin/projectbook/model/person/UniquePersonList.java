@@ -85,6 +85,19 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Replaces the contents of this list with {@code persons}.
+     * {@code persons} must not contain duplicate persons.
+     */
+    public void setPersons(List<Person> persons) {
+        requireAllNonNull(persons);
+        if (!personsAreUnique(persons)) {
+            throw new DuplicatePersonException();
+        }
+
+        internalList.setAll(persons);
+    }
+
+    /**
      * Replaces the existing person equal to {@code target} with {@code target} itself.
      *
      * Note: This is useful when the same {@code Person} instance has been mutated
@@ -102,19 +115,6 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.set(index, target);
-    }
-
-    /**
-     * Replaces the contents of this list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
-     */
-    public void setPersons(List<Person> persons) {
-        requireAllNonNull(persons);
-        if (!personsAreUnique(persons)) {
-            throw new DuplicatePersonException();
-        }
-
-        internalList.setAll(persons);
     }
 
     /**
