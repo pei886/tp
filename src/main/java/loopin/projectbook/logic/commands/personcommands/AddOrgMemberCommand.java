@@ -14,15 +14,15 @@ import loopin.projectbook.model.person.orgmember.OrgMember;
 public class AddOrgMemberCommand extends AddCommand {
 
     public static final String COMMAND_WORD = "addo";
-    public static final String MESSAGE_SUCCESS = "New Organisation Member added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New organisation member added: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an organisation member to the project book. "
-            + "Parameters: "
+            + "\nParameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_ORGANISATION + "ORGANISATION "
             + "[" + PREFIX_PHONE + "PHONE] "
             + PREFIX_EMAIL + "EMAIL "
             + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
-            + "Example: " + COMMAND_WORD + " "
+            + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Shi Wei "
             + PREFIX_ORGANISATION + "Eventive Solutions "
             + PREFIX_PHONE + "98381263 "

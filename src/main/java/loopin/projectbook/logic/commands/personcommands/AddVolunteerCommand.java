@@ -15,12 +15,12 @@ public class AddVolunteerCommand extends AddCommand {
     public static final String COMMAND_WORD = "addv";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a volunteer to the project book. "
-            + "Parameters: "
+            + "\nParameters: "
             + PREFIX_NAME + "NAME "
             + "[" + PREFIX_PHONE + "PHONE] "
             + PREFIX_EMAIL + "EMAIL "
             + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
-            + "Example: " + COMMAND_WORD + " "
+            + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
