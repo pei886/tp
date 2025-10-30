@@ -139,6 +139,7 @@ final class ProjectMemberTestUtil {
         @Override public void deletePerson(Person target) {}
         @Override public void addPerson(Person person) { persons.add(person); }
         @Override public void setPerson(Person target, Person editedPerson) {}
+        @Override public void setPersonInPlace(Person person) {}
 
         // ----- Project ops (unused in these tests) -----
         @Override public boolean hasProject(Project project) { return false; }
