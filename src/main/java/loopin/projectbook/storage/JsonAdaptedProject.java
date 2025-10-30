@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import loopin.projectbook.commons.exceptions.IllegalValueException;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Description;
+import loopin.projectbook.model.project.LastUpdate;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;
 
@@ -24,7 +25,8 @@ class JsonAdaptedProject {
     private final String description;
     private final List<String> members = new ArrayList<>();
     private final LocalDateTime createdAt;
-    //    private final LocalDateTime updatedAt;
+    private final String lastUpdateMessage;
+    private final LocalDateTime lastUpdateTimestamp;
 
     /**
      * Constructs a {@code JsonAdaptedProject} with the given project details.
@@ -34,12 +36,13 @@ class JsonAdaptedProject {
                               @JsonProperty("description") String description,
                               @JsonProperty("members") List<String> members,
                               @JsonProperty("createdAt") LocalDateTime createdAt,
-                              @JsonProperty("updatedAt") LocalDateTime updatedAt) {
+                              @JsonProperty("lastUpdateMessage") String lastUpdateMessage,
+                              @JsonProperty("lastUpdateTimestamp") LocalDateTime lastUpdateTimestamp) {
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
-        //        this.updatedAt = updatedAt;
-
+        this.lastUpdateMessage = lastUpdateMessage;
+        this.lastUpdateTimestamp = lastUpdateTimestamp;
         if (members != null) {
             this.members.addAll(members);
         }
@@ -52,7 +55,10 @@ class JsonAdaptedProject {
         name = source.getName().toString();
         description = source.getDescription().toString();
         createdAt = source.getCreatedAt();
-        //        updatedAt = source.getUpdatedAt();
+
+        LastUpdate update = source.getLastUpdate();
+        this.lastUpdateMessage = update.getUpdateMessage();
+        this.lastUpdateTimestamp = update.getTimestamp();
 
         for (Person p : source.getAllPeople()) {
             this.members.add(p.getEmail().value);
@@ -83,7 +89,14 @@ class JsonAdaptedProject {
         }
         final Description modelDescription = new Description(description);
 
-        return new Project(modelName, modelDescription);
+        LastUpdate modelLastUpdate;
+        if (lastUpdateMessage != null && lastUpdateTimestamp != null) {
+            modelLastUpdate = new LastUpdate(lastUpdateMessage, lastUpdateTimestamp);
+        } else {
+            modelLastUpdate = new LastUpdate();
+        }
+
+        return new Project(modelName, modelDescription, createdAt, modelLastUpdate);
     }
 
     public String getName() {

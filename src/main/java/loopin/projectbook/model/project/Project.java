@@ -33,12 +33,12 @@ public class Project {
      * @param name        name of the project
      * @param description short description of the project
      */
-    public Project(ProjectName name, Description description) {
+    public Project(ProjectName name, Description description, LocalDateTime createdAt, LastUpdate lastUpdate) {
         requireAllNonNull(name, description);
         this.name = name;
         this.description = description;
-        this.createdAt = LocalDateTime.now();
-        this.lastUpdate = new LastUpdate();
+        this.createdAt = createdAt;
+        this.lastUpdate = lastUpdate;
     }
 
     //    /** @return the unique ID of this project */
@@ -65,7 +65,7 @@ public class Project {
         this.lastUpdate = lastUpdate;
     }
 
-    public LastUpdate getLatestUpdate() {
+    public LastUpdate getLastUpdate() {
         return lastUpdate;
     }
 
