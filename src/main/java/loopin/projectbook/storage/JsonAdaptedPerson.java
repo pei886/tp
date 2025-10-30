@@ -24,7 +24,6 @@ import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -38,7 +37,6 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String telegram;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<JsonAdaptedProject> projects = new ArrayList<>(); // Renamed for clarity
     private final List<JsonAdaptedRemark> remarks = new ArrayList<>();
 
@@ -51,7 +49,6 @@ class JsonAdaptedPerson {
                              @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email,
                              @JsonProperty("telegram") String telegram,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
                              @JsonProperty("remarks") List<JsonAdaptedRemark> remarks,
                              @JsonProperty("projects") List<JsonAdaptedProject> projects) {
         this.name = name;
@@ -59,9 +56,7 @@ class JsonAdaptedPerson {
         this.phone = phone;
         this.email = email;
         this.telegram = telegram;
-        if (tags != null) {
-            this.tags.addAll(tags);
-        }
+
         if (projects != null) {
             this.projects.addAll(projects);
         }
@@ -79,9 +74,6 @@ class JsonAdaptedPerson {
         phone = source.getPhone().map(phone -> phone.value).orElse(null);
         email = source.getEmail().value;
         telegram = source.getTelegram().map(telegram -> telegram.value).orElse(null);
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
         projects.addAll(source.getProjects().stream()
                 .map(JsonAdaptedProject::new)
                 .collect(Collectors.toList()));
@@ -96,10 +88,6 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
-        }
 
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -135,8 +123,6 @@ class JsonAdaptedPerson {
             modelTelegram = Optional.of(new Telegram(telegram));
         }
 
-        final Set<Tag> modelTags = new HashSet<>(personTags);
-
         // Remarks
         final Set<Remark> modelRemarks = new HashSet<>();
         for (JsonAdaptedRemark remark : remarks) {
@@ -153,15 +139,15 @@ class JsonAdaptedPerson {
         switch (modelRole[0]) {
         case "Volunteer":
             return new Volunteer(modelName, modelPhone, modelEmail, modelTelegram,
-                    modelTags, modelRemarks, modelProjects);
+                    modelRemarks, modelProjects);
         case "Committee:":
             final Committee modelCommittee = new Committee(modelRole[1]);
             return new TeamMember(modelName, modelCommittee, modelPhone, modelEmail, modelTelegram,
-                    modelTags, modelRemarks, modelProjects);
+                    modelRemarks, modelProjects);
         case "Organisation:":
             final Organisation modelOrganisation = new Organisation(modelRole[1]);
             return new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTelegram,
-                    modelTags, modelRemarks, modelProjects);
+                    modelRemarks, modelProjects);
         default:
             assert false;
             throw new IllegalValueException("Unknown role: " + role);
