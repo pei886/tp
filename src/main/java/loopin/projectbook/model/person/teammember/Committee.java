@@ -1,5 +1,7 @@
 package loopin.projectbook.model.person.teammember;
 
+import static java.util.Objects.requireNonNull;
+
 /**
  * Represents a committee to which a {@code TeamMember} belongs in the project book.
  * A {@code Committee} is identified by its name.
@@ -13,6 +15,7 @@ public class Committee {
     public final String committeeName;
 
     public Committee(String committee) {
+        requireNonNull(committee);
         this.committeeName = committee;
     }
 
