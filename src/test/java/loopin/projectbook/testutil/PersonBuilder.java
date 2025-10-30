@@ -73,7 +73,7 @@ public class PersonBuilder {
      * Sets the {@code Phone} of the {@code Person} that we are building.
      */
     public PersonBuilder withPhone(String phone) {
-        this.phone = Optional.of(new Phone(phone));
+        this.phone = Optional.ofNullable(phone).map(p -> new Phone(p));
         return this;
     }
 
@@ -89,7 +89,7 @@ public class PersonBuilder {
      * Sets the {@code Telegram} of the {@code Person} that we are building.
      */
     public PersonBuilder withTelegram(String telegram) {
-        this.telegram = Optional.of(new Telegram(telegram));
+        this.telegram = Optional.ofNullable(telegram).map(t -> new Telegram(t));
         return this;
     }
 
@@ -124,6 +124,9 @@ public class PersonBuilder {
         return new OrgMember(name, organisation, phone, email, telegram, remarks, projects);
     }
 
+    /**
+     * Builds and returns a {@code Volunteer}.
+     */
     public Volunteer buildVolunteer() {
         return new Volunteer(name, phone, email, telegram, remarks, projects);
     }
