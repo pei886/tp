@@ -24,9 +24,9 @@ class JsonAdaptedProject {
     private final String name;
     private final String description;
     private final List<String> members = new ArrayList<>();
-    private final LocalDateTime createdAt;
+    private final String createdAt;
     private final String lastUpdateMessage;
-    private final LocalDateTime lastUpdateTimestamp;
+    private final String lastUpdateTimestamp;
 
     /**
      * Constructs a {@code JsonAdaptedProject} with the given project details.
@@ -35,14 +35,15 @@ class JsonAdaptedProject {
     public JsonAdaptedProject(@JsonProperty("name") String name,
                               @JsonProperty("description") String description,
                               @JsonProperty("members") List<String> members,
-                              @JsonProperty("createdAt") LocalDateTime createdAt,
+                              @JsonProperty("createdAt") String createdAt,
                               @JsonProperty("lastUpdateMessage") String lastUpdateMessage,
-                              @JsonProperty("lastUpdateTimestamp") LocalDateTime lastUpdateTimestamp) {
+                              @JsonProperty("lastUpdateTimestamp") String lastUpdateTimestamp) {
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
         this.lastUpdateMessage = lastUpdateMessage;
         this.lastUpdateTimestamp = lastUpdateTimestamp;
+
         if (members != null) {
             this.members.addAll(members);
         }
@@ -52,17 +53,23 @@ class JsonAdaptedProject {
      * Converts a given {@code Project} into this class for Jackson use.
      */
     public JsonAdaptedProject(Project source) {
-        name = source.getName().toString();
-        description = source.getDescription().toString();
-        createdAt = source.getCreatedAt();
+        this.name = source.getName().toString();
+        this.description = source.getDescription().toString();
+        this.createdAt = source.getCreatedAt().toString();
 
-        LastUpdate update = source.getLastUpdate();
-        this.lastUpdateMessage = update.getUpdateMessage();
-        this.lastUpdateTimestamp = update.getTimestamp();
+        LastUpdate lu = source.getLastUpdate();
+        if (lu != null && lu.hasUpdate()) {
+            this.lastUpdateMessage = lu.getUpdateMessage();
+            this.lastUpdateTimestamp = lu.getTimestamp().toString();
+        } else {
+            this.lastUpdateMessage = null;
+            this.lastUpdateTimestamp = null;
+        }
 
         for (Person p : source.getAllPeople()) {
             this.members.add(p.getEmail().value);
         }
+
     }
 
     /**
@@ -89,14 +96,19 @@ class JsonAdaptedProject {
         }
         final Description modelDescription = new Description(description);
 
-        LastUpdate modelLastUpdate;
-        if (lastUpdateMessage != null && lastUpdateTimestamp != null) {
-            modelLastUpdate = new LastUpdate(lastUpdateMessage, lastUpdateTimestamp);
-        } else {
-            modelLastUpdate = new LastUpdate();
-        }
+        // createdAt: prefer stored value; fallback for legacy data
+        final LocalDateTime modelCreatedAt =
+                createdAt != null && !createdAt.isEmpty()
+                        ? LocalDateTime.parse(createdAt)
+                        : LocalDateTime.now();
 
-        return new Project(modelName, modelDescription, createdAt, modelLastUpdate);
+        // lastUpdate: reconstruct if both fields exist; else default
+        final LastUpdate modelLastUpdate =
+                lastUpdateMessage != null && lastUpdateTimestamp != null
+                        ? new LastUpdate(lastUpdateMessage, LocalDateTime.parse(lastUpdateTimestamp))
+                        : new LastUpdate();
+
+        return new Project(modelName, modelDescription, modelCreatedAt, modelLastUpdate);
     }
 
     public String getName() {

@@ -12,6 +12,10 @@ import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.orgmember.OrgMember;
+import loopin.projectbook.model.person.orgmember.Organisation;
+import loopin.projectbook.model.person.teammember.Committee;
+import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.util.SampleDataUtil;
@@ -101,6 +105,26 @@ public class PersonBuilder {
      * Returns a concrete {@code Person} object (Volunteer by default).
      */
     public Person build() {
+        return new Volunteer(name, phone, email, telegram, remarks, projects);
+    }
+
+    /**
+     * Builds and returns a {@code TeamMember} with the given committee name.
+     */
+    public TeamMember buildTeamMember(String committeeName) {
+        Committee committee = new Committee(committeeName);
+        return new TeamMember(name, committee, phone, email, telegram, remarks, projects);
+    }
+
+    /**
+     * Builds and returns a {@code OrgMember} with the given organisation name.
+     */
+    public OrgMember buildOrgMember(String organisationName) {
+        Organisation organisation = new Organisation(organisationName);
+        return new OrgMember(name, organisation, phone, email, telegram, remarks, projects);
+    }
+
+    public Volunteer buildVolunteer() {
         return new Volunteer(name, phone, email, telegram, remarks, projects);
     }
 }

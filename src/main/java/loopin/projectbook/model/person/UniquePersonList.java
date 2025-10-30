@@ -85,6 +85,26 @@ public class UniquePersonList implements Iterable<Person> {
     }
 
     /**
+     * Replaces the existing person equal to {@code target} with {@code target} itself.
+     *
+     * Note: This is useful when the same {@code Person} instance has been mutated
+     * (e.g., updated fields) and needs to refresh bindings in the observable list.
+     *
+     * @param target updated person instance; must not be {@code null}
+     * @throws PersonNotFoundException if no equivalent person is present
+     */
+    public void setPersonInPlace(Person target) {
+        requireNonNull(target);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+
+        internalList.set(index, target);
+    }
+
+    /**
      * Replaces the contents of this list with {@code persons}.
      * {@code persons} must not contain duplicate persons.
      */

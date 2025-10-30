@@ -43,13 +43,14 @@ public class Project {
     }
 
     /**
-     * Creates a new Project with the given id, name, and description.
+     * Constructs a {@code Project} with the specified name, description, and creation timestamp.
+     * Used when loading projects from persistent storage to preserve original creation dates.
      *
      * @param name        name of the project
      * @param description short description of the project
      */
     public Project(ProjectName name, Description description, LocalDateTime createdAt, LastUpdate lastUpdate) {
-        requireAllNonNull(name, description);
+        requireAllNonNull(name, description, createdAt, lastUpdate);
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
@@ -167,6 +168,49 @@ public class Project {
         LastUpdate update = LastUpdate.memberRemoved(p);
         recordUpdate(update);
     }
+
+    /**
+     * Returns true if both projects have the same normalized name.
+     * This defines a weaker notion of equality between two projects.
+     */
+    public boolean isSameProject(Project other) {
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        return normalizeName(this.getName().fullName)
+                .equals(normalizeName(other.getName().fullName));
+    }
+
+    /** Normalizes a name for identity comparison: trim, collapse spaces, lowercase. */
+    private static String normalizeName(String s) {
+        return s == null ? "" : s.trim().replaceAll("\\s+", " ").toLowerCase();
+    }
+
+    /**
+     * Returns true if both projects have the same name and description.
+     * This defines a stronger notion of equality between two projects.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Project)) {
+            return false;
+        }
+        Project other = (Project) o;
+        return this.getName().equals(other.getName())
+                && this.getDescription().equals(other.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(getName(), getDescription());
+    }
+
 
     /**
      * Updates the reference to a person in this project's memberships.

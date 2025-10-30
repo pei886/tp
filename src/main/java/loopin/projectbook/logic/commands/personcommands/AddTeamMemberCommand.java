@@ -19,13 +19,13 @@ public class AddTeamMemberCommand extends AddCommand {
     public static final String COMMAND_WORD = "addt";
     public static final String MESSAGE_SUCCESS = "New team member added: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a team member to the project book. "
-            + "Parameters: "
+            + "\nParameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_COMMITEE + "COMMITTEE "
             + "[" + PREFIX_PHONE + "PHONE] "
             + PREFIX_EMAIL + "EMAIL "
             + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
-            + "Example: " + COMMAND_WORD + " "
+            + "\nExample: " + COMMAND_WORD + " "
             + PREFIX_NAME + "Jane Doe "
             + PREFIX_COMMITEE + "Operations "
             + PREFIX_PHONE + "98765432 "
@@ -54,4 +54,5 @@ public class AddTeamMemberCommand extends AddCommand {
             return super.equals(other);
         }
     }
+
 }

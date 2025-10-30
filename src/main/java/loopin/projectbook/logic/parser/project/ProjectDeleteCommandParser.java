@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.util.Optional;
-
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.projectcommands.ProjectDeleteCommand;
 import loopin.projectbook.logic.parser.ArgumentMultimap;
@@ -15,10 +13,11 @@ import loopin.projectbook.logic.parser.ParserUtil;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new ProjectDeleteCommand object.
- * Accepts either:
- *   - a single positional index, or
- *   - n/NAME
+ * Parses input arguments and creates a new {@link ProjectDeleteCommand}.
+ *
+ * Forms:
+ *   INDEX
+ *   n/NAME
  */
 public class ProjectDeleteCommandParser implements Parser<ProjectDeleteCommand> {
 
@@ -26,31 +25,37 @@ public class ProjectDeleteCommandParser implements Parser<ProjectDeleteCommand> 
     public ProjectDeleteCommand parse(String args) throws ParseException {
         requireNonNull(args);
 
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME);
+        ArgumentMultimap map = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
 
-        Optional<String> nameOpt = argMultimap.getValue(PREFIX_NAME);
-        if (nameOpt.isPresent()) {
-            String name = nameOpt.get().trim();
+        if (map.getValue(PREFIX_NAME).isPresent()) {
+            String name = map.getValue(PREFIX_NAME).get().trim();
             if (name.isEmpty()) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        ProjectDeleteCommand.MESSAGE_USAGE));
+                throw usageError();
             }
             return new ProjectDeleteCommand(name);
         }
 
-        String preamble = argMultimap.getPreamble().trim();
+        String preamble = map.getPreamble().trim();
         if (preamble.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ProjectDeleteCommand.MESSAGE_USAGE));
+            throw usageError();
         }
 
+        Index index = parseIndexOrUsage(preamble);
+        return new ProjectDeleteCommand(index);
+    }
+
+    // ---- helpers ----
+
+    private static ParseException usageError() {
+        return new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ProjectDeleteCommand.MESSAGE_USAGE));
+    }
+
+    private static Index parseIndexOrUsage(String preamble) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(preamble);
-            return new ProjectDeleteCommand(index);
+            return ParserUtil.parseIndex(preamble);
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ProjectDeleteCommand.MESSAGE_USAGE));
+            throw usageError();
         }
     }
 }

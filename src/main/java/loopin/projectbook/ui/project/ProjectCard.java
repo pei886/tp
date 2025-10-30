@@ -56,7 +56,8 @@ public class ProjectCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(project.getName().fullName);
         description.setText(project.getDescription().toString());
-        createdAt.setText(project.getCreatedAt().toString());
+        createdAt.setText(project.getCreatedAt()
+                .format(java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm")));
         lastUpdateMessage.setText(project.getLastUpdateAsString());
 
         populateMembersByRole();

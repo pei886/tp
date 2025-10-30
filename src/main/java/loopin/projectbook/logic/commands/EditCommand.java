@@ -35,7 +35,17 @@ import loopin.projectbook.model.project.Project;
 
 
 /**
- * Edits the details of an existing person in the project book.
+ * Edits fields of an existing {@link Person} in the project book.
+ *
+ * Usage:
+ * {@code
+ * edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [tg/TELEGRAM] [c/COMMITTEE] [o/ORGANISATION]
+ * }
+ *
+ * Role-specific constraints:
+ *   - {@link TeamMember} cannot edit Organisation.
+ *   - {@link OrgMember} cannot edit Committee.
+ *   - {@link Volunteer} cannot edit role-specific fields (Committee/Organisation).
  */
 public class EditCommand extends Command {
 
@@ -64,8 +74,10 @@ public class EditCommand extends Command {
     private final EditPersonDescriptor editPersonDescriptor;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * Constructs an {@code EditCommand}.
+     *
+     * @param index index of the person in the filtered person list to edit
+     * @param editPersonDescriptor details to edit the person with; at least one field must be present
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
@@ -84,6 +96,10 @@ public class EditCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
+        if (!editPersonDescriptor.isAnyFieldEdited()) {
+            throw new CommandException(MESSAGE_NOT_EDITED);
+        }
+
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
@@ -97,57 +113,84 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates and returns a new {@code Person} object (or one of its subclasses with updated field values based on
-     * the provided {@code EditPersonDescriptor}.
+     * Creates and returns a new {@link Person} (or subclass) based on {@code original} and {@code edits}.
      *
-     * @param personToEdit the existing {@code Person} to be edited
-     * @param editPersonDescriptor the {@code EditPersonDescriptor} containing optional updated values
-     * @return a new {@code Person} (or subclass) instance with applied edits
-     * @throws CommandException if a field inappropriate for the person’s role is supplied
+     * SLAP steps:
+     *   - Assemble common fields
+     *   - Enforce role-specific constraints
+     *   - Construct the correct subclass
+     *
+     * @param original existing person to edit; must not be {@code null}
+     * @param edits optional updates to apply
+     * @return updated {@link Person}
+     * @throws CommandException if role-specific constraints are violated
      */
-    private static Person createEditedPerson(
-            Person personToEdit, EditPersonDescriptor editPersonDescriptor
-    ) throws CommandException {
-        assert personToEdit != null;
+    private static Person createEditedPerson(Person original, EditPersonDescriptor edits) throws CommandException {
+        assert original != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Optional<Phone> updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Optional<Telegram> updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
-        Set<Remark> remarks = personToEdit.getRemarks();
-        List<Project> projects = personToEdit.getProjects();
+        // Assemble common fields
+        Name name = edits.nameOr(original.getName());
+        Optional<Phone> phone = edits.phoneOr(original.getPhone());
+        Email email = edits.emailOr(original.getEmail());
+        Optional<Telegram> telegram = edits.telegramOr(original.getTelegram());
 
-        if (personToEdit instanceof TeamMember teamMember) {
-            // person is a team member
-            if (editPersonDescriptor.getOrganisation().isPresent()) {
-                throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
-            }
-            Committee updatedCommittee = editPersonDescriptor.getCommittee().orElse(teamMember.getCommittee());
+        var remarks = original.getRemarks();
+        var projects = original.getProjects();
 
+        // Role-specific branching
+        if (original instanceof TeamMember tm) {
+            ensureNoOrganisationForTeamMember(edits);
             return new TeamMember(
-                    updatedName, updatedCommittee, updatedPhone, updatedEmail, updatedTelegram,
-                    remarks, projects
+                    name,
+                    edits.getCommittee().orElse(tm.getCommittee()),
+                    phone, email, telegram, remarks, projects
             );
-
-        } else if (personToEdit instanceof OrgMember orgMember) {
-            // person is an organisation member
-            if (editPersonDescriptor.getCommittee().isPresent()) {
-                throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
-            }
-            Organisation updatedOrganisation =
-                    editPersonDescriptor.getOrganisation().orElse(orgMember.getOrganisation());
-
+        }
+        if (original instanceof OrgMember om) {
+            ensureNoCommitteeForOrgMember(edits);
             return new OrgMember(
-                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram,
-                    remarks, projects
+                    name,
+                    edits.getOrganisation().orElse(om.getOrganisation()),
+                    phone, email, telegram, remarks, projects
             );
         }
 
-        // person is a volunteer
-        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram,
-                remarks, projects
-        );
+        // Volunteer
+        ensureNoRoleOnlyFieldsForVolunteer(edits);
+        return new Volunteer(name, phone, email, telegram, remarks, projects);
+    }
 
+    /**
+     * Ensures that {@code organisation} is not edited for a {@link TeamMember}.
+     *
+     * @throws CommandException if {@code organisation} is present
+     */
+    private static void ensureNoOrganisationForTeamMember(EditPersonDescriptor edits) throws CommandException {
+        if (edits.getOrganisation().isPresent()) {
+            throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
+        }
+    }
+
+    /**
+     * Ensures that {@code committee} is not edited for an {@link OrgMember}.
+     *
+     * @throws CommandException if {@code committee} is present
+     */
+    private static void ensureNoCommitteeForOrgMember(EditPersonDescriptor edits) throws CommandException {
+        if (edits.getCommittee().isPresent()) {
+            throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
+        }
+    }
+
+    /**
+     * Ensures that volunteers do not receive role-specific fields.
+     *
+     * @throws CommandException if {@code committee} or {@code organisation} is present
+     */
+    private static void ensureNoRoleOnlyFieldsForVolunteer(EditPersonDescriptor edits) throws CommandException {
+        if (edits.getCommittee().isPresent() || edits.getOrganisation().isPresent()) {
+            throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
+        }
     }
 
     @Override
@@ -188,6 +231,18 @@ public class EditCommand extends Command {
 
         public EditPersonDescriptor() {}
 
+        /** Returns updated value if the descriptor specifies it; otherwise returns current. */
+        public Optional<Phone> phoneOr(Optional<Phone> current) { return phone != null ? phone : current; }
+
+        /** Returns updated value if the descriptor specifies it; otherwise returns current. */
+        public Optional<Telegram> telegramOr(Optional<Telegram> current) {
+            return telegram != null ? telegram : current;
+        }
+
+        public Name nameOr(Name current) { return name != null ? name : current; }
+
+        public Email emailOr(Email current) { return email != null ? email : current; }
+
         /**
          * Copy constructor.
          */
@@ -219,10 +274,6 @@ public class EditCommand extends Command {
             this.phone = phone;
         }
 
-        public Optional<Optional<Phone>> getPhone() {
-            return Optional.ofNullable(phone);
-        }
-
         public void setEmail(Email email) {
             this.email = email;
         }
@@ -231,12 +282,24 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
+        /** Returns true iff the descriptor explicitly includes a phone edit (present or explicit removal). */
+        public boolean hasPhoneEdit() { return phone != null; }
+
+        /** Returns the edited phone value when present; empty = explicit removal. Undefined if !hasPhoneEdit(). */
+        public Optional<Phone> editedPhone() { return phone; }
+
+        /** Returns true iff the descriptor explicitly includes a telegram edit (present or explicit removal). */
+        public boolean hasTelegramEdit() { return telegram != null; }
+
+        /**
+         * Returns the edited telegram value when present;
+         * empty = explicit removal. Undefined if !hasTelegramEdit().
+         */
+        public Optional<Telegram> editedTelegram() { return telegram; }
+
+
         public void setTelegram(Optional<Telegram> telegram) {
             this.telegram = telegram;
-        }
-
-        public Optional<Optional<Telegram>> getTelegram() {
-            return Optional.ofNullable(telegram);
         }
 
         public void setCommittee(Committee committee) {

@@ -13,54 +13,50 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.project.ProjectName;
 
 /**
- * Parses input arguments and creates a new {@link ProjectRemoveCommand} object.
+ * Parses input arguments and creates a new {@link ProjectRemoveCommand}.
  *
- * Supported formats:
- * {@code INDEX project/PROJECT_NAME}
- * {@code n/NAME project/PROJECT_NAME}
+ * Supported forms:
+ *   INDEX project/PROJECT_NAME
+ *   n/NAME project/PROJECT_NAME
  */
 public final class ProjectRemoveCommandParser implements Parser<ProjectRemoveCommand> {
 
     @Override
     public ProjectRemoveCommand parse(String args) throws ParseException {
-        final String normalized = " " + args.trim();
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(normalized, PREFIX_NAME, PREFIX_PROJECT);
+        final String trimmed = args == null ? "" : args.trim();
+        final ArgumentMultimap map = ArgumentTokenizer.tokenize(" " + trimmed, PREFIX_NAME, PREFIX_PROJECT);
 
-        if (args.trim().startsWith(PREFIX_NAME.getPrefix())) {
-            //name-based assignment
-            String nameValue = argMultimap.getValue(PREFIX_NAME)
-                    .orElseThrow(() -> new ParseException(ProjectRemoveCommand.MESSAGE_USAGE));
-            ProjectName projectName = argMultimap.getValue(PREFIX_PROJECT)
-                    .map(n -> {
-                        try {
-                            return ParserUtil.parseProjectName(n);
-                        } catch (ParseException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .orElseThrow(() -> new ParseException(ProjectRemoveCommand.MESSAGE_USAGE));
+        final ProjectName projectName = requireProjectName(map, ProjectRemoveCommand.MESSAGE_USAGE);
 
-            return new ProjectRemoveCommand(nameValue.trim(), projectName);
+        if (isNameMode(trimmed)) {
+            final String name = map.getValue(PREFIX_NAME)
+                    .map(String::trim)
+                    .filter(s -> !s.isEmpty())
+                    .orElseThrow(() -> new ParseException(ProjectRemoveCommand.MESSAGE_USAGE));
+            return new ProjectRemoveCommand(name, projectName);
         }
 
-        String preamble = argMultimap.getPreamble().trim();
-        ProjectName projectName = argMultimap.getValue(PREFIX_PROJECT)
-                .map(n -> {
-                    try {
-                        return ParserUtil.parseProjectName(n);
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .orElseThrow(() -> new ParseException(ProjectRemoveCommand.MESSAGE_USAGE));
-
-        if (!preamble.isEmpty()) {
-            // index-based assignment
-            Index index = ParserUtil.parseIndex(preamble);
-            return new ProjectRemoveCommand(index, projectName);
-        }
-
-        Index index = ParserUtil.parseIndex(preamble);
+        final Index index = parseIndexFromPreamble(map, ProjectRemoveCommand.MESSAGE_USAGE);
         return new ProjectRemoveCommand(index, projectName);
+    }
+
+    // ---- helpers ----
+
+    private static boolean isNameMode(String trimmedArgs) {
+        return trimmedArgs.startsWith(PREFIX_NAME.getPrefix());
+    }
+
+    private static ProjectName requireProjectName(ArgumentMultimap map, String usage) throws ParseException {
+        String raw = map.getValue(PREFIX_PROJECT)
+                .orElseThrow(() -> new ParseException(usage));
+        return ParserUtil.parseProjectName(raw);
+    }
+
+    private static Index parseIndexFromPreamble(ArgumentMultimap map, String usage) throws ParseException {
+        String preamble = map.getPreamble().trim();
+        if (preamble.isEmpty()) {
+            throw new ParseException(usage);
+        }
+        return ParserUtil.parseIndex(preamble);
     }
 }
