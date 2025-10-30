@@ -338,8 +338,9 @@
 }
 
 .remark_tag {
-    -fx-background-color: #ff9933; /* Orange/Gold color */
+    -fx-background-color: #ff9933;      /* Orange/Gold color */
     -fx-border-radius: 3;
-    -fx-padding: 1 5 1 5;
-    -fx-text-fill: #303030; /* Dark text for contrast */
+    -fx-padding: 0 3 0 3;               /* Thinner padding */
+    -fx-font-size: 12px;                /* Smaller text */
+    -fx-text-fill: #303030;             /* Dark text for contrast */
 }
