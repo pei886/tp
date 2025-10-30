@@ -25,17 +25,17 @@ import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.Organisation;
-import loopin.projectbook.model.person.OrgMember;
+import loopin.projectbook.model.person.orgmember.Organisation;
+import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
-import loopin.projectbook.model.person.Volunteer;
+import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
-import loopin.projectbook.model.teammember.Committee;
-import loopin.projectbook.model.teammember.TeamMember;
+import loopin.projectbook.model.person.teammember.Committee;
+import loopin.projectbook.model.person.teammember.TeamMember;
 
 /**
  * Edits the details of an existing person in the project book.
@@ -129,7 +129,10 @@ public class EditCommand extends Command {
             }
             Committee updatedCommittee = editPersonDescriptor.getCommittee().orElse(teamMember.getCommittee());
 
-            return new TeamMember(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedCommittee);
+            return new TeamMember(
+                    updatedName, updatedCommittee, updatedPhone, updatedEmail, updatedTelegram, updatedTags,
+                    remarks, projects
+            );
 
         } else if (personToEdit instanceof OrgMember orgMember) {
             // person is an organisation member
@@ -140,12 +143,13 @@ public class EditCommand extends Command {
                     editPersonDescriptor.getOrganisation().orElse(orgMember.getOrganisation());
 
             return new OrgMember(
-                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram, updatedTags
+                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram, updatedTags,
+                    remarks, projects
             );
         }
 
         // person is a volunteer
-        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags, remarks, projects);
 
     }
 
