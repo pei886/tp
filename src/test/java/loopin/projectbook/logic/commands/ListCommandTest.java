@@ -16,6 +16,7 @@ import loopin.projectbook.model.UserPrefs;
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
  */
 public class ListCommandTest {
+    private static final boolean IS_PERSON_VIEW = true;
 
     private Model model;
     private Model expectedModel;
@@ -28,12 +29,12 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel, IS_PERSON_VIEW);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ListCommand(), model, ListCommand.MESSAGE_SUCCESS, expectedModel, IS_PERSON_VIEW);
     }
 }

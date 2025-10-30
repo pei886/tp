@@ -11,13 +11,14 @@ import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.UserPrefs;
 
 public class ClearCommandTest {
+    private static final boolean IS_PERSON_VIEW = true;
 
     @Test
     public void execute_emptyProjectBook_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
 
-        assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel, IS_PERSON_VIEW);
     }
 
     @Test
@@ -26,7 +27,7 @@ public class ClearCommandTest {
         Model expectedModel = new ModelManager(getTypicalProjectBook(), new UserPrefs());
         expectedModel.setProjectBook(new ProjectBook());
 
-        assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ClearCommand(), model, ClearCommand.MESSAGE_SUCCESS, expectedModel, IS_PERSON_VIEW);
     }
 
 }

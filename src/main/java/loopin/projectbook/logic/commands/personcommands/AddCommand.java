@@ -38,7 +38,8 @@ public abstract class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
-        return new CommandResult(String.format(getSuccessMessage(), Messages.formatPerson(toAdd)));
+        return new CommandResult(String.format(getSuccessMessage(), Messages.formatPerson(toAdd)),
+                false, false, true, false);
     }
 
     @Override

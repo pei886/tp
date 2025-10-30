@@ -19,6 +19,7 @@ import loopin.projectbook.testutil.PersonBuilder;
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
  */
 public class AddCommandIntegrationTest {
+    private static final boolean IS_PERSON_VIEW = true;
 
     private Model model;
 
@@ -36,7 +37,7 @@ public class AddCommandIntegrationTest {
 
         assertCommandSuccess(new AddVolunteerCommand((Volunteer) validPerson), model,
                 String.format(AddVolunteerCommand.MESSAGE_SUCCESS, Messages.formatPerson(validPerson)),
-                expectedModel);
+                expectedModel, IS_PERSON_VIEW);
     }
 
     @Test

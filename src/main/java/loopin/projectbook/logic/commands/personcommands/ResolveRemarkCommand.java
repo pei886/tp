@@ -73,7 +73,8 @@ public class ResolveRemarkCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
-        return new CommandResult(String.format(MESSAGE_RESOLVE_REMARK_SUCCESS, Messages.formatPerson(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_RESOLVE_REMARK_SUCCESS, Messages.formatPerson(editedPerson)),
+                false, false, true, false);
     }
 
     @Override

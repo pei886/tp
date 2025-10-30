@@ -82,8 +82,11 @@ public class CommandTestUtil {
      * that takes a string {@code expectedMessage}.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
+            Model expectedModel, boolean isPersonView) {
+        CommandResult expectedCommandResult =
+                isPersonView
+                ? new CommandResult(expectedMessage, false, false, true, false) // Set showPersonList to true
+                : new CommandResult(expectedMessage, false, false, false, true); // Set showProjectList to true
         assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
     }
 

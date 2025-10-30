@@ -24,6 +24,7 @@ import loopin.projectbook.testutil.PersonBuilder;
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
  */
 public class EditCommandTest {
+    private static final boolean IS_PERSON_VIEW = true;
 
     private Model model = new ModelManager(getTypicalProjectBook(), new UserPrefs());
 
@@ -39,7 +40,7 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new ProjectBook(model.getProjectBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
     }
 
     @Test
@@ -61,7 +62,7 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new ProjectBook(model.getProjectBook()), new UserPrefs());
         expectedModel.setPerson(lastPerson, editedPerson);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
     }
 
     @Test
@@ -74,7 +75,7 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new ProjectBook(model.getProjectBook()), new UserPrefs());
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
     }
 
     @Test
@@ -92,7 +93,7 @@ public class EditCommandTest {
         Model expectedModel = new ModelManager(new ProjectBook(model.getProjectBook()), new UserPrefs());
         expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel, IS_PERSON_VIEW);
     }
 
     @Test

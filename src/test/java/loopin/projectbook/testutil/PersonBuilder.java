@@ -46,7 +46,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         telegram = Optional.of(new Telegram(DEFAULT_TELEGRAM));
         remarks = new HashSet<>();
-        projects = new ArrayList();
+        projects = new ArrayList<>();
     }
 
     /**
@@ -58,7 +58,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         telegram = personToCopy.getTelegram();
         remarks = new HashSet<>(personToCopy.getRemarks());
-        projects = new ArrayList(personToCopy.getProjects());
+        projects = new ArrayList<>(personToCopy.getProjects());
     }
 
     /**

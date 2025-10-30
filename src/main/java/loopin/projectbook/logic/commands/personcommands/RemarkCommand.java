@@ -69,7 +69,7 @@ public class RemarkCommand extends Command {
         // Success Output
         return new CommandResult(String.format(MESSAGE_ADD_REMARK_SUCCESS,
                 remarkedPerson.getName().fullName,
-                remarkContent));
+                remarkContent), false, false, true, false);
     }
 
     @Override
