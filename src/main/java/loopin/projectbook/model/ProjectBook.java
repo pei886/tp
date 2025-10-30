@@ -106,6 +106,26 @@ public class ProjectBook implements ReadOnlyProjectBook {
     }
 
     /**
+     * Replaces the existing person equal to {@code person} with {@code person} itself.
+     * <p>
+     * This is useful when a {@code Person} instance has been modified in-place and
+     * needs to refresh its bindings within the observable list. This method does not
+     * change the person’s identity and does not perform any duplicate checks.
+     *
+     * @param person updated person instance; must not be {@code null}
+     * @throws loopin.projectbook.model.person.exceptions.PersonNotFoundException if no equivalent person exists
+     */
+    public void setPersonInPlace(Person person) {
+        requireNonNull(person);
+        persons.setPersonInPlace(person);
+
+        // Automatically update all projects where this person is referenced
+        for (Project project : person.getProjects()) {
+            project.updatePersonReference(person, person);
+        }
+    }
+
+    /**
      * Removes {@code key} from this {@code ProjectBook}.
      * {@code key} must exist in the project book.
      */
