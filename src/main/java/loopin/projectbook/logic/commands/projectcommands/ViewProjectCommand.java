@@ -45,8 +45,10 @@ public class ViewProjectCommand extends Command {
         }
 
         Project p = project.get();
-        StringBuilder output = new StringBuilder(MESSAGE_PROJECT_SUCCESS);
+        model.updateFilteredProjectList(proj -> proj.equals(p));
 
+        StringBuilder output = new StringBuilder(MESSAGE_PROJECT_SUCCESS);
+        output.append("Name: ").append(p.getName()).append("\n");
         output.append("Description:\n");
         output.append(p.getDescription()).append("\n");
 

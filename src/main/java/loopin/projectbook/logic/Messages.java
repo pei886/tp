@@ -70,7 +70,7 @@ public class Messages {
                         java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm")
                 ))
                 .append("\n")
-                .append(project.getLastUpdate().toString());
+                .append(project.getLastUpdateAsString());
         return builder.toString();
     }
 }
