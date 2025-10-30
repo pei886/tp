@@ -25,7 +25,9 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -96,12 +98,15 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
+        Optional<Phone> updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Telegram updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
+        Optional<Telegram> updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Remark> remarks = personToEdit.getRemarks();
+        List<Project> projects = personToEdit.getProjects();
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram,
+                updatedTags, remarks, projects);
     }
 
     @Override
@@ -134,9 +139,9 @@ public class EditCommand extends Command {
      */
     public static class EditPersonDescriptor {
         private Name name;
-        private Phone phone;
+        private Optional<Phone> phone;
         private Email email;
-        private Telegram telegram;
+        private Optional<Telegram> telegram;
         private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
@@ -168,11 +173,11 @@ public class EditCommand extends Command {
             return Optional.ofNullable(name);
         }
 
-        public void setPhone(Phone phone) {
+        public void setPhone(Optional<Phone> phone) {
             this.phone = phone;
         }
 
-        public Optional<Phone> getPhone() {
+        public Optional<Optional<Phone>> getPhone() {
             return Optional.ofNullable(phone);
         }
 
@@ -184,11 +189,11 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public void setTelegram(Telegram telegram) {
+        public void setTelegram(Optional<Telegram> telegram) {
             this.telegram = telegram;
         }
 
-        public Optional<Telegram> getTelegram() {
+        public Optional<Optional<Telegram>> getTelegram() {
             return Optional.ofNullable(telegram);
         }
 

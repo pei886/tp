@@ -13,11 +13,20 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import loopin.projectbook.logic.commands.*;
+import loopin.projectbook.logic.commands.ClearCommand;
+import loopin.projectbook.logic.commands.DeleteCommand;
+import loopin.projectbook.logic.commands.EditCommand;
 import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
+import loopin.projectbook.logic.commands.ExitCommand;
+import loopin.projectbook.logic.commands.HelpCommand;
+import loopin.projectbook.logic.commands.ListCommand;
+import loopin.projectbook.logic.commands.personcommands.AddCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
+import loopin.projectbook.logic.commands.personcommands.FindCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.testutil.EditPersonDescriptorBuilder;
 import loopin.projectbook.testutil.PersonBuilder;
 import loopin.projectbook.testutil.PersonUtil;
@@ -30,7 +39,7 @@ public class ProjectBookParserTest {
     public void parseCommand_add() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
+        assertEquals(new AddVolunteerCommand((Volunteer) person), command);
     }
 
     @Test

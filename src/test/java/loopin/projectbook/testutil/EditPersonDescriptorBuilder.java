@@ -1,15 +1,16 @@
 package loopin.projectbook.testutil;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
-import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.tag.Tag;
 
 /**
@@ -35,7 +36,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setName(person.getName());
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
-        descriptor.setAddress(person.getAddress());
+        descriptor.setTelegram(person.getTelegram());
         descriptor.setTags(person.getTags());
     }
 
@@ -51,7 +52,7 @@ public class EditPersonDescriptorBuilder {
      * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
      */
     public EditPersonDescriptorBuilder withPhone(String phone) {
-        descriptor.setPhone(new Phone(phone));
+        descriptor.setPhone(Optional.of(new Phone(phone)));
         return this;
     }
 
@@ -64,10 +65,10 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code EditPersonDescriptor} that we are building.
+     * Sets the {@code Telegram} of the {@code EditPersonDescriptor} that we are building.
      */
-    public EditPersonDescriptorBuilder withAddress(String address) {
-        descriptor.setAddress(new Address(address));
+    public EditPersonDescriptorBuilder withTelegram(String telegram) {
+        descriptor.setTelegram(Optional.of(new Telegram(telegram)));
         return this;
     }
 
