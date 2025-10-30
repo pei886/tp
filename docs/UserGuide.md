@@ -24,6 +24,7 @@ Action                         | Format, Examples
 **Delete**                     | `delete INDEX`<br> e.g., `delete 3`
 **Edit**                       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com t/jameslee123`
 **Remark**                     | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
+**Resolve**                    | `resolve PERSON_INDEX REMARK_INDEX ` <br> e.g. `resolve 2 1`
 **Done**                       | `done INDEX u/UPDATE` <br> e.g. `done 2 u/add to shared drive`
 **Find**                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**                       | `list`
@@ -120,6 +121,20 @@ Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE
 **Note:** There are slight differences in the parameters for different roles.
 
 </box>
+
+### Making a remark to remember to update a person : `list`
+
+Adds a remark to a person. Remarks are used as a reminder to liaise with a person about a certain update.
+
+Format: `remark INDEX u/UPDATE`
+
+
+### Resolving a remark after updating the person : `list`
+
+Removes a remark from a person. After having updated the person, the reminder is no longer needed.
+
+Format: `remark PERSON_INDEX REMARK_INDEX`
+
 
 ### Listing all persons : `list`
 
