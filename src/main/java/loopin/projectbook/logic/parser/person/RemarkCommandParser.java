@@ -1,6 +1,7 @@
 package loopin.projectbook.logic.parser.person;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.personcommands.RemarkCommand;
@@ -45,7 +46,7 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
             // Assuming ParserUtil.parseIndex exists to handle number conversion and validation
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, pe);
         }
 
         String remarkContent = argMultimap.getValue(PREFIX_UPDATE).get().trim();
