@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import loopin.projectbook.commons.exceptions.IllegalValueException;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.project.Description;
+import loopin.projectbook.model.project.LastUpdate;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.project.ProjectName;
 
@@ -23,8 +24,9 @@ class JsonAdaptedProject {
     private final String name;
     private final String description;
     private final List<String> members = new ArrayList<>();
-    private final LocalDateTime createdAt;
-    //    private final LocalDateTime updatedAt;
+    private final String createdAt;
+    private final String lastUpdateMessage;
+    private final String lastUpdateTimestamp;
 
     /**
      * Constructs a {@code JsonAdaptedProject} with the given project details.
@@ -33,12 +35,14 @@ class JsonAdaptedProject {
     public JsonAdaptedProject(@JsonProperty("name") String name,
                               @JsonProperty("description") String description,
                               @JsonProperty("members") List<String> members,
-                              @JsonProperty("createdAt") LocalDateTime createdAt,
-                              @JsonProperty("updatedAt") LocalDateTime updatedAt) {
+                              @JsonProperty("createdAt") String createdAt,
+                              @JsonProperty("lastUpdateMessage") String lastUpdateMessage,
+                              @JsonProperty("lastUpdateTimestamp") String lastUpdateTimestamp) {
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
-        //        this.updatedAt = updatedAt;
+        this.lastUpdateMessage = lastUpdateMessage;
+        this.lastUpdateTimestamp = lastUpdateTimestamp;
 
         if (members != null) {
             this.members.addAll(members);
@@ -49,14 +53,23 @@ class JsonAdaptedProject {
      * Converts a given {@code Project} into this class for Jackson use.
      */
     public JsonAdaptedProject(Project source) {
-        name = source.getName().toString();
-        description = source.getDescription().toString();
-        createdAt = source.getCreatedAt();
-        //        updatedAt = source.getUpdatedAt();
+        this.name = source.getName().toString();
+        this.description = source.getDescription().toString();
+        this.createdAt = source.getCreatedAt().toString();
+
+        LastUpdate lu = source.getLatestUpdate();
+        if (lu != null && lu.hasUpdate()) {
+            this.lastUpdateMessage = lu.getUpdateMessage();
+            this.lastUpdateTimestamp = lu.getTimestamp().toString();
+        } else {
+            this.lastUpdateMessage = null;
+            this.lastUpdateTimestamp = null;
+        }
 
         for (Person p : source.getAllPeople()) {
             this.members.add(p.getEmail().value);
         }
+
     }
 
     /**
@@ -83,7 +96,19 @@ class JsonAdaptedProject {
         }
         final Description modelDescription = new Description(description);
 
-        return new Project(modelName, modelDescription);
+        // createdAt: prefer stored value; fallback for legacy data
+        final LocalDateTime modelCreatedAt =
+                (createdAt != null && !createdAt.isEmpty())
+                        ? LocalDateTime.parse(createdAt)
+                        : LocalDateTime.now();
+
+        // lastUpdate: reconstruct if both fields exist; else default
+        final LastUpdate modelLastUpdate =
+                (lastUpdateMessage != null && lastUpdateTimestamp != null)
+                        ? new LastUpdate(lastUpdateMessage, LocalDateTime.parse(lastUpdateTimestamp))
+                        : new LastUpdate();
+
+        return new Project(modelName, modelDescription, modelCreatedAt, modelLastUpdate);
     }
 
     public String getName() {
