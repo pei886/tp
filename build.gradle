@@ -73,8 +73,4 @@ shadowJar {
     archiveFileName = 'projectBook.jar'
 }
 
-run {
-    enableAssertions = true
-}
-
 defaultTasks 'clean', 'test'

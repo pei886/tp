@@ -1,7 +1,6 @@
 package loopin.projectbook.model.person;
 
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TELEGRAM_BOB;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.ALICE;
 import static loopin.projectbook.testutil.TypicalPersons.BOB;
@@ -40,7 +39,7 @@ public class UniquePersonListTest {
     @Test
     public void contains_personWithSameIdentityFieldsInList_returnsTrue() {
         uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Person editedAlice = new PersonBuilder(ALICE).withTelegram(VALID_TELEGRAM_BOB)
                 .build();
         assertTrue(uniquePersonList.contains(editedAlice));
     }
@@ -83,7 +82,7 @@ public class UniquePersonListTest {
     @Test
     public void setPerson_editedPersonHasSameIdentity_success() {
         uniquePersonList.add(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Person editedAlice = new PersonBuilder(ALICE).withTelegram(VALID_TELEGRAM_BOB)
                 .build();
         uniquePersonList.setPerson(ALICE, editedAlice);
         UniquePersonList expectedUniquePersonList = new UniquePersonList();

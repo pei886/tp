@@ -1,7 +1,6 @@
 package loopin.projectbook.model;
 
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static loopin.projectbook.logic.commands.CommandTestUtil.VALID_TELEGRAM_BOB;
 import static loopin.projectbook.testutil.Assert.assertThrows;
 import static loopin.projectbook.testutil.TypicalPersons.ALICE;
 import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
@@ -44,8 +43,7 @@ public class ProjectBookTest {
 
     @Test
     public void resetData_withDuplicatePersons_throwsDuplicatePersonException() {
-        // Two persons with the same identity fields
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Person editedAlice = new PersonBuilder(ALICE).withTelegram(VALID_TELEGRAM_BOB)
                 .build();
         List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
         ProjectBookStub newData = new ProjectBookStub(newPersons);
@@ -72,7 +70,7 @@ public class ProjectBookTest {
     @Test
     public void hasPerson_personWithSameIdentityFieldsInProjectBook_returnsTrue() {
         projectBook.addPerson(ALICE);
-        Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
+        Person editedAlice = new PersonBuilder(ALICE).withTelegram(VALID_TELEGRAM_BOB)
                 .build();
         assertTrue(projectBook.hasPerson(editedAlice));
     }
@@ -105,8 +103,9 @@ public class ProjectBookTest {
 
         @Override
         public ObservableList<Project> getProjectList() {
-            return null;
+            return FXCollections.observableArrayList();
         }
     }
+
 
 }

@@ -106,4 +106,7 @@ public interface Model {
     boolean hasProject(Project project);
     void addProject(Project project);
 
+    /** Deletes a project from the project book */
+    void deleteProject(Project project);
+
 }

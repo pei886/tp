@@ -17,11 +17,14 @@ import javafx.collections.ObservableList;
 import loopin.projectbook.commons.core.GuiSettings;
 import loopin.projectbook.logic.Messages;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
+import loopin.projectbook.logic.commands.personcommands.AddCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.ReadOnlyProjectBook;
 import loopin.projectbook.model.ReadOnlyUserPrefs;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.testutil.PersonBuilder;
 
@@ -29,7 +32,7 @@ public class AddCommandTest {
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddCommand(null));
+        assertThrows(NullPointerException.class, () -> new AddVolunteerCommand(null));
     }
 
     @Test
@@ -37,9 +40,9 @@ public class AddCommandTest {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
 
-        CommandResult commandResult = new AddCommand(validPerson).execute(modelStub);
+        CommandResult commandResult = new AddVolunteerCommand((Volunteer) validPerson).execute(modelStub);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.formatPerson(validPerson)),
+        assertEquals(String.format(AddVolunteerCommand.MESSAGE_SUCCESS, Messages.formatPerson(validPerson)),
                 commandResult.getFeedbackToUser());
         assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
     }
@@ -47,7 +50,7 @@ public class AddCommandTest {
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
         Person validPerson = new PersonBuilder().build();
-        AddCommand addCommand = new AddCommand(validPerson);
+        AddCommand addCommand = new AddVolunteerCommand((Volunteer) validPerson);
         ModelStub modelStub = new ModelStubWithPerson(validPerson);
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
@@ -57,14 +60,10 @@ public class AddCommandTest {
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
-
-        // same object -> returns true
+        AddCommand addAliceCommand = new AddVolunteerCommand((Volunteer) alice);
+        AddCommand addBobCommand = new AddVolunteerCommand((Volunteer) bob);
         assertTrue(addAliceCommand.equals(addAliceCommand));
-
-        // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
+        AddCommand addAliceCommandCopy = new AddVolunteerCommand((Volunteer) alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -79,7 +78,7 @@ public class AddCommandTest {
 
     @Test
     public void toStringMethod() {
-        AddCommand addCommand = new AddCommand(ALICE);
+        AddCommand addCommand = new AddVolunteerCommand((Volunteer) ALICE);
         String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
         assertEquals(expected, addCommand.toString());
     }
@@ -159,8 +158,13 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Project> getFilteredProjectList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public Optional<Project> findProjectByName(String name) {
-            return Optional.empty();
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
@@ -170,11 +174,21 @@ public class AddCommandTest {
 
         @Override
         public boolean hasProject(Project project) {
-            return false;
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void addProject(Project project) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteProject(Project project) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredProjectList(Predicate<Project> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }

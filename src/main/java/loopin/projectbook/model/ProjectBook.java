@@ -98,6 +98,11 @@ public class ProjectBook implements ReadOnlyProjectBook {
         requireNonNull(editedPerson);
 
         persons.setPerson(target, editedPerson);
+
+        // Automatically update all projects
+        for (Project project : target.getProjects()) {
+            project.updatePersonReference(target, editedPerson);
+        }
     }
 
     /**
@@ -130,6 +135,13 @@ public class ProjectBook implements ReadOnlyProjectBook {
     public void setProject(Project project) {
         requireNonNull(project);
         projects.setProject(project);
+    }
+
+    /**
+     * Removes a project from the project book.
+     */
+    public void removeProject(Project project) {
+        projects.remove(project);
     }
 
     public java.util.Optional<Project> findProjectByName(String name) {

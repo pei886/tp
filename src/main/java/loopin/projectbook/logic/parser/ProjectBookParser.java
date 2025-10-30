@@ -8,25 +8,42 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import loopin.projectbook.commons.core.LogsCenter;
-import loopin.projectbook.logic.commands.AddOrgMemberCommand;
-import loopin.projectbook.logic.commands.AddProjectCommand;
-import loopin.projectbook.logic.commands.AddTeamMemberCommand;
-import loopin.projectbook.logic.commands.AddVolunteerCommand;
 import loopin.projectbook.logic.commands.ClearCommand;
 import loopin.projectbook.logic.commands.Command;
 import loopin.projectbook.logic.commands.DeleteCommand;
 import loopin.projectbook.logic.commands.EditCommand;
 import loopin.projectbook.logic.commands.ExitCommand;
-import loopin.projectbook.logic.commands.FindCommand;
 import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
-import loopin.projectbook.logic.commands.ProjectAssignCommand;
-import loopin.projectbook.logic.commands.ProjectListCommand;
-import loopin.projectbook.logic.commands.ProjectRemoveCommand;
-import loopin.projectbook.logic.commands.RemarkCommand;
-import loopin.projectbook.logic.commands.ViewProjectCommand;
-import loopin.projectbook.logic.commands.*;
+import loopin.projectbook.logic.commands.personcommands.AddOrgMemberCommand;
+import loopin.projectbook.logic.commands.personcommands.AddProjectCommand;
+import loopin.projectbook.logic.commands.personcommands.AddTeamMemberCommand;
+import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
+import loopin.projectbook.logic.commands.personcommands.FindCommand;
+import loopin.projectbook.logic.commands.personcommands.FindRoleCommand;
+import loopin.projectbook.logic.commands.personcommands.RemarkCommand;
+import loopin.projectbook.logic.commands.personcommands.ResolveRemarkCommand;
+import loopin.projectbook.logic.commands.projectcommands.ProjectAssignCommand;
+import loopin.projectbook.logic.commands.projectcommands.ProjectDeleteCommand;
+import loopin.projectbook.logic.commands.projectcommands.ProjectFindCommand;
+import loopin.projectbook.logic.commands.projectcommands.ProjectListCommand;
+import loopin.projectbook.logic.commands.projectcommands.ProjectRemoveCommand;
+import loopin.projectbook.logic.commands.projectcommands.ViewProjectCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
+import loopin.projectbook.logic.parser.person.AddOrgMemberCommandParser;
+import loopin.projectbook.logic.parser.person.AddTeamMemberCommandParser;
+import loopin.projectbook.logic.parser.person.AddVolunteerCommandParser;
+import loopin.projectbook.logic.parser.person.FindCommandParser;
+import loopin.projectbook.logic.parser.person.FindRoleCommandParser;
+import loopin.projectbook.logic.parser.person.RemarkCommandParser;
+import loopin.projectbook.logic.parser.person.ResolveRemarkCommandParser;
+import loopin.projectbook.logic.parser.project.AddProjectCommandParser;
+import loopin.projectbook.logic.parser.project.ProjectAssignCommandParser;
+import loopin.projectbook.logic.parser.project.ProjectDeleteCommandParser;
+import loopin.projectbook.logic.parser.project.ProjectFindCommandParser;
+import loopin.projectbook.logic.parser.project.ProjectRemoveCommandParser;
+import loopin.projectbook.logic.parser.project.ViewProjectCommandParser;
+
 
 /**
  * Parses user input.
@@ -89,12 +106,14 @@ public class ProjectBookParser {
         case ResolveRemarkCommand.COMMAND_WORD:
             return new ResolveRemarkCommandParser().parse(arguments);
 
-
         case AddTeamMemberCommand.COMMAND_WORD:
             return new AddTeamMemberCommandParser().parse(arguments);
 
         case AddOrgMemberCommand.COMMAND_WORD:
             return new AddOrgMemberCommandParser().parse(arguments);
+
+        case FindRoleCommand.COMMAND_WORD:
+            return new FindRoleCommandParser().parse(arguments);
 
         case "project": {
             final String trimmed = arguments.trim();
@@ -116,15 +135,23 @@ public class ProjectBookParser {
                 return new ProjectAssignCommandParser().parse(rest);
             case ProjectRemoveCommand.SUBCOMMAND:
                 return new ProjectRemoveCommandParser().parse(rest);
+            case ProjectDeleteCommand.SUBCOMMAND:
+                return new ProjectDeleteCommandParser().parse(" " + rest);
             case ViewProjectCommand.SUBCOMMAND:
                 return new ViewProjectCommandParser().parse(" " + rest);
             case ProjectListCommand.SUBCOMMAND:
                 logger.info("Projects listed");
                 return new ProjectListCommand();
+            case ProjectFindCommand.SUBCOMMAND:
+                logger.info("Finding Projects, going to parse keywords now");
+                return new ProjectFindCommandParser().parse("" + rest);
             default:
                 throw new ParseException("Unknown project subcommand. Try:\n"
+                        + ProjectFindCommand.MESSAGE_USAGE + "\n"
+                        + ProjectListCommand.MESSAGE_USAGE + "\n"
                         + ProjectAssignCommand.MESSAGE_USAGE + "\n"
-                        + ProjectRemoveCommand.MESSAGE_USAGE);
+                        + ProjectRemoveCommand.MESSAGE_USAGE + "\n"
+                        + ViewProjectCommand.MESSAGE_USAGE);
             }
         }
         case AddVolunteerCommand.COMMAND_WORD:

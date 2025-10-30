@@ -23,12 +23,13 @@ public class Project {
     private final ProjectName name;
     private final Description description;
     private final LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LastUpdate lastUpdate;
 
     private final List<Membership> memberships = new ArrayList<>();
 
     /**
-     * Creates a new Project with the given id, name, and description.
+     * Creates a new Project with the given name and description.
+     * Uses current time as createdAt and default "no updates yet" status.
      *
      * @param name        name of the project
      * @param description short description of the project
@@ -38,7 +39,22 @@ public class Project {
         this.name = name;
         this.description = description;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = this.createdAt;
+        this.lastUpdate = new LastUpdate();
+    }
+
+    /**
+     * Constructs a {@code Project} with the specified name, description, and creation timestamp.
+     * Used when loading projects from persistent storage to preserve original creation dates.
+     *
+     * @param name        name of the project
+     * @param description short description of the project
+     */
+    public Project(ProjectName name, Description description, LocalDateTime createdAt, LastUpdate lastUpdate) {
+        requireAllNonNull(name, description, createdAt, lastUpdate);
+        this.name = name;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.lastUpdate = lastUpdate;
     }
 
     //    /** @return the unique ID of this project */
@@ -61,9 +77,16 @@ public class Project {
         return createdAt;
     }
 
-    /** @return the timestamp of the last update to this project */
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public void recordUpdate(LastUpdate lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public LastUpdate getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public String getLastUpdateAsString() {
+        return lastUpdate.toString();
     }
 
     /**
@@ -77,14 +100,6 @@ public class Project {
                         .map(Membership::getPerson)
                         .collect(Collectors.toList())
         );
-    }
-
-    /**
-     * Updates the timestamp indicating when this project was last modified.
-     *
-     */
-    public void touch() {
-        this.updatedAt = LocalDateTime.now();
     }
 
     /**
@@ -134,7 +149,8 @@ public class Project {
             throw new IllegalStateException("Person is already in this project.");
         }
         memberships.add(new Membership(p));
-        touch();
+        LastUpdate update = LastUpdate.memberAdded(p);
+        recordUpdate(update);
     }
 
     /**
@@ -149,7 +165,67 @@ public class Project {
         if (!removed) {
             throw new IllegalStateException("Person is not in this project.");
         }
-        touch();
+        LastUpdate update = LastUpdate.memberRemoved(p);
+        recordUpdate(update);
+    }
+
+    /**
+     * Returns true if both projects have the same normalized name.
+     * This defines a weaker notion of equality between two projects.
+     */
+    public boolean isSameProject(Project other) {
+        if (other == this) {
+            return true;
+        }
+        if (other == null) {
+            return false;
+        }
+        return normalizeName(this.getName().fullName)
+                .equals(normalizeName(other.getName().fullName));
+    }
+
+    /** Normalizes a name for identity comparison: trim, collapse spaces, lowercase. */
+    private static String normalizeName(String s) {
+        return s == null ? "" : s.trim().replaceAll("\\s+", " ").toLowerCase();
+    }
+
+    /**
+     * Returns true if both projects have the same name and description.
+     * This defines a stronger notion of equality between two projects.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Project)) {
+            return false;
+        }
+        Project other = (Project) o;
+        return this.getName().equals(other.getName())
+                && this.getDescription().equals(other.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(getName(), getDescription());
+    }
+
+
+    /**
+     * Updates the reference to a person in this project's memberships.
+     * Used when a person object is replaced (e.g., when editing).
+     *
+     * @param oldPerson the old person reference
+     * @param newPerson the new person reference
+     */
+    public void updatePersonReference(Person oldPerson, Person newPerson) {
+        for (int i = 0; i < memberships.size(); i++) {
+            if (memberships.get(i).getPerson().isSamePerson(oldPerson)) {
+                memberships.set(i, new Membership(newPerson));
+                break;
+            }
+        }
     }
 
 }

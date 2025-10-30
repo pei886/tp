@@ -1,15 +1,23 @@
 package loopin.projectbook.testutil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
-import loopin.projectbook.model.person.Address;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
-import loopin.projectbook.model.tag.Tag;
+import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.orgmember.OrgMember;
+import loopin.projectbook.model.person.orgmember.Organisation;
+import loopin.projectbook.model.person.teammember.Committee;
+import loopin.projectbook.model.person.teammember.TeamMember;
+import loopin.projectbook.model.person.volunteer.Volunteer;
+import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.util.SampleDataUtil;
 
 /**
@@ -20,25 +28,25 @@ public class PersonBuilder {
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
-    public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_TELEGRAM = "amybee";
 
     private Name name;
-    private Phone phone;
+    private Optional<Phone> phone;
     private Email email;
-    private Address address;
-    private Set<Tag> tags;
+    private Optional<Telegram> telegram;
     private Set<Remark> remarks;
+    private List<Project> projects;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
      */
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
+        phone = Optional.of(new Phone(DEFAULT_PHONE));
         email = new Email(DEFAULT_EMAIL);
-        address = new Address(DEFAULT_ADDRESS);
-        tags = new HashSet<>();
+        telegram = Optional.of(new Telegram(DEFAULT_TELEGRAM));
         remarks = new HashSet<>();
+        projects = new ArrayList();
     }
 
     /**
@@ -48,9 +56,9 @@ public class PersonBuilder {
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
-        address = personToCopy.getAddress();
-        tags = new HashSet<>(personToCopy.getTags());
+        telegram = personToCopy.getTelegram();
         remarks = new HashSet<>(personToCopy.getRemarks());
+        projects = new ArrayList(personToCopy.getProjects());
     }
 
     /**
@@ -62,10 +70,26 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Sets the {@code Phone} of the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
+    public PersonBuilder withPhone(String phone) {
+        this.phone = Optional.of(new Phone(phone));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Email} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withEmail(String email) {
+        this.email = new Email(email);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Telegram} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withTelegram(String telegram) {
+        this.telegram = Optional.of(new Telegram(telegram));
         return this;
     }
 
@@ -78,31 +102,29 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
+     * Returns a concrete {@code Person} object (Volunteer by default).
      */
-    public PersonBuilder withAddress(String address) {
-        this.address = new Address(address);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Phone} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withPhone(String phone) {
-        this.phone = new Phone(phone);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
-        return this;
-    }
-
     public Person build() {
-        return new Person(name, phone, email, address, tags, remarks);
+        return new Volunteer(name, phone, email, telegram, remarks, projects);
     }
 
+    /**
+     * Builds and returns a {@code TeamMember} with the given committee name.
+     */
+    public TeamMember buildTeamMember(String committeeName) {
+        Committee committee = new Committee(committeeName);
+        return new TeamMember(name, committee, phone, email, telegram, remarks, projects);
+    }
+
+    /**
+     * Builds and returns a {@code OrgMember} with the given organisation name.
+     */
+    public OrgMember buildOrgMember(String organisationName) {
+        Organisation organisation = new Organisation(organisationName);
+        return new OrgMember(name, organisation, phone, email, telegram, remarks, projects);
+    }
+
+    public Volunteer buildVolunteer() {
+        return new Volunteer(name, phone, email, telegram, remarks, projects);
+    }
 }

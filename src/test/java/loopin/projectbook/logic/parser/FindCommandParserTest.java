@@ -8,7 +8,8 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import loopin.projectbook.logic.commands.FindCommand;
+import loopin.projectbook.logic.commands.personcommands.FindCommand;
+import loopin.projectbook.logic.parser.person.FindCommandParser;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
 
 public class FindCommandParserTest {

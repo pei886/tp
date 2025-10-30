@@ -12,6 +12,7 @@ import loopin.projectbook.commons.exceptions.IllegalValueException;
 import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.ReadOnlyProjectBook;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.LastUpdate;
 import loopin.projectbook.model.project.Project;
 
 /**
@@ -56,6 +57,7 @@ class JsonSerializableProjectBook {
         ProjectBook projectBook = new ProjectBook();
         java.util.Map<String, Person> personsByEmail = new java.util.HashMap<>();
         java.util.Map<String, Project> projectsByName = new java.util.HashMap<>();
+        java.util.Map<String, LastUpdate> savedLastUpdates = new java.util.HashMap<>();
 
         // Add persons
         for (JsonAdaptedPerson jsonAdaptedPerson : persons) {
@@ -75,6 +77,7 @@ class JsonSerializableProjectBook {
             }
             projectBook.addProject(project);
             projectsByName.put(project.getName().toString(), project);
+            savedLastUpdates.put(project.getName().toString(), project.getLastUpdate());
         }
 
         // Attach memberships
@@ -88,9 +91,11 @@ class JsonSerializableProjectBook {
                 if (p != null) {
                     if (!project.hasMember(p)) {
                         project.assignPerson(p);
+                        p.addProject(project);
                     }
                 }
             }
+            project.recordUpdate(savedLastUpdates.get(jsonAdaptedProject.getName()));
         }
 
         return projectBook;

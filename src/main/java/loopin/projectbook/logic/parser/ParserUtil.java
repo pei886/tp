@@ -12,13 +12,12 @@ import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
+import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.teammember.Committee;
-import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.project.Description;
 import loopin.projectbook.model.project.ProjectName;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -119,32 +118,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws ParseException if the given {@code tag} is invalid.
-     */
-    public static Tag parseTag(String tag) throws ParseException {
-        requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
-            throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
-        }
-        return new Tag(trimmedTag);
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
-        }
-        return tagSet;
-    }
-    /**
      * Parses {@code Collection<String> remarks} into a {@code Set<Remark>}.
      */
     public static Set<Remark> parseRemarks(Collection<String> remarks) throws ParseException {
@@ -156,7 +129,6 @@ public class ParserUtil {
         }
         return remarkSet;
     }
-
 
     /**
      * Parses the given {@code String} into a {@code ProjectName} object.

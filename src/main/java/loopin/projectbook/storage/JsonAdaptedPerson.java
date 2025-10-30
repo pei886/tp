@@ -3,6 +3,7 @@ package loopin.projectbook.storage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,7 +23,7 @@ import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.person.volunteer.Volunteer;
-import loopin.projectbook.model.tag.Tag;
+import loopin.projectbook.model.project.Project;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -32,29 +33,33 @@ class JsonAdaptedPerson {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     private final String name;
+    private final String role;
     private final String phone;
     private final String email;
     private final String telegram;
-    private final List<JsonAdaptedTag> tags = new ArrayList<>();
-    private final String role;
+    private final List<JsonAdaptedProject> projects = new ArrayList<>(); // Renamed for clarity
     private final List<JsonAdaptedRemark> remarks = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email, @JsonProperty("telegram") String telegram,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("role") String role,
-                             @JsonProperty("remarks") List<JsonAdaptedRemark> remarks) {
+    public JsonAdaptedPerson(@JsonProperty("name") String name,
+                             @JsonProperty("role") String role,
+                             @JsonProperty("phone") String phone,
+                             @JsonProperty("email") String email,
+                             @JsonProperty("telegram") String telegram,
+                             @JsonProperty("remarks") List<JsonAdaptedRemark> remarks,
+                             @JsonProperty("projects") List<JsonAdaptedProject> projects) {
         this.name = name;
+        this.role = role;
         this.phone = phone;
         this.email = email;
         this.telegram = telegram;
-        if (tags != null) {
-            this.tags.addAll(tags);
+
+        if (projects != null) {
+            this.projects.addAll(projects);
         }
-        this.role = role != null ? role : "Unknown";
         if (remarks != null) {
             this.remarks.addAll(remarks);
         }
@@ -65,12 +70,12 @@ class JsonAdaptedPerson {
      */
     public JsonAdaptedPerson(Person source) {
         name = source.getName().fullName;
-        role = source.getRole() != null ? source.getRole().fullRole : "Unknown";
-        phone = source.getPhone() != null ? source.getPhone().value : null;
+        role = source.getRole().fullRole;
+        phone = source.getPhone().map(phone -> phone.value).orElse(null);
         email = source.getEmail().value;
-        telegram = source.getTelegram() != null ? source.getTelegram().value : null;
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
+        telegram = source.getTelegram().map(telegram -> telegram.value).orElse(null);
+        projects.addAll(source.getProjects().stream()
+                .map(JsonAdaptedProject::new)
                 .collect(Collectors.toList()));
         remarks.addAll(source.getRemarks().stream()
                 .map(JsonAdaptedRemark::new)
@@ -83,10 +88,6 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (JsonAdaptedTag tag : tags) {
-            personTags.add(tag.toModelType());
-        }
 
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -96,13 +97,13 @@ class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
-        final Phone modelPhone;
+        final Optional<Phone> modelPhone;
         if (phone == null) {
-            modelPhone = null; // Person allows null phone
+            modelPhone = Optional.empty(); // Person allows null phone
         } else if (!Phone.isValidPhone(phone)) {
             throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
         } else {
-            modelPhone = new Phone(phone);
+            modelPhone = Optional.of(new Phone(phone));
         }
 
         if (email == null) {
@@ -113,16 +114,14 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        final Telegram modelTelegram;
+        final Optional<Telegram> modelTelegram;
         if (telegram == null) {
-            modelTelegram = null; // Person allows null telegram
+            modelTelegram = Optional.empty(); // Person allows null telegram
         } else if (!Telegram.isValidTelegram(telegram)) {
             throw new IllegalValueException(Telegram.MESSAGE_CONSTRAINTS);
         } else {
-            modelTelegram = new Telegram(telegram);
+            modelTelegram = Optional.of(new Telegram(telegram));
         }
-
-        final Set<Tag> modelTags = new HashSet<>(personTags);
 
         // Remarks
         final Set<Remark> modelRemarks = new HashSet<>();
@@ -130,31 +129,30 @@ class JsonAdaptedPerson {
             modelRemarks.add(remark.toModelType());
         }
 
-        // Role is guaranteed non-null by constructor (defaults to "Unknown")
+        final List<Project> modelProjects = new ArrayList<>();
+
+        if (role == null) {
+            throw new IllegalValueException(Role.MESSAGE_CONSTRAINTS);
+        }
         String[] modelRole = role.split(" ", 2);
-        Person modelPerson = null;
 
         switch (modelRole[0]) {
-        case "Unknown":
         case "Volunteer":
-            modelPerson = new Volunteer(modelName, modelPhone, modelEmail, modelTelegram, modelTags, modelRemarks);
-            break;
+            return new Volunteer(modelName, modelPhone, modelEmail, modelTelegram,
+                    modelRemarks, modelProjects);
         case "Committee:":
             final Committee modelCommittee = new Committee(modelRole[1]);
-            modelPerson = new TeamMember(modelName, modelCommittee, modelPhone, modelEmail, modelTelegram,
-                    modelTags, modelRemarks);
-            break;
+            return new TeamMember(modelName, modelCommittee, modelPhone, modelEmail, modelTelegram,
+                    modelRemarks, modelProjects);
         case "Organisation:":
             final Organisation modelOrganisation = new Organisation(modelRole[1]);
-            modelPerson = new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTelegram,
-                    modelTags, modelRemarks);
-            break;
+            return new OrgMember(modelName, modelOrganisation, modelPhone, modelEmail, modelTelegram,
+                    modelRemarks, modelProjects);
         default:
             assert false;
             throw new IllegalValueException("Unknown role: " + role);
         }
 
-        return modelPerson;
     }
 
 }

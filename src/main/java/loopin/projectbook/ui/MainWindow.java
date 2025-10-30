@@ -16,6 +16,8 @@ import loopin.projectbook.logic.Logic;
 import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
+import loopin.projectbook.ui.person.PersonListPanel;
+import loopin.projectbook.ui.project.ProjectListPanel;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -211,6 +213,9 @@ public class MainWindow extends UiPart<Stage> {
             } else if (commandResult.isShowPersonList()) {
                 showPersonList();
             }
+
+            //Refresh project list
+            projectListPanel.refresh();
 
             return commandResult;
         } catch (CommandException | ParseException e) {

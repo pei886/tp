@@ -4,7 +4,6 @@ import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandFai
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static loopin.projectbook.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.Messages;
+import loopin.projectbook.logic.commands.personcommands.ResolveRemarkCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.UserPrefs;

@@ -654,6 +654,24 @@ testers are expected to do more *exploratory* testing.
 
 1. _{ more test cases …​ }_
 
+### Adding a project
+
+1. Adding a project while all projects are being shown
+
+    1. Test case: `project add n/Clean Beach`<br>
+       Expected: A new project named Clean Beach is added to the list with the correct timestamp. No last update and description is available.
+    2. Test case: `project add d/No name provided`<br>
+       Expected: No project is added. Error message shown indicating that the name field is required. Status bar remains unchanged.
+
+### Viewing a project
+
+1. Viewing a project when projects are being shown
+
+    1. Test case: `project view project/Clean Beach`<br>
+       Expected: The details of project Clean Beach is shown, including a list of persons associated with it, categorized by different roles.
+    2. Test case: `project view project/Nonexistent`<br>
+        Expected: No project is viewed. Message shown indicating that the project with the given name does not exist.
+
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
