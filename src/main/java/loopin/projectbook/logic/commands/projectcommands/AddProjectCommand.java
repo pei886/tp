@@ -51,8 +51,7 @@ public class AddProjectCommand extends Command {
         }
 
         model.addProject(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatProject(toAdd)),
-                false, false, false, true);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.formatProject(toAdd)));
     }
 
     @Override
