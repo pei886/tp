@@ -17,11 +17,11 @@ import loopin.projectbook.model.person.teammember.TeamMember;
 
 public class AddTeamMemberCommandParserTest {
 
-    private final AddTeamMemberCommandParser parser = new AddTeamMemberCommandParser();
-
     private static final String VALID_COMMITTEE_ALPHA = "Alpha";
     private static final String COMMITTEE_DESC_ALPHA = " c/" + VALID_COMMITTEE_ALPHA;
     private static final String INVALID_COMMITTEE_DESC = " c/"; // empty
+
+    private final AddTeamMemberCommandParser parser = new AddTeamMemberCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {

@@ -1,20 +1,18 @@
 package loopin.projectbook.testutil;
 
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
-
-import java.util.Optional;
 
 import loopin.projectbook.logic.commands.personcommands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.orgmember.Organisation;
-import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.person.teammember.Committee;
+import loopin.projectbook.model.person.teammember.TeamMember;
 
 /**
  * Utilities for generating CLI strings for Person-related commands in tests.

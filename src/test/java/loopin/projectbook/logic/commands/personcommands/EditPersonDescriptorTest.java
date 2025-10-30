@@ -11,8 +11,8 @@ import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Telegram;
-import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.orgmember.Organisation;
+import loopin.projectbook.model.person.teammember.Committee;
 
 /**
  * Tests for {@link EditPersonDescriptor} aligned to the new API

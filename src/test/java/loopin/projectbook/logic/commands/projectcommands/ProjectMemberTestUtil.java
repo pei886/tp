@@ -45,13 +45,17 @@ final class ProjectMemberTestUtil {
 
     static ObservableList<Person> peopleList(Person... ps) {
         ObservableList<Person> list = FXCollections.observableArrayList();
-        if (ps != null) list.addAll(ps);
+        if (ps != null) {
+            list.addAll(ps);
+        }
         return list;
     }
 
     static ObservableList<Project> projectList(Project... ps) {
         ObservableList<Project> list = FXCollections.observableArrayList();
-        if (ps != null) list.addAll(ps);
+        if (ps != null) {
+            list.addAll(ps);
+        }
         return list;
     }
 
@@ -100,7 +104,9 @@ final class ProjectMemberTestUtil {
         @Override public Optional<Project> findProjectByName(String name) {
             String needle = normalize(name);
             for (Project p : projects) {
-                if (normalize(p.getName().fullName).equals(needle)) return Optional.of(p);
+                if (normalize(p.getName().fullName).equals(needle)) {
+                    return Optional.of(p);
+                }
             }
             return Optional.empty();
         }
@@ -117,32 +123,66 @@ final class ProjectMemberTestUtil {
         }
 
         // ----- Lists & filters -----
-        @Override public ObservableList<Person> getFilteredPersonList() { return persons; }
-        @Override public ObservableList<Project> getFilteredProjectList() { return projects; }
+        @Override public ObservableList<Person> getFilteredPersonList() {
+            return persons;
+        }
+
+        @Override public ObservableList<Project> getFilteredProjectList() {
+            return projects;
+        }
+
         @Override public void updateFilteredPersonList(Predicate<Person> predicate) {}
         @Override public void updateFilteredProjectList(Predicate<Project> predicate) {}
 
         // ----- Prefs & file path -----
         @Override public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {}
-        @Override public ReadOnlyUserPrefs getUserPrefs() { return prefs; }
-        @Override public GuiSettings getGuiSettings() { return new GuiSettings(); }
+        @Override public ReadOnlyUserPrefs getUserPrefs() {
+            return prefs;
+        }
+
+        @Override public GuiSettings getGuiSettings() {
+            return new GuiSettings();
+        }
+
         @Override public void setGuiSettings(GuiSettings guiSettings) {}
-        @Override public Path getProjectBookFilePath() { return projectBookFilePath; }
-        @Override public void setProjectBookFilePath(Path projectBookFilePath) { this.projectBookFilePath = projectBookFilePath; }
+        @Override public Path getProjectBookFilePath() {
+            return projectBookFilePath;
+        }
+
+        @Override public void setProjectBookFilePath(Path projectBookFilePath) {
+            this.projectBookFilePath = projectBookFilePath;
+        }
 
         // ----- ProjectBook -----
         @Override public void setProjectBook(ReadOnlyProjectBook projectBook) {}
-        @Override public ReadOnlyProjectBook getProjectBook() { return roBookView; }
+        @Override public ReadOnlyProjectBook getProjectBook() {
+            return roBookView;
+        }
 
         // ----- People ops (unused in these tests) -----
-        @Override public boolean hasPerson(Person person) { return false; }
+        @Override public boolean hasPerson(Person person) {
+            return false;
+        }
+
         @Override public void deletePerson(Person target) {}
-        @Override public void addPerson(Person person) { persons.add(person); }
+        @Override public void addPerson(Person person) {
+            persons.add(person);
+        }
+
         @Override public void setPerson(Person target, Person editedPerson) {}
+        @Override public void setPersonInPlace(Person person) {}
 
         // ----- Project ops (unused in these tests) -----
-        @Override public boolean hasProject(Project project) { return false; }
-        @Override public void addProject(Project project) { projects.add(project); }
-        @Override public void deleteProject(Project project) { projects.remove(project); }
+        @Override public boolean hasProject(Project project) {
+            return false;
+        }
+
+        @Override public void addProject(Project project) {
+            projects.add(project);
+        }
+
+        @Override public void deleteProject(Project project) {
+            projects.remove(project);
+        }
     }
 }

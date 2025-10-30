@@ -24,8 +24,8 @@ public class CommitteeTest {
         assertFalse(Committee.isValidCommittee(null));
 
         // invalid committees
-        assertFalse(Committee.isValidCommittee(""));     // empty string
-        assertFalse(Committee.isValidCommittee("   "));  // spaces only
+        assertFalse(Committee.isValidCommittee("")); // empty string
+        assertFalse(Committee.isValidCommittee("   ")); // spaces only
 
         // valid committees
         assertTrue(Committee.isValidCommittee("Finance"));
