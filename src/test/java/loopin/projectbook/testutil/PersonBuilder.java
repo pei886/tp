@@ -113,7 +113,7 @@ public class PersonBuilder {
      */
     public TeamMember buildTeamMember(String committeeName) {
         Committee committee = new Committee(committeeName);
-        return new TeamMember(name, committee, phone, email, telegram, tags, remarks, projects);
+        return new TeamMember(name, committee, phone, email, telegram, remarks, projects);
     }
 
     /**
@@ -121,10 +121,10 @@ public class PersonBuilder {
      */
     public OrgMember buildOrgMember(String organisationName) {
         Organisation organisation = new Organisation(organisationName);
-        return new OrgMember(name, organisation, phone, email, telegram, tags, remarks, projects);
+        return new OrgMember(name, organisation, phone, email, telegram, remarks, projects);
     }
 
     public Volunteer buildVolunteer() {
-        return new Volunteer(name, phone, email, telegram, tags, remarks, projects);
+        return new Volunteer(name, phone, email, telegram, remarks, projects);
     }
 }

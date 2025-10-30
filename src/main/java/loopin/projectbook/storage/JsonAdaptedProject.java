@@ -98,13 +98,13 @@ class JsonAdaptedProject {
 
         // createdAt: prefer stored value; fallback for legacy data
         final LocalDateTime modelCreatedAt =
-                (createdAt != null && !createdAt.isEmpty())
+                createdAt != null && !createdAt.isEmpty()
                         ? LocalDateTime.parse(createdAt)
                         : LocalDateTime.now();
 
         // lastUpdate: reconstruct if both fields exist; else default
         final LastUpdate modelLastUpdate =
-                (lastUpdateMessage != null && lastUpdateTimestamp != null)
+                lastUpdateMessage != null && lastUpdateTimestamp != null
                         ? new LastUpdate(lastUpdateMessage, LocalDateTime.parse(lastUpdateTimestamp))
                         : new LastUpdate();
 

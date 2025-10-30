@@ -169,6 +169,10 @@ public class Project {
         recordUpdate(update);
     }
 
+    /**
+     * Returns true if both projects have the same normalized name.
+     * This defines a weaker notion of equality between two projects.
+     */
     public boolean isSameProject(Project other) {
         if (other == this) {
             return true;
@@ -185,6 +189,10 @@ public class Project {
         return s == null ? "" : s.trim().replaceAll("\\s+", " ").toLowerCase();
     }
 
+    /**
+     * Returns true if both projects have the same name and description.
+     * This defines a stronger notion of equality between two projects.
+     */
     @Override
     public boolean equals(Object o) {
         if (o == this) {

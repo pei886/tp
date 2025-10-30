@@ -75,27 +75,6 @@ public abstract class Person {
     }
 
     /**
-     * Returns true if both persons have the same phone, email or telegram.
-     * This defines a weaker notion of equality between two persons.
-     */
-    public boolean isSamePerson(Person otherPerson) {
-        if (otherPerson == this) {
-            return true;
-        } else if (otherPerson == null) {
-            return false;
-        }
-
-        // email is guaranteed non-null
-        boolean isSameEmail = getEmail().equals(otherPerson.getEmail());
-
-        // If phone and telegram are empty, they are not considered as duplicates
-        boolean isSamePhone = getPhone().isPresent() && getPhone().equals(otherPerson.getPhone());
-        boolean isSameTelegram = getTelegram().isPresent() && getTelegram().equals(otherPerson.getTelegram());
-
-        return isSamePhone || isSameEmail || isSameTelegram;
-    }
-
-    /**
      * Creates a copy of the existing person with the same role but updated fields.
      */
     public abstract Person createCopy(Name name, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
@@ -186,6 +165,27 @@ public abstract class Person {
      */
     public Set<Remark> getRemarks() {
         return Collections.unmodifiableSet(remarks);
+    }
+
+    /**
+     * Returns true if both persons have the same phone, email or telegram.
+     * This defines a weaker notion of equality between two persons.
+     */
+    public boolean isSamePerson(Person otherPerson) {
+        if (otherPerson == this) {
+            return true;
+        } else if (otherPerson == null) {
+            return false;
+        }
+
+        // email is guaranteed non-null
+        boolean isSameEmail = getEmail().equals(otherPerson.getEmail());
+
+        // If phone and telegram are empty, they are not considered as duplicates
+        boolean isSamePhone = getPhone().isPresent() && getPhone().equals(otherPerson.getPhone());
+        boolean isSameTelegram = getTelegram().isPresent() && getTelegram().equals(otherPerson.getTelegram());
+
+        return isSamePhone || isSameEmail || isSameTelegram;
     }
 
     /**
