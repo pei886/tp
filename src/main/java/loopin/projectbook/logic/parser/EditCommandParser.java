@@ -5,21 +5,16 @@ import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.EditCommand;
 import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -37,7 +32,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(
                         args,
-                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG,
+                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM,
                         PREFIX_COMMITEE, PREFIX_ORGANISATION
                 );
 
@@ -52,7 +47,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(
                 PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM,
                 PREFIX_COMMITEE, PREFIX_ORGANISATION
-                );
+        );
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -80,28 +75,11 @@ public class EditCommandParser implements Parser<EditCommand> {
             ));
         }
 
-        parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
         return new EditCommand(index, editPersonDescriptor);
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws ParseException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
     }
 
 }

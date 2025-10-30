@@ -4,14 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import static loopin.projectbook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,17 +22,17 @@ import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
-import loopin.projectbook.model.person.orgmember.Organisation;
-import loopin.projectbook.model.person.orgmember.OrgMember;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
-import loopin.projectbook.model.person.volunteer.Volunteer;
-import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
+import loopin.projectbook.model.person.orgmember.OrgMember;
+import loopin.projectbook.model.person.orgmember.Organisation;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
+import loopin.projectbook.model.person.volunteer.Volunteer;
+import loopin.projectbook.model.project.Project;
+
 
 /**
  * Edits the details of an existing person in the project book.
@@ -52,7 +49,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
-            + "[" + PREFIX_TAG + "TAG]... "
             + "[" + PREFIX_COMMITEE + "COMMITTEE] "
             + "[" + PREFIX_ORGANISATION + "ORGANISATION]\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -118,7 +114,6 @@ public class EditCommand extends Command {
         Optional<Phone> updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Optional<Telegram> updatedTelegram = editPersonDescriptor.getTelegram().orElse(personToEdit.getTelegram());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Remark> remarks = personToEdit.getRemarks();
         List<Project> projects = personToEdit.getProjects();
 
@@ -130,7 +125,7 @@ public class EditCommand extends Command {
             Committee updatedCommittee = editPersonDescriptor.getCommittee().orElse(teamMember.getCommittee());
 
             return new TeamMember(
-                    updatedName, updatedCommittee, updatedPhone, updatedEmail, updatedTelegram, updatedTags,
+                    updatedName, updatedCommittee, updatedPhone, updatedEmail, updatedTelegram,
                     remarks, projects
             );
 
@@ -143,13 +138,15 @@ public class EditCommand extends Command {
                     editPersonDescriptor.getOrganisation().orElse(orgMember.getOrganisation());
 
             return new OrgMember(
-                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram, updatedTags,
+                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram,
                     remarks, projects
             );
         }
 
         // person is a volunteer
-        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags, remarks, projects);
+        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram,
+                remarks, projects
+        );
 
     }
 
@@ -186,7 +183,6 @@ public class EditCommand extends Command {
         private Optional<Phone> phone;
         private Email email;
         private Optional<Telegram> telegram;
-        private Set<Tag> tags;
         private Committee committee;
         private Organisation organisation;
 
@@ -194,14 +190,12 @@ public class EditCommand extends Command {
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setTelegram(toCopy.telegram);
-            setTags(toCopy.tags);
             setCommittee(toCopy.committee);
             setOrganisation(toCopy.organisation);
         }
@@ -210,7 +204,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, telegram, tags, committee, organisation);
+            return CollectionUtil.isAnyNonNull(name, phone, email, telegram, committee, organisation);
         }
 
         public void setName(Name name) {
@@ -245,29 +239,20 @@ public class EditCommand extends Command {
             return Optional.ofNullable(telegram);
         }
 
-        public void setCommittee(Committee committee) { this.committee = committee; }
-
-        public Optional<Committee> getCommittee() { return Optional.ofNullable(committee); }
-
-        public void setOrganisation(Organisation organisation) { this.organisation = organisation; }
-
-        public Optional<Organisation> getOrganisation() { return Optional.ofNullable(organisation); }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setCommittee(Committee committee) {
+            this.committee = committee;
         }
 
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Committee> getCommittee() {
+            return Optional.ofNullable(committee);
+        }
+
+        public void setOrganisation(Organisation organisation) {
+            this.organisation = organisation;
+        }
+
+        public Optional<Organisation> getOrganisation() {
+            return Optional.ofNullable(organisation);
         }
 
         @Override
@@ -286,7 +271,6 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(telegram, otherEditPersonDescriptor.telegram)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
                     && Objects.equals(committee, otherEditPersonDescriptor.committee)
                     && Objects.equals(organisation, otherEditPersonDescriptor.organisation);
         }
@@ -298,7 +282,6 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("telegram", telegram)
-                    .add("tags", tags)
                     .add("committee", committee)
                     .add("organisation", organisation)
                     .toString();

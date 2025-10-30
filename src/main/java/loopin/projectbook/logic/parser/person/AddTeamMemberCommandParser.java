@@ -6,7 +6,6 @@ import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
-import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 
 import java.util.ArrayList;
@@ -31,7 +30,6 @@ import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Parses user input to create a new AddTeamMember object
@@ -51,7 +49,7 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_COMMITEE,
-                        PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM, PREFIX_TAG);
+                        PREFIX_PHONE, PREFIX_EMAIL, PREFIX_TELEGRAM);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_COMMITEE, PREFIX_EMAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -72,11 +70,10 @@ public class AddTeamMemberCommandParser implements Parser<AddTeamMemberCommand> 
                 ? Optional.of(ParserUtil.parseTelegram(argMultimap.getValue(PREFIX_TELEGRAM).get()))
                 : Optional.empty();
         Committee committee = ParserUtil.parseCommittee(argMultimap.getValue(PREFIX_COMMITEE).get());
-        Set<Tag> tags = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Remark> remarks = new HashSet<Remark>();
         List<Project> projects = new ArrayList<Project>();
 
-        TeamMember member = new TeamMember(name, committee, phone, email, telegram, tags, remarks, projects);
+        TeamMember member = new TeamMember(name, committee, phone, email, telegram, remarks, projects);
 
 
         return new AddTeamMemberCommand(member);

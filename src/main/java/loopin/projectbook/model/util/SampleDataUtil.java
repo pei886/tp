@@ -21,7 +21,6 @@ import loopin.projectbook.model.person.teammember.Committee;
 import loopin.projectbook.model.person.teammember.TeamMember;
 import loopin.projectbook.model.person.volunteer.Volunteer;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Contains utility methods for populating {@code ProjectBook} with sample data.
@@ -32,42 +31,36 @@ public class SampleDataUtil {
             new TeamMember(new Name("Alex Yeoh"), new Committee("Operations"),
                     Optional.of(new Phone("87438807")), new Email("alexyeoh@example.com"),
                     Optional.of(new Telegram("AlexYeoh123")),
-                    getTagSet("Meeting shifted to Thursday"),
                     getRemarkSet("Check venue booking"),
                     new ArrayList<Project>()),
 
             new Volunteer(new Name("Bernice Yu"),
                     Optional.of(new Phone("99272758")), new Email("berniceyu@example.com"),
                     Optional.of(new Telegram("BurnIce")),
-                    getTagSet(),
                     getEmptyRemarkSet(),
                     new ArrayList<Project>()),
 
             new OrgMember(new Name("Charlotte Oliveiro"), new Organisation("GreenCorp"),
                     Optional.of(new Phone("93210283")), new Email("charlotte@example.com"),
                     Optional.of(new Telegram("CharredOlive")),
-                    getTagSet(),
                     getRemarkSet("Follow up on sponsorship"),
                     new ArrayList<Project>()),
 
             new TeamMember(new Name("David Li"), new Committee("Logistics"),
                     Optional.of(new Phone("91031282")), new Email("lidavid@example.com"),
                     Optional.of(new Telegram("DavidLi918")),
-                    getTagSet(),
                     getEmptyRemarkSet(),
                     new ArrayList<Project>()),
 
             new Volunteer(new Name("Irfan Ibrahim"),
                     Optional.of(new Phone("92492021")), new Email("irfan@example.com"),
                     Optional.of(new Telegram("Irfan_Ibrahim")),
-                    getTagSet("Posted to new booth"),
                     getRemarkSet("Needs T-shirt (Size L)"),
                     new ArrayList<Project>()),
 
             new OrgMember(new Name("Roy Balakrishnan"), new Organisation("PixelWorks"),
                     Optional.of(new Phone("92624417")), new Email("royb@example.com"),
                     Optional.of(new Telegram("Roy_Balakrishnan172")),
-                    getTagSet("Need mockup by Wednesday"),
                     getRemarkSet("Invoice pending", "Confirm logo dimensions"),
                     new ArrayList<Project>()),
         };
@@ -79,15 +72,6 @@ public class SampleDataUtil {
             sampleAb.addPerson(samplePerson);
         }
         return sampleAb;
-    }
-
-    /**
-     * Returns a tag set containing the list of strings given.
-     */
-    public static Set<Tag> getTagSet(String... strings) {
-        return Arrays.stream(strings)
-                .map(Tag::new)
-                .collect(Collectors.toSet());
     }
 
     /**

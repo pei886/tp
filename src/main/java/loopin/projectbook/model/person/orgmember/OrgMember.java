@@ -15,7 +15,6 @@ import loopin.projectbook.model.person.Role;
 import loopin.projectbook.model.person.RoleType;
 import loopin.projectbook.model.person.Telegram;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Represents an Organisation Member in the project book.
@@ -29,9 +28,9 @@ public class OrgMember extends Person {
      */
     public OrgMember(Name name, Organisation organisation,
             Optional<Phone> phone, Email email, Optional<Telegram> telegram,
-            Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
+            Set<Remark> remarks, List<Project> projects) {
         super(name, new Role(RoleType.ORGMEMBER, organisation.toString()), phone, email, telegram,
-                tags, remarks, projects);
+                 remarks, projects);
         requireNonNull(organisation);
         this.organisation = organisation;
     }
@@ -42,7 +41,7 @@ public class OrgMember extends Person {
 
     @Override
     public Person createCopy(Name name, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
-            Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
-        return new OrgMember(name, organisation, phone, email, telegram, tags, remarks, projects);
+            Set<Remark> remarks, List<Project> projects) {
+        return new OrgMember(name, organisation, phone, email, telegram, remarks, projects);
     }
 }

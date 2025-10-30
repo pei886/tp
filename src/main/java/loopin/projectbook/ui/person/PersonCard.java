@@ -1,7 +1,5 @@
 package loopin.projectbook.ui.person;
 
-import java.util.Comparator;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -44,7 +42,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label numberOfProjects;
     @FXML
-    private FlowPane tags;
+    private FlowPane remarks;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -59,16 +57,12 @@ public class PersonCard extends UiPart<Region> {
         telegram.setText(person.getTelegram().map(telegram -> "@" + telegram.value).orElse("Telegram: nil"));
         email.setText(person.getEmail().value);
 
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-
         person.getRemarks()
                 .forEach(remark -> {
                     Label remarkLabel = new Label(remark.content);
                     // Assign a CSS class for the orange background (e.g., 'remark_tag')
                     remarkLabel.getStyleClass().add("remark_tag");
-                    tags.getChildren().add(remarkLabel);
+                    remarks.getChildren().add(remarkLabel);
                 });
 
         String projectNames = person.getProjects().stream()

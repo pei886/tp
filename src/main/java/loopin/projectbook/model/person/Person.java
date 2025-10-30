@@ -15,7 +15,6 @@ import loopin.projectbook.commons.core.LogsCenter;
 import loopin.projectbook.commons.util.ToStringBuilder;
 import loopin.projectbook.model.project.LastUpdate;
 import loopin.projectbook.model.project.Project;
-import loopin.projectbook.model.tag.Tag;
 
 /**
  * Represents a Person in the project book.
@@ -36,7 +35,6 @@ public abstract class Person {
     private final Role role;
 
     // Data fields
-    private final Set<Tag> tags = new HashSet<>();
     private final Set<Remark> remarks = new HashSet<>(); // Changed to Set
     private List<Project> projects = new ArrayList<>(); //list of projects the person is part of, empty by default
     /**
@@ -45,14 +43,13 @@ public abstract class Person {
      * Phone and telegram are optional.
      */
     protected Person(Name name, Role role, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
-            Set<Tag> tags, Set<Remark> remarks, List<Project> projects) {
-        requireAllNonNull(name, role, phone, email, telegram, tags, remarks, projects);
+            Set<Remark> remarks, List<Project> projects) {
+        requireAllNonNull(name, role, phone, email, telegram, remarks, projects);
         this.name = name;
         this.role = role;
         this.phone = phone;
         this.email = email;
         this.telegram = telegram;
-        this.tags.addAll(tags);
         this.remarks.addAll(remarks);
         this.projects.addAll(projects);
     }
@@ -75,14 +72,6 @@ public abstract class Person {
 
     public Optional<Telegram> getTelegram() {
         return telegram;
-    }
-
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
     }
 
     /**
@@ -110,7 +99,7 @@ public abstract class Person {
      * Creates a copy of the existing person with the same role but updated fields.
      */
     public abstract Person createCopy(Name name, Optional<Phone> phone, Email email, Optional<Telegram> telegram,
-            Set<Tag> tags, Set<Remark> remarks, List<Project> projects);
+            Set<Remark> remarks, List<Project> projects);
 
     public boolean hasRemark(Remark remark) {
         return remarks.contains(remark);
@@ -120,7 +109,7 @@ public abstract class Person {
      * Returns a new immutable Person with a remark.
      */
     public Person withNewRemark(Remark newRemark) {
-        Person updatedPerson = createCopy(name, phone, email, telegram, tags, remarks, projects);
+        Person updatedPerson = createCopy(name, phone, email, telegram, remarks, projects);
         updatedPerson.remarks.addAll(this.remarks);
         updatedPerson.remarks.add(newRemark);
 
@@ -135,7 +124,7 @@ public abstract class Person {
      * Returns a new immutable Person with the specified remark resolved (replaced).
      */
     public Person withResolvedRemark(Remark oldRemark, Remark resolvedRemark) {
-        Person updatedPerson = createCopy(name, phone, email, telegram, tags, remarks, projects);
+        Person updatedPerson = createCopy(name, phone, email, telegram, remarks, projects);
         updatedPerson.remarks.addAll(this.remarks);
         updatedPerson.remarks.remove(oldRemark);
         updatedPerson.remarks.add(resolvedRemark);
@@ -154,7 +143,7 @@ public abstract class Person {
     public Person withRemarkRemoved(Remark remarkToRemove) {
         Set<Remark> updatedRemarks = new HashSet<>(this.remarks);
         updatedRemarks.remove(remarkToRemove);
-        Person updatedPerson = createCopy(name, phone, email, telegram, tags, updatedRemarks, projects);
+        Person updatedPerson = createCopy(name, phone, email, telegram, updatedRemarks, projects);
 
         // Update all associated projects
         for (Project project : this.projects) {
@@ -218,7 +207,6 @@ public abstract class Person {
         // Non-null fields
         return name.equals(otherPerson.name)
                 && email.equals(otherPerson.email)
-                && tags.equals(otherPerson.tags)
                 && remarks.equals(otherPerson.remarks)
                 // Nullable fields
                 && Objects.equals(role, otherPerson.role)
@@ -228,7 +216,7 @@ public abstract class Person {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, role, phone, email, telegram, tags, remarks, projects);
+        return Objects.hash(name, role, phone, email, telegram, remarks, projects);
     }
 
     @Override
@@ -238,7 +226,6 @@ public abstract class Person {
                 .add("phone", phone.map(p -> p.value).orElse("nil"))
                 .add("email", email)
                 .add("telegram", telegram.map(t -> t.value).orElse("nil"))
-                .add("tags", tags)
                 .add("remarks", remarks)
                 .toString();
     }

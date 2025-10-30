@@ -48,7 +48,6 @@ public class Messages {
                 .append("; Telegram: ")
                 .append(person.getTelegram().map(p -> p.value).orElse("nil"))
                 .append("; Tags: ");
-        person.getTags().forEach(builder::append);
         return builder.toString();
     }
 
