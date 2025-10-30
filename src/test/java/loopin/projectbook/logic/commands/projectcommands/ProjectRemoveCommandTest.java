@@ -18,58 +18,105 @@ import loopin.projectbook.model.project.ProjectName;
 
 /**
  * Tests for {@link ProjectRemoveCommand}.
+ *
+ * Each test is labelled with what it is testing for.
  */
 public class ProjectRemoveCommandTest {
 
     @Test
     public void execute_removeByIndex_success() throws Exception {
-        // tests: remove person at index 1 from project
-        Person p = new Person("Alice");
-        Project proj = new Project(new ProjectName("Website"));
-        proj.assignPerson(p);
+        // tests: removing a person (by index) who IS in the project should succeed
+        Person alice = new TestPerson("Alice");
+        TestProject website = new TestProject(new ProjectName("Website"));
+        website.assignPerson(alice);
 
-        ModelStub model = new ModelStub(List.of(p), List.of(proj));
+        ModelStub model = new ModelStub(List.of(alice), List.of(website));
 
-        ProjectRemoveCommand cmd = new ProjectRemoveCommand(Index.fromOneBased(1), new ProjectName("Website"));
-        CommandResult res = cmd.execute(model);
+        ProjectRemoveCommand cmd =
+                new ProjectRemoveCommand(Index.fromOneBased(1), new ProjectName("Website"));
 
-        assertTrue(res.getFeedbackToUser().toLowerCase().contains("removed")
-                || res.getFeedbackToUser().toLowerCase().contains("unassigned"));
-        assertFalse(proj.members.contains(p));
-    }
+        CommandResult result = cmd.execute(model);
 
-    @Test
-    public void execute_removePersonNotInProject_throws() {
-        // tests: removing when person not in project -> error
-        Person p = new Person("Alice");
-        Project proj = new Project(new ProjectName("Website"));
-
-        ModelStub model = new ModelStub(List.of(p), List.of(proj));
-
-        ProjectRemoveCommand cmd = new ProjectRemoveCommand(Index.fromOneBased(1), new ProjectName("Website"));
-        assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertTrue(result.getFeedbackToUser().contains("Removed"));
+        assertFalse(website.hasMember(alice), "Person should have been removed from project.");
+        assertTrue(model.setProjectCalled, "Model#setProject should be called to persist change.");
     }
 
     @Test
     public void execute_removeByName_success() throws Exception {
-        // tests: remove by name mode
-        Person p = new Person("Alice");
-        Project proj = new Project(new ProjectName("Website"));
-        proj.assignPerson(p);
-        ModelStub model = new ModelStub(List.of(p), List.of(proj));
+        // tests: removing a person (by name) who IS in the project should succeed
+        Person alice = new TestPerson("Alice");
+        TestProject website = new TestProject(new ProjectName("Website"));
+        website.assignPerson(alice);
 
-        ProjectRemoveCommand cmd = new ProjectRemoveCommand("Alice", new ProjectName("Website"));
-        cmd.execute(model);
+        ModelStub model = new ModelStub(List.of(alice), List.of(website));
 
-        assertFalse(proj.members.contains(p));
+        ProjectRemoveCommand cmd =
+                new ProjectRemoveCommand("Alice", new ProjectName("Website"));
+
+        CommandResult result = cmd.execute(model);
+
+        assertTrue(result.getFeedbackToUser().contains("Removed"));
+        assertFalse(website.hasMember(alice));
     }
 
-    // ----------------------------------------------------------------------
-    // model stub
-    // ----------------------------------------------------------------------
+    @Test
+    public void execute_personNotInProject_throwsCommandException() {
+        // tests: trying to remove a person who is NOT in the project should throw
+        Person alice = new TestPerson("Alice");
+        TestProject website = new TestProject(new ProjectName("Website"));
+        // NOTE: we do NOT add Alice to website.members here
+
+        ModelStub model = new ModelStub(List.of(alice), List.of(website));
+
+        ProjectRemoveCommand cmd =
+                new ProjectRemoveCommand("Alice", new ProjectName("Website"));
+
+        CommandException ex = assertThrows(CommandException.class, () -> cmd.execute(model));
+        assertEquals(String.format(ProjectRemoveCommand.MESSAGE_NOT_IN, alice.getName()), ex.getMessage());
+    }
+
+    @Test
+    public void execute_projectNotFound_throwsCommandException() {
+        // tests: if the project name cannot be found in model, the command should fail
+        Person alice = new TestPerson("Alice");
+        ModelStub model = new ModelStub(List.of(alice), List.of()); // no projects
+
+        ProjectRemoveCommand cmd =
+                new ProjectRemoveCommand("Alice", new ProjectName("MissingProject"));
+
+        assertThrows(CommandException.class, () -> cmd.execute(model));
+    }
+
+    @Test
+    public void execute_personNameNotFound_throwsCommandException() {
+        // tests: name mode, but person name not in filtered list → BaseProjectMemberCommand should fail
+        // we simulate it by providing an empty person list
+        ModelStub model = new ModelStub(List.of(), List.of(new TestProject(new ProjectName("Website"))));
+
+        ProjectRemoveCommand cmd =
+                new ProjectRemoveCommand("Alice", new ProjectName("Website"));
+
+        assertThrows(CommandException.class, () -> cmd.execute(model));
+    }
+
+    // ======================================================================
+    // Model stub
+    // ======================================================================
+
+    /**
+     * Minimal model stub to support:
+     * - getFilteredPersonList()
+     * - getFilteredProjectList()
+     * - findProjectByName(String)
+     * - setProject(Project)
+     *
+     * This is enough for BaseProjectMemberCommand + ProjectRemoveCommand to work.
+     */
     private static class ModelStub implements Model {
         private final List<Person> persons;
         private final List<Project> projects;
+        boolean setProjectCalled = false;
 
         ModelStub(List<Person> persons, List<Project> projects) {
             this.persons = persons;
@@ -95,10 +142,13 @@ public class ProjectRemoveCommandTest {
 
         @Override
         public void setProject(Project project) {
-            // no-op
+            // in real model, this would replace the project in the list
+            setProjectCalled = true;
         }
 
-        // ---- unused ----
+        // ------------------------------------------------------------------
+        // unused Model methods — no-op
+        // ------------------------------------------------------------------
         @Override public void updateFilteredPersonList(java.util.function.Predicate<Person> predicate) {}
         @Override public boolean hasPerson(Person person) { return false; }
         @Override public void setPerson(Person target, Person editedPerson) {}
@@ -110,47 +160,57 @@ public class ProjectRemoveCommandTest {
         @Override public void setProjectBook(loopin.projectbook.ReadOnlyProjectBook projectBook) {}
     }
 
-    // ----------------------------------------------------------------------
-    // minimal Project + Person
-    // ----------------------------------------------------------------------
-    private static class Project extends loopin.projectbook.model.project.Project {
-        final List<Person> members = new ArrayList<>();
+    // ======================================================================
+    // Test doubles for Project and Person
+    // ======================================================================
 
-        Project(ProjectName name) {
+    /**
+     * Test double for Project that tracks members in-memory.
+     */
+    private static class TestProject extends loopin.projectbook.model.project.Project {
+        private final List<Person> members = new ArrayList<>();
+
+        TestProject(ProjectName name) {
             super(name);
         }
 
         @Override
-        public boolean hasMember(Person p) {
-            return members.contains(p);
+        public boolean hasMember(Person person) {
+            return members.contains(person);
         }
 
         @Override
-        public void assignPerson(Person p) {
-            members.add(p);
+        public void assignPerson(Person person) {
+            members.add(person);
         }
 
-        public void removePerson(Person p) {
-            members.remove(p);
+        @Override
+        public void removePerson(Person person) {
+            members.remove(person);
         }
     }
 
-    private static class Person extends loopin.projectbook.model.person.Person {
-        private final String name;
+    /**
+     * Test double for Person with a simple name-based identity.
+     */
+    private static class TestPerson extends loopin.projectbook.model.person.Person {
+        private final String rawName;
 
-        Person(String name) {
-            super(new loopin.projectbook.model.person.Name(name),
+        TestPerson(String name) {
+            super(
+                    new loopin.projectbook.model.person.Name(name),
                     Optional.empty(),
                     new loopin.projectbook.model.person.Email(name.toLowerCase() + "@example.com"),
                     Optional.empty(),
                     new ArrayList<>(),
-                    new ArrayList<>());
-            this.name = name;
+                    new ArrayList<>()
+            );
+            this.rawName = name;
         }
 
         @Override
         public boolean isSamePerson(loopin.projectbook.model.person.Person otherPerson) {
-            return otherPerson.getName().toString().equalsIgnoreCase(this.name);
+            return otherPerson.getName().toString().equalsIgnoreCase(rawName);
         }
     }
 }
