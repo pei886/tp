@@ -17,17 +17,17 @@ Loopin is a desktop app that helps project leaders **track team members, organis
 
 Action                         | Format, Examples
 -------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add volunteer**              | `addv n/NAME p/PHONE_NUMBER e/EMAIL [t/TELEGRAM]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
-**Add team member**            | `addt n/NAME c/COMMITTEE p/PHONE e/EMAIL [t/TELEGRAM]` <br> e.g. `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarahlogistics`
-**Add organisation member**    | `addo n/NAME o/ORGANISATION p/PHONE e/EMAIL [t/TELEGRAM]` <br> e.g. `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
+**Add volunteer**              | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
+**Add team member**            | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g. `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarahlogistics`
+**Add organisation member**    | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g. `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
 **Clear**                      | `clear`
 **Delete**                     | `delete INDEX`<br> e.g., `delete 3`
-**Edit**                       | `edit INDEX [n/NAME] [p/PHONE] e/EMAIL [t/TELEGRAM]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com t/jameslee123`
+**Edit**                       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com t/jameslee123`
 **Remark**                     | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
 **Done**                       | `done INDEX u/UPDATE` <br> e.g. `done 2 u/add to shared drive`
 **Find**                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**                       | `list`
-**Add project**                | `project add n/NAME [d/DESCRIPTION]` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
+**Add project**                | `project add n/NAME d/DESCRIPTION` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
 **List projects**              | `project list`
 **View project**               | `project view` <br> e.g., `project view project/Beach Cleanup`
 **Assign person to project**   | `project assign INDEX project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
