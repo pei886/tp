@@ -110,10 +110,10 @@ Format: `help`
 Adds a person of a specific role to the project book. There are 3 roles a person can play in the project book: volunteer, committee member and organisation.
 
 Feature                    | Command word | Command format                                                   | Example
----------------------------|--------------|------------------------------------------------------------------|-------------------------------------------------------------------------
-Add a volunteer            | `addv`       | `addv n/NAME p/PHONE e/EMAIL [t/TELEGRAM]`                        | `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
-Add a team member          | `addt`       | `addt n/NAME c/COMMITTEE p/PHONE e/EMAIL [t/TELEGRAM]`           | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarahlogistics`
-Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION p/PHONE e/EMAIL [t/TELEGRAM]`        | `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
+---------------------------|--------------|------------------------------------------------------------------|-------------------------------------------------------------------------------------
+Add a volunteer            | `addv`       | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]`                     | `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
+Add a team member          | `addt`       | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]`         | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarah_ng`
+Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]`      | `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
 
 <box type="tip" seamless>
 
@@ -131,7 +131,7 @@ Format: `list`
 
 Edits the specified fields of an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -193,7 +193,7 @@ Format: `project list`
 
 Adds a project to the project book.
 
-Format: `project add n/PROJECTNAME [d/DESCRIPTION]
+Format: `project add n/PROJECTNAME d/DESCRIPTION
 
 Example:
 `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
