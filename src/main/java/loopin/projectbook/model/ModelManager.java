@@ -142,6 +142,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void deleteProject(Project project) {
+        requireNonNull(project);
+        projectBook.removeProject(project);
+    }
+
+    @Override
     public java.util.Optional<Project> findProjectByName(String name) {
         return projectBook.findProjectByName(name);
     }
