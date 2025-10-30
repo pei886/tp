@@ -132,6 +132,13 @@ public class ProjectBook implements ReadOnlyProjectBook {
         projects.setProject(project);
     }
 
+    /**
+     * Removes a project from the project book.
+     */
+    public void removeProject(Project project) {
+        projects.remove(project);
+    }
+
     public java.util.Optional<Project> findProjectByName(String name) {
         return projects.findByName(name);
     }
