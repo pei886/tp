@@ -1,9 +1,11 @@
 package loopin.projectbook.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_COMMITEE;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_NAME;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_PHONE;
+import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_ORGANISATION;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TAG;
 import static loopin.projectbook.logic.parser.CliSyntax.PREFIX_TELEGRAM;
 import static loopin.projectbook.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -23,12 +25,17 @@ import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
+import loopin.projectbook.model.person.Organisation;
+import loopin.projectbook.model.person.OrgMember;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.model.person.Volunteer;
 import loopin.projectbook.model.project.Project;
 import loopin.projectbook.model.tag.Tag;
+import loopin.projectbook.model.teammember.Committee;
+import loopin.projectbook.model.teammember.TeamMember;
 
 /**
  * Edits the details of an existing person in the project book.
@@ -44,8 +51,10 @@ public class EditCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_TELEGRAM + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TELEGRAM + "TELEGRAM] "
+            + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_COMMITEE + "COMMITTEE] "
+            + "[" + PREFIX_ORGANISATION + "ORGANISATION]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -53,6 +62,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the project book.";
+    public static final String MESSAGE_NOT_PERMITTED_FOR_ROLE = "This field does not exist for this role.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -91,10 +101,17 @@ public class EditCommand extends Command {
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Creates and returns a new {@code Person} object (or one of its subclasses with updated field values based on
+     * the provided {@code EditPersonDescriptor}.
+     *
+     * @param personToEdit the existing {@code Person} to be edited
+     * @param editPersonDescriptor the {@code EditPersonDescriptor} containing optional updated values
+     * @return a new {@code Person} (or subclass) instance with applied edits
+     * @throws CommandException if a field inappropriate for the person’s role is supplied
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
+    private static Person createEditedPerson(
+            Person personToEdit, EditPersonDescriptor editPersonDescriptor
+    ) throws CommandException {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
@@ -105,8 +122,31 @@ public class EditCommand extends Command {
         Set<Remark> remarks = personToEdit.getRemarks();
         List<Project> projects = personToEdit.getProjects();
 
-        return personToEdit.createCopy(updatedName, updatedPhone, updatedEmail, updatedTelegram,
-                updatedTags, remarks, projects);
+        if (personToEdit instanceof TeamMember teamMember) {
+            // person is a team member
+            if (editPersonDescriptor.getOrganisation().isPresent()) {
+                throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
+            }
+            Committee updatedCommittee = editPersonDescriptor.getCommittee().orElse(teamMember.getCommittee());
+
+            return new TeamMember(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedCommittee);
+
+        } else if (personToEdit instanceof OrgMember orgMember) {
+            // person is an organisation member
+            if (editPersonDescriptor.getCommittee().isPresent()) {
+                throw new CommandException(MESSAGE_NOT_PERMITTED_FOR_ROLE);
+            }
+            Organisation updatedOrganisation =
+                    editPersonDescriptor.getOrganisation().orElse(orgMember.getOrganisation());
+
+            return new OrgMember(
+                    updatedName, updatedOrganisation, updatedPhone, updatedEmail, updatedTelegram, updatedTags
+            );
+        }
+
+        // person is a volunteer
+        return new Volunteer(updatedName, updatedPhone, updatedEmail, updatedTelegram, updatedTags);
+
     }
 
     @Override
@@ -143,6 +183,8 @@ public class EditCommand extends Command {
         private Email email;
         private Optional<Telegram> telegram;
         private Set<Tag> tags;
+        private Committee committee;
+        private Organisation organisation;
 
         public EditPersonDescriptor() {}
 
@@ -156,13 +198,15 @@ public class EditCommand extends Command {
             setEmail(toCopy.email);
             setTelegram(toCopy.telegram);
             setTags(toCopy.tags);
+            setCommittee(toCopy.committee);
+            setOrganisation(toCopy.organisation);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, telegram, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, telegram, tags, committee, organisation);
         }
 
         public void setName(Name name) {
@@ -197,6 +241,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(telegram);
         }
 
+        public void setCommittee(Committee committee) { this.committee = committee; }
+
+        public Optional<Committee> getCommittee() { return Optional.ofNullable(committee); }
+
+        public void setOrganisation(Organisation organisation) { this.organisation = organisation; }
+
+        public Optional<Organisation> getOrganisation() { return Optional.ofNullable(organisation); }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -230,7 +282,9 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(telegram, otherEditPersonDescriptor.telegram)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(committee, otherEditPersonDescriptor.committee)
+                    && Objects.equals(organisation, otherEditPersonDescriptor.organisation);
         }
 
         @Override
@@ -241,6 +295,8 @@ public class EditCommand extends Command {
                     .add("email", email)
                     .add("telegram", telegram)
                     .add("tags", tags)
+                    .add("committee", committee)
+                    .add("organisation", organisation)
                     .toString();
         }
     }
