@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.parser.person;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -9,7 +9,6 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.logic.commands.personcommands.FindCommand;
-import loopin.projectbook.logic.parser.person.FindCommandParser;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
