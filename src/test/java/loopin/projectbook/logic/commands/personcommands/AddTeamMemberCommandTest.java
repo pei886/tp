@@ -90,7 +90,7 @@ public class AddTeamMemberCommandTest {
 
     @Test
     public void toStringMethod() {
-        TeamMember alice = (TeamMember) new PersonBuilder().withName("Alice").build();
+        TeamMember alice = new PersonBuilder().withName("Alice").buildTeamMember("Marketing");
         AddTeamMemberCommand command = new AddTeamMemberCommand(alice);
 
         String str = command.toString();

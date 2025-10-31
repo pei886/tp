@@ -78,9 +78,9 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_optionalFieldsMissing_success() {
-        Person expectedPerson = new PersonBuilder(AMY).build();
+        Person expectedPerson = new PersonBuilder(AMY).withPhone(null).withTelegram(null).build();
         assertParseSuccess(parser,
-                NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + TELEGRAM_DESC_AMY,
+                NAME_DESC_AMY + EMAIL_DESC_AMY,
                 new AddVolunteerCommand((Volunteer) expectedPerson));
     }
 
@@ -94,19 +94,9 @@ public class AddCommandParserTest {
                 VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + TELEGRAM_DESC_BOB,
                 expectedMessage);
 
-        // missing phone prefix
-        assertParseFailure(parser,
-                NAME_DESC_BOB + VALID_PHONE_BOB + EMAIL_DESC_BOB + TELEGRAM_DESC_BOB,
-                expectedMessage);
-
         // missing email prefix
         assertParseFailure(parser,
                 NAME_DESC_BOB + PHONE_DESC_BOB + VALID_EMAIL_BOB + TELEGRAM_DESC_BOB,
-                expectedMessage);
-
-        // missing telegram prefix
-        assertParseFailure(parser,
-                NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + VALID_TELEGRAM_BOB,
                 expectedMessage);
 
         // all prefixes missing
