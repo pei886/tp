@@ -162,21 +162,23 @@ Examples:
 
 ### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds persons whose names contain the given sequence of characters.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is **case-insensitive**. e.g. `hans` will match `Hans`.
+* The search matches **any part of the name** — it does not need to be a full word.  
+  e.g. `Han` will match `Hans`, `Hannah`, or `Johanson`.
+* Persons will be shown if **all** given keywords appear somewhere in their name (in order, without whitespace).  
+  e.g. `Hans Gr` will match `Hans Gruber`, `Gruber Hans`.
+* The order of the keywords does not matter.
+* Partial matches across multiple keywords are shown.
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find John` returns `John Doe`, `Johnson Tan`
+* `find david alex` returns `Alex Yeoh David`, `Alexandra Davidson`
+* `find david david` returns `Alex Yeoh David`, `Alexandra Davidson`, and `David Li`<br>
+  ![result for 'find alex david'](images/findcommandresult.png)
 
 
 ### Deleting a person : `delete`
