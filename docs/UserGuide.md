@@ -96,6 +96,7 @@ Action                         | Format, Examples
 
 </box>
 
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
@@ -106,7 +107,7 @@ The link will bring you to a condensed cheatsheet of commands for your future re
 Format: `help`
 
 
-#### Adding a person: `add(v/t/o)`
+### Adding a person: `add(v/t/o)`
 
 Adds a person of a specific role to the project book. There are 3 roles a person can play in the project book: volunteer, committee member and organisation.
 
@@ -121,6 +122,7 @@ Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE
 **Note:** There are slight differences in the parameters for different roles.
 
 </box>
+
 
 ### Making a remark to remember to update a person : `list`
 
@@ -142,6 +144,7 @@ Shows a list of all persons in the address book.
 
 Format: `list`
 
+
 ### Editing a person : `edit`
 
 Edits the specified fields of an existing person in the address book.
@@ -155,6 +158,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
+
 
 ### Locating persons by name: `find`
 
@@ -174,6 +178,7 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -188,6 +193,7 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -198,11 +204,13 @@ Format: `clear`
 Note: This action cannot be reversed.
 </box>
 
+
 ### Listing all projects: `project list`
 
 Shows a list of all projects in the project book.
 
 Format: `project list`
+
 
 ### Adding a project: `project add`
 
@@ -215,6 +223,7 @@ Example:
 * Adds a new project named "`Beach Cleanup`" and has the description "`Beach Cleaning at Siloso Beach`"
 * No one is associated with it yet.
 
+
 ### Deleting a project: `project delete`
 
 Deletes the specified project from the project book.
@@ -225,6 +234,7 @@ Example:
 `project delete project/Fundraising Drive
 
 * Deleting a project does not delete its associated persons.
+
 
 ### Viewing a project: `project view`
 
@@ -238,6 +248,7 @@ Views a project named "Beach Cleanup" and lists:
 * Name and description of project
 * Latest project updates
 * Contacts of volunteers, team members, and organisations
+
 
 ### Assigning a person to a project: `project assign`
 
@@ -253,6 +264,7 @@ Format: `project assign INDEX project/PROJECTNAME`
 Example:
 `project assign 4 project/Startup Showcase`
 
+
 ### Removing a person from a project: `project remove`
 
 Removes a specified volunteer, team member, or organisation member from a project.
@@ -264,15 +276,18 @@ Format: `project remove INDEX project/PROJECTNAME`
 * The index **must be a positive integer** 1, 2, 3, …​
 * When you view the project details using the command `project view project/PROJECTNAME`, the removed person will no longer show up in its details.
 
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
+
 ### Saving the data
 
 Loopin's data is saved in the hard disk automatically after any command that modifies data. There is no need to save manually!
+
 
 ### Editing the data file
 
@@ -284,6 +299,7 @@ If your changes to the data file makes its format invalid, AddressBook will disc
 
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
+
 
 ### Archiving data files `[coming in v2.0]`
 
