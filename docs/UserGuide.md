@@ -43,11 +43,11 @@ Action                         | Format, Examples
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from our github page.
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your ProjectBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar projectBook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -59,7 +59,7 @@ Action                         | Format, Examples
 
    * `list` : Lists all contacts.
 
-   * `addv n/John Doe p/98765432 e/johnd@example.com` : Adds a volunteer contact named `John Doe` to the Address Book.
+   * `addv n/John Doe p/98765432 e/johnd@example.com` : Adds a volunteer contact named `John Doe` to the Project Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -162,22 +162,20 @@ Examples:
 
 ### Locating persons by name: `find`
 
-Finds persons whose names contain the given sequence of characters.
+Finds a person whose name contains the given sequence of characters.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is **case-insensitive**. e.g. `hans` will match `Hans`.
 * The search matches **any part of the name** — it does not need to be a full word.  
-  e.g. `Han` will match `Hans`, `Hannah`, or `Johanson`.
-* Persons will be shown if **all** given keywords appear somewhere in their name (in order, without whitespace).  
-  e.g. `Hans Gr` will match `Hans Gruber`, `Gruber Hans`.
+  e.g. `Han` will match one of `Hans`, `Hannah`, or `Johanson`. The most specific phrase will be chosen.
 * The order of the keywords does not matter.
 * Partial matches across multiple keywords are shown.
 
 Examples:
-* `find John` returns `John Doe`, `Johnson Tan`
+* `find John` returns `John Doe`, or `Johnson Tan`
 * `find david alex` returns `Alex Yeoh David`, `Alexandra Davidson`
-* `find david david` returns `Alex Yeoh David`, `Alexandra Davidson`, and `David Li`<br>
+* `find david david` returns `Alex Yeoh David`, or `Alexandra Davidson`, or `David Li`<br>
   ![result for 'find alex david'](images/findcommandresult.png)
 
 
