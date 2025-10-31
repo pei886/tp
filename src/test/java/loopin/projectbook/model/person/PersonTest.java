@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import loopin.projectbook.testutil.PersonBuilder;
 import loopin.projectbook.model.person.volunteer.Volunteer;
+import loopin.projectbook.testutil.PersonBuilder;
 
 public class PersonTest {
 

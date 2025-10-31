@@ -1,71 +1,80 @@
----
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
 # Loopin User Guide
 
 Loopin is a desktop app that helps project leaders **track team members, organisation partners, volunteers, and project updates** in one place. It is designed for project leads and coordinators, and friendly for first-time users via a CLI (only typing required) interface.
 
-<!-- * Table of Contents -->
+--------------------------------------------------------------------------------------------------------------------
+
+## Command Summary
+
+Action | Format, Examples
+---|---
+[**Add volunteer**](#addv--addt--addo-adding-a-person-volunteer-teammember-organisationmember) | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
+[**Add team member**](#addv--addt--addo-adding-a-person-volunteer-teammember-organisationmember) | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g. `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarahlogistics`
+[**Add organisation member**](#addv--addt--addo-adding-a-person-volunteer-teammember-organisationmember) | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g. `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
+[**Clear**](#clear-clearing-all-entries) | `clear`
+[**Delete**](#delete-deleting-a-person) | `delete INDEX`<br> e.g., `delete 3`
+[**Edit**](#edit-editing-a-person) | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com t/jameslee123`
+[**Remark**](#remark-adding-a-remark) | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
+[**Resolve**](#resolve-resolving-a-remark) | `resolve PERSON_INDEX REMARK_INDEX ` <br> e.g. `resolve 2 1`
+[**Find**](#find-finding-persons) | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+[**List**](#list-listing-all-persons) | `list`
+[**Add project**](#project-add-adding-a-project) | `project add n/NAME d/DESCRIPTION` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
+[**List projects**](#project-list-listing-all-projects) | `project list`
+[**View project**](#project-view-viewing-a-project) | `project view project/PROJECTNAME` <br> e.g., `project view project/Beach Cleanup`
+[**Delete project**](#project-delete-deleting-a-project) | `project delete project/PROJECTNAME` <br> e.g., `project delete project/Fundraising Drive`
+[**Assign person to project**](#project-assign-assigning-a-person-to-a-project) | `project assign INDEX project/PROJECTNAME` <br> `project assign n/NAME project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
+[**Remove person from project**](#project-remove-removing-a-person-from-a-project) | `project remove INDEX project/PROJECTNAME` <br> `project remove n/NAME project/PROJECTNAME` <br> e.g., `project remove 4 project/Wellbeing`
+[**Help**](#help-viewing-help) | `help`
+[**Exit**](#exit-exiting-the-program) | `exit`
+
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## Getting Started
 
-Action                         | Format, Examples
--------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add volunteer**              | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
-**Add team member**            | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g. `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarahlogistics`
-**Add organisation member**    | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g. `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
-**Clear**                      | `clear`
-**Delete**                     | `delete INDEX`<br> e.g., `delete 3`
-**Edit**                       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com t/jameslee123`
-**Remark**                     | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
-**Resolve**                    | `resolve PERSON_INDEX REMARK_INDEX ` <br> e.g. `resolve 2 1`
-**Done**                       | `done INDEX u/UPDATE` <br> e.g. `done 2 u/add to shared drive`
-**Find**                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**                       | `list`
-**Add project**                | `project add n/NAME d/DESCRIPTION` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
-**List projects**              | `project list`
-**View project**               | `project view` <br> e.g., `project view project/Beach Cleanup`
-**Assign person to project**   | `project assign INDEX project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
-**Remove person from project** | `project remove INDEX project/PROJECTNAME` <br> e.g., `project remove 4 project/Wellbeing Focus Group Discussion`
-**Help**                       | `help`
+### 1. Installation
 
---------------------------------------------------------------------------------------------------------------------
+1.  Ensure you have Java `17` or above installed in your Computer.<br>
+    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
+2.  Download the latest `.jar` file from our GitHub page.
 
-## Quick start
+3.  Copy the file to the folder you want to use as the *home folder* for your ProjectBook.
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+4.  Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar projectBook.jar` command to run the application.<br>
+    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
 
-1. Download the latest `.jar` file from our github page.
+    ![Ui](images/Ui.png)
 
-1. Copy the file to the folder you want to use as the _home folder_ for your ProjectBook.
+### 2. Your First Commands (A Quick Tutorial)
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar projectBook.jar` command to run the application.<br>
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+1.  Type commands into the command box and press Enter to execute them. For example, typing **`help`** and pressing Enter will open the help window.
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+2.  The app starts with sample data. Let's clear it by typing **`clear`** and pressing Enter.
 
-1. You may clear all sample data to begin populating the contact book with your own data by entering **`clear`**.<br>
+3.  Now, let's add your first volunteer. Type:
+    `addv n/John Doe p/98765432 e/johnd@example.com`
 
-   Other example commands you can try:
+4.  Next, create a project for John to be a part of. Type:
+    `project add n/Beach Cleanup d/Weekly cleanup at Siloso Beach`
 
-   * `list` : Lists all contacts.
+5.  You should see John as Item 1 in the person list. Let's assign him to your new project. Type:
+    `project assign 1 project/Beach Cleanup`
 
-   * `addv n/John Doe p/98765432 e/johnd@example.com` : Adds a volunteer contact named `John Doe` to the Project Book.
+6.  To see a summary of the project and who's in it, type:
+    `project view project/Beach Cleanup`
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+7.  To see all contacts in your book, type `list`.
 
-   * `exit` : Exits the app.
+8.  To exit the app, type `exit`.
 
-1. Refer to the [Features](#features) below for details of each command.
+Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -76,15 +85,15 @@ Action                         | Format, Examples
 **Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  e.g. in `addv n/NAME`, `NAME` is a parameter which can be used as `addv n/John Doe`.
 
-* Items in square brackets are optional.<br>
+* Items in square brackets `[]` are optional.<br>
   e.g `n/NAME [p/PHONE]` can be used as `n/John Doe p/98613698` or as `n/John Doe`.
 
 * `INDEX` refers to the index number shown in the displayed person list. The index must be a positive integer e.g., `1`, `2`, `3`...
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[u/UPDATE]…​` can be used as ` ` (i.e. 0 times), `u/add to group chat`, `u/register in portal` etc.
+* Items with `…` after them can be used multiple times including zero times.<br>
+  e.g. `[u/UPDATE]…` can be used as ` ` (i.e. 0 times), `u/add to group chat`, `u/register in portal` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE`, `p/PHONE n/NAME` is also acceptable.
@@ -96,147 +105,164 @@ Action                         | Format, Examples
 
 </box>
 
+<box type="tip" seamless>
 
-### Viewing help : `help`
+**Pro Tip: Command Chaining**
 
-Shows a message explaining how to access the help page.
-The link will bring you to a condensed cheatsheet of commands for your future reference!
+The `INDEX` for commands like `edit` or `delete` refers to the *currently displayed list*.
+
+This means you can "chain" commands. For example:
+1.  Use `find Alex` to show only people named Alex.
+2.  The list might show two people: `1. Alex Yeoh` and `2. Alexandra Tan`.
+3.  You can then use `delete 1` to delete **Alex Yeoh**, who is the 1st person *in that filtered list*.
+
+</box>
+
+### `help`: Viewing help
+
+Shows a message explaining how to access the help page. The link will bring you to a condensed cheatsheet of commands for your future reference!
 
 ![help message](images/helpMessage.png)
 
 Format: `help`
 
+---
+### `addv` / `addt` / `addo`: Adding a Person (Volunteer, TeamMember, OrganisationMember)
 
-### Adding a person: `add(v/t/o)`
+Adds a person of a specific role to the project book. There are 3 roles a person can play: volunteer, committee member, and organisation contact.
 
-Adds a person of a specific role to the project book. There are 3 roles a person can play in the project book: volunteer, committee member and organisation.
+Feature | Command word | Command format | Example
+---|---|---|---
+Add a volunteer | `addv` | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
+Add a team member | `addt` | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarah_ng`
+Add an organisation member | `addo` | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
 
-Feature                    | Command word | Command format                                                   | Example
----------------------------|--------------|------------------------------------------------------------------|-------------------------------------------------------------------------------------
-Add a volunteer            | `addv`       | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]`                     | `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
-Add a team member          | `addt`       | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]`         | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarah_ng`
-Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]`      | `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
+![img.png](img.png)
 
-<box type="tip" seamless>
+---
+### `remark`: Adding a Remark
 
-**Note:** There are slight differences in the parameters for different roles.
-
-</box>
-
-
-### Making a remark to remember to update a person : `list`
-
-Adds a remark to a person. Remarks are used as a reminder to liaise with a person about a certain update.
+Adds a remark to a person. Remarks are used as a "to-do" list or reminder to liaise with a person about a certain update.
 
 Format: `remark INDEX u/UPDATE`
 
+Example: `remark 2 u/add to shared drive`
 
-### Resolving a remark after updating the person : `list`
+---
+### `resolve`: Resolving a Remark
 
-Removes a remark from a person. After having updated the person, the reminder is no longer needed.
+Removes a remark from a person after the task is done. After having updated the person, the reminder is no longer needed.
 
-Format: `remark PERSON_INDEX REMARK_INDEX`
+Format: `resolve PERSON_INDEX REMARK_INDEX`
 
+Example: `resolve 2 1` (Removes the 1st remark from the 2nd person)
 
-### Listing all persons : `list`
+---
+### `list`: Listing All Persons
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the project book.
 
 Format: `list`
 
+---
+### `edit`: Editing a Person
 
-### Editing a person : `edit`
-
-Edits the specified fields of an existing person in the address book.
+Edits the specified fields of an existing person in the project book.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list.
+* The `INDEX` **must be a positive integer** (1, 2, 3, …).
 * At least one of the optional fields must be provided.
-* The given value will replace the existing value.
+* The given value will replace the existing value for that field.
 
 Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
+* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone and email of the 1st person.
+* `edit 2 n/Betsy Crower` Edits the name of the 2nd person.
 
+<box type="tip" seamless>
+**Tip:** Use `list` or `find` first to get the correct `INDEX` of the person you want to edit!
+</box>
 
-### Locating persons by name: `find`
+---
+### `find`: Finding Persons
 
-Finds a person whose name contains the given sequence of characters.
+Locates persons by matching their name to a sequence of keywords.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is **case-insensitive**. e.g. `hans` will match `Hans`.
-* The search matches **any part of the name** — it does not need to be a full word.  
-  e.g. `Han` will match one of `Hans`, `Hannah`, or `Johanson`. The most specific phrase will be chosen.
+* The search is **case-insensitive** (e.g., `hans` will match `Hans`).
+* The search matches **any part of the name** (e.g., `Han` will match `Hans`, `Hannah`, or `Johanson`).
 * The order of the keywords does not matter.
-* Partial matches across multiple keywords are shown.
 
 Examples:
-* `find John` returns `John Doe`, or `Johnson Tan`
-* `find david alex` returns `Alex Yeoh David`, `Alexandra Davidson`
-* `find david david` returns `Alex Yeoh David`, or `Alexandra Davidson`, or `David Li`<br>
-  ![result for 'find alex david'](images/findcommandresult.png)
+* `find John` returns `John Doe`, or `Johnson Tan`.
+* `find david alex` returns `Alex Yeoh David`, `Alexandra Davidson`.
 
+![result for 'find alex david'](images/findcommandresult.png)
 
-### Deleting a person : `delete`
+---
+### `delete`: Deleting a Person
 
-Deletes the specified person from the address book.
+Deletes the specified person from the project book.
 
 Format: `delete INDEX`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* Deletes the person at the specified `INDEX` from the *currently displayed list*.
+* The `INDEX` **must be a positive integer** (1, 2, 3, …).
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `list` followed by `delete 2` deletes the 2nd person in the project book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+---
+### `clear`: Clearing All Entries
 
-### Clearing all entries : `clear`
-
-Clears all entries from the address book.
+Clears all entries (all persons and all projects) from the project book.
 
 Format: `clear`
 
 <box type="warning" seamless>
-Note: This action cannot be reversed.
+**Warning:** This action cannot be reversed.
 </box>
 
-
-### Listing all projects: `project list`
+---
+### `project list`: Listing All Projects
 
 Shows a list of all projects in the project book.
 
 Format: `project list`
 
-
-### Adding a project: `project add`
+---
+### `project add`: Adding a Project
 
 Adds a project to the project book.
 
-Format: `project add n/PROJECTNAME d/DESCRIPTION
+Format: `project add n/PROJECTNAME d/DESCRIPTION`
 
 Example:
 `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
-* Adds a new project named "`Beach Cleanup`" and has the description "`Beach Cleaning at Siloso Beach`"
-* No one is associated with it yet.
+* Adds a new project named "Beach Cleanup" with the given description.
+* No one is assigned to it yet.
 
+<box type="tip" seamless>
+**Tip:** Project names are your unique identifiers. Choose clear, unique names like "Annual Gala 2025" instead of just "Gala".
+</box>
 
-### Deleting a project: `project delete`
+---
+### `project delete`: Deleting a Project
 
 Deletes the specified project from the project book.
 
 Format: `project delete project/PROJECTNAME`
 
 Example:
-`project delete project/Fundraising Drive
+`project delete project/Fundraising Drive`
 
-* Deleting a project does not delete its associated persons.
+* Deleting a project does *not* delete the persons who were associated with it. They will just no longer be assigned to this project.
 
-
-### Viewing a project: `project view`
+---
+### `project view`: Viewing a Project
 
 Views the summary of an existing project and its participants.
 
@@ -244,62 +270,66 @@ Format: `project view project/PROJECTNAME`
 
 Example:
 `project view project/Beach Cleanup`
-Views a project named "Beach Cleanup" and lists:
-* Name and description of project
-* Latest project updates
-* Contacts of volunteers, team members, and organisations
+* Lists the name and description of the project.
+* Lists all contacts (volunteers, team, orgs) assigned to it.
 
-
-### Assigning a person to a project: `project assign`
+---
+### `project assign`: Assigning a Person to a Project
 
 Assigns a specified volunteer, team member, or organisation member to a project.
 
-Format: `project assign INDEX project/PROJECTNAME`
+**Formats:**
+* `project assign INDEX project/PROJECTNAME`
+* `project assign n/NAME project/PROJECTNAME`
 
-* Assigns the person at the specified `INDEX` to the specified `PROJECT`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* When you view the project details using the command `project view project/PROJECTNAME`, the assigned person will show up in its details.
+* Assigns the person at the specified `INDEX`, or with the specified `NAME`, to the specified `PROJECT`.
+* The `INDEX` refers to the index number shown in the displayed person list. It **must be a positive integer** (1, 2, 3, …).
+* The `NAME` search is **case-insensitive**.
+* When you view the project details (`project view`), the assigned person will show up in its details.
 
-Example:
-`project assign 4 project/Startup Showcase`
+**Examples:**
+* `project assign 4 project/Startup Showcase`
+* `project assign n/Jackson project/Startup Showcase`
 
-
-### Removing a person from a project: `project remove`
+---
+### `project remove`: Removing a Person from a Project
 
 Removes a specified volunteer, team member, or organisation member from a project.
 
-Format: `project remove INDEX project/PROJECTNAME`
+**Formats:**
+* `project remove INDEX project/PROJECTNAME`
+* `project remove n/NAME project/PROJECTNAME`
 
-* Removes the person at the specified `INDEX` from the specified `PROJECT`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* When you view the project details using the command `project view project/PROJECTNAME`, the removed person will no longer show up in its details.
+* Removes the person at the specified `INDEX`, or with the specified `NAME`, from the specified `PROJECT`.
+* The `INDEX` refers to the index number shown in the displayed person list. It **must be a positive integer** (1, 2, 3, …).
+* The `NAME` search is **case-insensitive**.
+* This only *un-assigns* them; it does not delete the person from the project book.
 
+**Examples:**
+* `project remove 4 project/Science Fair`
+* `project remove n/Marianne project/Science Fair`
 
-### Exiting the program : `exit`
+---
+### `exit`: Exiting the Program
 
 Exits the program.
 
 Format: `exit`
 
-
+---
 ### Saving the data
 
 Loopin's data is saved in the hard disk automatically after any command that modifies data. There is no need to save manually!
 
-
+---
 ### Editing the data file
 
 Loopin data are saved automatically as a JSON file `[JAR file location]/data/projectbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
-
+<box type="warning" seamless>
 **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
-
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, ProjectBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
 </box>
-
 
 ### Archiving data files `[coming in v2.0]`
 
@@ -316,6 +346,5 @@ _Details coming soon ..._
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
-
+1.  **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+2.  **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
