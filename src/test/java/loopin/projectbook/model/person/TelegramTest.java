@@ -39,21 +39,21 @@ public class TelegramTest {
 
     @Test
     public void equals() {
-        Telegram address = new Telegram("Valid Telegram");
+        Telegram telegram = new Telegram("Valid_Telegram");
 
         // same values -> returns true
-        assertTrue(address.equals(new Telegram("Valid Telegram")));
+        assertTrue(telegram.equals(new Telegram("Valid_Telegram")));
 
         // same object -> returns true
-        assertTrue(address.equals(address));
+        assertTrue(telegram.equals(telegram));
 
         // null -> returns false
-        assertFalse(address.equals(null));
+        assertFalse(telegram.equals(null));
 
         // different types -> returns false
-        assertFalse(address.equals(5.0f));
+        assertFalse(telegram.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(address.equals(new Telegram("Other Valid Telegram")));
+        assertFalse(telegram.equals(new Telegram("Other_Valid_Telegram")));
     }
 }

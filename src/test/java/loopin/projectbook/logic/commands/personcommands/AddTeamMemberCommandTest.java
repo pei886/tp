@@ -90,7 +90,7 @@ public class AddTeamMemberCommandTest {
 
     @Test
     public void toStringMethod() {
-        TeamMember alice = (TeamMember) new PersonBuilder().withName("Alice").build();
+        TeamMember alice = new PersonBuilder().withName("Alice").buildTeamMember("Marketing");
         AddTeamMemberCommand command = new AddTeamMemberCommand(alice);
 
         String str = command.toString();
@@ -156,6 +156,11 @@ public class AddTeamMemberCommandTest {
 
         @Override
         public void setPerson(Person target, Person editedPerson) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setPersonInPlace(Person person) {
             throw new AssertionError("This method should not be called.");
         }
 

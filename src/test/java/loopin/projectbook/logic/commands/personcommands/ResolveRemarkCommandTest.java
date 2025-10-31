@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandFailure;
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.Messages;
-import loopin.projectbook.logic.commands.personcommands.ResolveRemarkCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.UserPrefs;

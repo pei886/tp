@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.parser;
+package loopin.projectbook.logic.parser.person;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static loopin.projectbook.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -30,8 +30,8 @@ import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.Messages;
-import loopin.projectbook.logic.commands.EditCommand;
-import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
+import loopin.projectbook.logic.commands.personcommands.EditCommand;
+import loopin.projectbook.logic.commands.personcommands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.model.person.Email;
 import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;

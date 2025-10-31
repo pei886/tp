@@ -82,6 +82,12 @@ public interface Model {
      */
     void setPerson(Person target, Person editedPerson);
 
+    /**
+     * Replaces the existing person equal to {@code person} with {@code person} itself.
+     * @param person to be replaced
+     */
+    void setPersonInPlace(Person person);
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

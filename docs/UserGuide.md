@@ -17,24 +17,26 @@ Loopin is a desktop app that helps project leaders **track team members, organis
 
 Action                         | Format, Examples
 -------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add volunteer**              | `addv n/NAME [p/PHONE_NUMBER] [e/EMAIL]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com`
-**Add team member**            | `addt n/NAME c/COMMITTEE [p/PHONE] [e/EMAIL]` <br> e.g. `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com`
-**Add organisation member**    | `addo n/NAME o/ORGANISATION [p/PHONE] [e/EMAIL]` <br> e.g. `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com`
+**Add volunteer**              | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g., `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
+**Add team member**            | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g. `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarahlogistics`
+**Add organisation member**    | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]` <br> e.g. `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
 **Clear**                      | `clear`
 **Delete**                     | `delete INDEX`<br> e.g., `delete 3`
-**Edit**                       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit**                       | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com t/jameslee123`
 **Remark**                     | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
+**Resolve**                    | `resolve PERSON_INDEX REMARK_INDEX ` <br> e.g. `resolve 2 1`
 **Done**                       | `done INDEX u/UPDATE` <br> e.g. `done 2 u/add to shared drive`
 **Find**                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**                       | `list`
-**Add project**                | `project add n/NAME [d/DESCRIPTION]` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
+**Add project**                | `project add n/NAME d/DESCRIPTION` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
 **List projects**              | `project list`
 **View project**               | `project view` <br> e.g., `project view project/Beach Cleanup`
-**Assign perosn to project**   | `project assign INDEX project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
+**Assign person to project**   | `project assign INDEX project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
 **Remove person from project** | `project remove INDEX project/PROJECTNAME` <br> e.g., `project remove 4 project/Wellbeing Focus Group Discussion`
 **Help**                       | `help`
 
 --------------------------------------------------------------------------------------------------------------------
+
 
 ## Quick start
 
@@ -94,6 +96,7 @@ Action                         | Format, Examples
 
 </box>
 
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
@@ -106,13 +109,13 @@ Format: `help`
 
 ### Adding a person: `add(v/t/o)`
 
-Adds a person of a specific role to the project book. There are 3 roles a person can play in the project book: volunteer, committee member and organisation. 
+Adds a person of a specific role to the project book. There are 3 roles a person can play in the project book: volunteer, committee member and organisation.
 
-Feature                    | Command word | Command format                                   | Example
----------------------------|--------------|--------------------------------------------------|-------------------------------------------------------------------------
-Add a volunteer            | `addv`       | `addv n/NAME [p/PHONE] [e/EMAIL]`                | `addv n/James Ho p/22224444 e/jamesho@example.com`
-Add a team member          | `addt`       | `addt n/NAME c/COMMITTEE [p/PHONE] [e/EMAIL]`    | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com`
-Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE] [e/EMAIL]` | `addo n/Timothy Lee o/Example Company p/92863718 e/company@email.com`
+Feature                    | Command word | Command format                                                   | Example
+---------------------------|--------------|------------------------------------------------------------------|-------------------------------------------------------------------------------------
+Add a volunteer            | `addv`       | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]`                     | `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
+Add a team member          | `addt`       | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]`         | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarah_ng`
+Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]`      | `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
 
 <box type="tip" seamless>
 
@@ -120,17 +123,33 @@ Add an organisation member | `addo`       | `addo n/NAME o/ORGANISATION [p/PHONE
 
 </box>
 
+
+### Making a remark to remember to update a person : `list`
+
+Adds a remark to a person. Remarks are used as a reminder to liaise with a person about a certain update.
+
+Format: `remark INDEX u/UPDATE`
+
+
+### Resolving a remark after updating the person : `list`
+
+Removes a remark from a person. After having updated the person, the reminder is no longer needed.
+
+Format: `remark PERSON_INDEX REMARK_INDEX`
+
+
 ### Listing all persons : `list`
 
 Shows a list of all persons in the address book.
 
 Format: `list`
 
+
 ### Editing a person : `edit`
 
 Edits the specified fields of an existing person in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL]`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -140,23 +159,27 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
 
+
 ### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds persons whose names contain the given sequence of characters.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* The search is **case-insensitive**. e.g. `hans` will match `Hans`.
+* The search matches **any part of the name** — it does not need to be a full word.  
+  e.g. `Han` will match `Hans`, `Hannah`, or `Johanson`.
+* Persons will be shown if **all** given keywords appear somewhere in their name (in order, without whitespace).  
+  e.g. `Hans Gr` will match `Hans Gruber`, `Gruber Hans`.
+* The order of the keywords does not matter.
+* Partial matches across multiple keywords are shown.
 
 Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find John` returns `John Doe`, `Johnson Tan`
+* `find david alex` returns `Alex Yeoh David`, `Alexandra Davidson`
+* `find david david` returns `Alex Yeoh David`, `Alexandra Davidson`, and `David Li`<br>
+  ![result for 'find alex david'](images/findcommandresult.png)
+
 
 ### Deleting a person : `delete`
 
@@ -172,6 +195,7 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -182,22 +206,25 @@ Format: `clear`
 Note: This action cannot be reversed.
 </box>
 
+
 ### Listing all projects: `project list`
 
 Shows a list of all projects in the project book.
 
 Format: `project list`
 
+
 ### Adding a project: `project add`
 
 Adds a project to the project book.
 
-Format: `project add n/PROJECTNAME [d/DESCRIPTION]
+Format: `project add n/PROJECTNAME d/DESCRIPTION
 
 Example:
 `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
 * Adds a new project named "`Beach Cleanup`" and has the description "`Beach Cleaning at Siloso Beach`"
 * No one is associated with it yet.
+
 
 ### Deleting a project: `project delete`
 
@@ -209,6 +236,7 @@ Example:
 `project delete project/Fundraising Drive
 
 * Deleting a project does not delete its associated persons.
+
 
 ### Viewing a project: `project view`
 
@@ -222,6 +250,7 @@ Views a project named "Beach Cleanup" and lists:
 * Name and description of project
 * Latest project updates
 * Contacts of volunteers, team members, and organisations
+
 
 ### Assigning a person to a project: `project assign`
 
@@ -237,6 +266,7 @@ Format: `project assign INDEX project/PROJECTNAME`
 Example:
 `project assign 4 project/Startup Showcase`
 
+
 ### Removing a person from a project: `project remove`
 
 Removes a specified volunteer, team member, or organisation member from a project.
@@ -248,15 +278,18 @@ Format: `project remove INDEX project/PROJECTNAME`
 * The index **must be a positive integer** 1, 2, 3, …​
 * When you view the project details using the command `project view project/PROJECTNAME`, the removed person will no longer show up in its details.
 
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
+
 ### Saving the data
 
 Loopin's data is saved in the hard disk automatically after any command that modifies data. There is no need to save manually!
+
 
 ### Editing the data file
 
@@ -268,6 +301,7 @@ If your changes to the data file makes its format invalid, AddressBook will disc
 
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </box>
+
 
 ### Archiving data files `[coming in v2.0]`
 

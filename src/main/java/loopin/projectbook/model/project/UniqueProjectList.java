@@ -12,8 +12,13 @@ import loopin.projectbook.model.project.exceptions.DuplicateProjectException;
 import loopin.projectbook.model.project.exceptions.ProjectNotFoundException;
 
 /**
- * A list of projects that enforces uniqueness between its elements and does not allow nulls.
- * A project is considered unique by comparing using {@code Project#equals(Project)}.
+ * Maintains a list of {@link Project} with uniqueness enforced and no null elements allowed.
+ *
+ * Uniqueness is determined by {@link Project#equals(Object)}. As such, adding and updating rely on
+ * {@code equals} for identity. Name-based convenience lookups are provided via {@link #findByName(String)}
+ * and {@link #removeByName(String)} which perform case-insensitive matching with whitespace normalization.
+ *
+ * This class supports a minimal set of list operations and exposes an unmodifiable view suitable for UI binding.
  */
 public class UniqueProjectList implements Iterable<Project> {
     private final ObservableList<Project> internalList = FXCollections.observableArrayList();
@@ -21,7 +26,10 @@ public class UniqueProjectList implements Iterable<Project> {
             FXCollections.unmodifiableObservableList(internalList);
 
     /**
-     * Returns true if the list contains an equivalent project as the given argument.
+     * Returns {@code true} if the list contains an equivalent project to {@code toCheck}.
+     *
+     * @param toCheck project to test for containment; must not be {@code null}
+     * @return whether an equivalent project exists in this list
      */
     public boolean contains(Project toCheck) {
         requireNonNull(toCheck);
@@ -29,27 +37,34 @@ public class UniqueProjectList implements Iterable<Project> {
     }
 
     /**
-     * Finds a project by its name.
+     * Finds the first project whose name exactly matches {@code name} under normalization
+     * (trim + collapse internal whitespace + case-insensitive).
      *
-     * @param name the project name to search for
-     * @return an {@code Optional} containing the first matching project, or {@code Optional.empty()} if none found
+     * @param name project name to search; may be {@code null}
+     * @return an {@link Optional} containing the first matching project, or {@link Optional#empty()} if none found
      */
     public Optional<Project> findByName(String name) {
         if (name == null) {
             return Optional.empty();
         }
-        String normalisedName = name.trim().replaceAll("\\s+", " ").toLowerCase();
+        String needle = normalizeName(name);
         return internalList.stream()
-                .filter(p -> p.getName().toString()
-                        .equalsIgnoreCase(normalisedName))
+                .filter(p -> normalizeName(p.getName().toString()).equals(needle))
                 .findFirst();
     }
 
     /**
-     * Adds a project to the list.
-     * The project must not already exist in the list.
+     * Normalizes a project name by trimming, collapsing internal whitespace to a single space, and lowercasing.
+     */
+    private static String normalizeName(String s) {
+        return s.trim().replaceAll("\\s+", " ").toLowerCase();
+    }
+
+    /**
+     * Adds {@code toAdd} to the list.
      *
-     * @throws DuplicateProjectException if the project already exists
+     * @param toAdd project to add; must not be {@code null}
+     * @throws DuplicateProjectException if an equivalent project already exists
      */
     public void add(Project toAdd) {
         requireNonNull(toAdd);
@@ -60,10 +75,13 @@ public class UniqueProjectList implements Iterable<Project> {
     }
 
     /**
-     * Replaces the project {@code target} in the list with the updated version.
-     * {@code target} must exist in the list.
+     * Replaces the existing project equal to {@code target} with {@code target}.
      *
-     * @throws ProjectNotFoundException if the target project does not exist
+     * Note: callers typically mutate fields of a project and pass the same instance back;
+     * this method finds by {@code equals} and replaces at the same index.
+     *
+     * @param target updated project instance; must not be {@code null}
+     * @throws ProjectNotFoundException if no equivalent project is present
      */
     public void setProject(Project target) {
         requireNonNull(target);
@@ -77,18 +95,34 @@ public class UniqueProjectList implements Iterable<Project> {
     }
 
     /**
-     * Replaces the contents of this list with {@code projects}.
+     * Replaces the entire contents with {@code projects}.
+     *
+     * @param projects replacement list; must not be {@code null}
      */
     public void setProjects(List<Project> projects) {
         requireNonNull(projects);
+        if (!projectsAreUnique(projects)) {
+            throw new DuplicateProjectException();
+        }
         internalList.setAll(projects);
     }
 
+    private boolean projectsAreUnique(List<Project> projects) {
+        for (int i = 0; i < projects.size() - 1; i++) {
+            for (int j = i + 1; j < projects.size(); j++) {
+                if (projects.get(i).equals(projects.get(j))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
-     * Removes the equivalent project from the list.
-     * The project must exist in the list.
+     * Removes the project equal to {@code toRemove}.
      *
-     * @throws ProjectNotFoundException if the project does not exist
+     * @param toRemove project to remove; must not be {@code null}
+     * @throws ProjectNotFoundException if no equivalent project exists
      */
     public void remove(Project toRemove) {
         requireNonNull(toRemove);
@@ -98,21 +132,20 @@ public class UniqueProjectList implements Iterable<Project> {
     }
 
     /**
-     * Removes the project with the given name (case-insensitive, normalised).
+     * Removes the project with the given {@code name} using the same normalization as {@link #findByName(String)}.
      *
      * @param name name of the project to remove
      * @throws ProjectNotFoundException if no project with the given name exists
      */
     public void removeByName(String name) {
-        Optional<Project> match = findByName(name);
-        if (match.isEmpty()) {
-            throw new ProjectNotFoundException();
-        }
-        internalList.remove(match.get());
+        Project match = findByName(name).orElseThrow(ProjectNotFoundException::new);
+        internalList.remove(match);
     }
 
     /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     * Returns an unmodifiable view of the backing list for UI binding.
+     *
+     * @return unmodifiable {@link ObservableList}
      */
     public ObservableList<Project> asUnmodifiableObservableList() {
         return internalUnmodifiableList;

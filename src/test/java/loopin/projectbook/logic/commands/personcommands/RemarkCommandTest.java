@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.model.person.Remark;
 
-public class RemarkTest {
+public class RemarkCommandTest {
 
     @Test
     public void constructor_validContent_pendingStatus() {

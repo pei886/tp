@@ -1,4 +1,4 @@
-package loopin.projectbook.logic.commands;
+package loopin.projectbook.logic.commands.personcommands;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -15,7 +15,6 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
-import loopin.projectbook.logic.commands.personcommands.FindCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.UserPrefs;

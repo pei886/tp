@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import loopin.projectbook.logic.commands.ClearCommand;
-import loopin.projectbook.logic.commands.DeleteCommand;
-import loopin.projectbook.logic.commands.EditCommand;
-import loopin.projectbook.logic.commands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.logic.commands.ExitCommand;
 import loopin.projectbook.logic.commands.HelpCommand;
 import loopin.projectbook.logic.commands.ListCommand;
 import loopin.projectbook.logic.commands.personcommands.AddCommand;
 import loopin.projectbook.logic.commands.personcommands.AddVolunteerCommand;
+import loopin.projectbook.logic.commands.personcommands.DeleteCommand;
+import loopin.projectbook.logic.commands.personcommands.EditCommand;
+import loopin.projectbook.logic.commands.personcommands.EditCommand.EditPersonDescriptor;
 import loopin.projectbook.logic.commands.personcommands.FindCommand;
 import loopin.projectbook.logic.parser.exceptions.ParseException;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;

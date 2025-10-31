@@ -20,8 +20,11 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
     public static final String MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX = "The project index provided is invalid";
-    public static final String MESSAGE_PROJECT_NOT_FOUND_BY_NAME = "No project found with name: %s";
     public static final String MESSAGE_PROJECTS_LISTED_OVERVIEW = "%1$d project(s) listed!";
+    public static final String MESSAGE_NO_PERSON = "Person '%s' does not exist.";
+    public static final String MESSAGE_NO_PROJECT = "Project '%s' does not exist.";
+    public static final String MESSAGE_AMBIGUOUS_NAME = "Multiple people share the name %s.\n"
+            + "Please use index-based commands instead.";
 
     /**
      * Returns an error message indicating the duplicate prefixes.

@@ -110,9 +110,15 @@ public class ModelManager implements Model {
     @Override
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
-
         projectBook.setPerson(target, editedPerson);
     }
+
+    @Override
+    public void setPersonInPlace(Person person) {
+        requireNonNull(person);
+        projectBook.setPersonInPlace(person);
+    }
+
 
     /**
      * Returns an unmodifiable view of the list of {@code Project} backed by the internal list of

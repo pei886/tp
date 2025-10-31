@@ -1,12 +1,11 @@
 ---
   layout: default.md
-  title: "Developer Guide"
-  pageNav: 3
+    title: "Developer Guide"
+    pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# Loopin Developer Guide
 
-<!-- * Table of Contents -->
 <page-nav-print />
 
 --------------------------------------------------------------------------------------------------------------------
@@ -35,7 +34,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/java/loopin/projectbook/Main.java) and [`MainApp`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/java/loopin/projectbook/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -67,13 +66,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/java/loopin/projectbook/ui/Ui.java)
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/java/loopin/projectbook/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -84,7 +83,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/java/loopin/projectbook/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -101,7 +100,8 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+1. When `Logic` is called upon to execute a command, it is passed to an `Project
+BookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
@@ -112,11 +112,13 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `Project
+BookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `Project
+BookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/java/loopin/projectbook/model/Model.java)
 
 <puml src="diagrams/ModelClassDiagram.puml" width="450" />
 
@@ -126,7 +128,7 @@ The **`Model`** component:
 * stores all data of the application, i.e.,
     - `Person` objects (contained in a `UniquePersonList`), and
     - `Project` objects (contained in a `UniqueProjectList`).  
-      These lists are contained within the `ProjectBook`. 
+      These lists are contained within the `ProjectBook`.
 
 * keeps track of the currently _selected_ or _filtered_ lists of both `Person` and `Project` objects.  
   These are exposed to other components as unmodifiable `ObservableList<Person>` and `ObservableList<Project>` objects, allowing the UI to automatically update when data changes.
@@ -141,8 +143,8 @@ The **`Model`** component:
     - Each `Project` contains one or more `Membership` entries that connect it back to the people involved.
 
 * distinguishes between different types of persons:
-    - `Volunteer`: a general member with basic contact info and tags.
-    - `TeamMember`: a person belonging to a committee within a project.
+    - `Volunteer`: a volunteer with basic contact info and tags.
+    - `TeamMember`: a team member belonging to a committee.
     - `OrgMember`: a person associated with an external organisation.
 
 * does not depend on other major components (e.g., Logic, UI, or Storage).  
@@ -150,7 +152,9 @@ The **`Model`** component:
 
 [//]: # (<box type="info" seamless>)
 
-[//]: # (**Note:** An alternative &#40;arguably, a more OOP&#41; model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>)
+[//]: # (**Note:** An alternative &#40;arguably, a more OOP&#41; model is given below. It has a `Tag` list in the `Project
+Book`, which `Person` references. This allows `Project
+Book` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>)
 
 [//]: # ()
 [//]: # (<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />)
@@ -160,18 +164,19 @@ The **`Model`** component:
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/java/loopin/projectbook/storage/Storage.java)
 
 <puml src="diagrams/StorageClassDiagram.puml" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* can save both project book data and user preference data in JSON format, and read them back into corresponding objects.
+* inherits from both `Project
+BookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.address.commons` package.
+Classes used by multiple components are in the `seedu.project.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -183,42 +188,58 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Proposed Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The proposed undo/redo mechanism is facilitated by `VersionedProject
+Book`. It extends `Project
+Book` with an undo/redo history, stored internally as an `projectBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+* `VersionedProject
+Book#commit()` — Saves the current project book state in its history.
+* `VersionedProject
+Book#undo()` — Restores the previous project book state from its history.
+* `VersionedProject
+Book#redo()` — Restores a previously undone project book state from its history.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+These operations are exposed in the `Model` interface as `Model#commitProject
+Book()`, `Model#undoProject
+Book()` and `Model#redoProject
+Book()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time. The `VersionedProject
+Book` will be initialized with the initial project book state, and the `currentStatePointer` pointing to that single project book state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th person in the project book. The `delete` command calls `Model#commitProject
+Book()`, causing the modified state of the project book after the `delete 5` command executes to be saved in the `projectBookStateList`, and the `currentStatePointer` is shifted to the newly inserted project book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitProject
+Book()`, causing another modified project book state to be saved into the `projectBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
 <box type="info" seamless>
 
-**Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+**Note:** If a command fails its execution, it will not call `Model#commitProject
+Book()`, so the project book state will not be saved into the `projectBookStateList`.
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoProject
+Book()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous project book state, and restores the project book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial Project
+Book state, then there are no previous Project
+Book states to restore. The `undo` command uses `Model#canUndoProject
+Book()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
 
 </box>
@@ -237,19 +258,26 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 
 <puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
 
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite — it calls `Model#redoProject
+Book()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the project book to that state.
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `projectBookStateList.size() - 1`, pointing to the latest project book state, then there are no undone Project
+Book states to restore. The `redo` command uses `Model#canRedoProject
+Book()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </box>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the project book, such as `list`, will usually not call `Model#commitProject
+Book()`, `Model#undoProject
+Book()` or `Model#redoProject
+Book()`. Thus, the `projectBookStateList` remains unchanged.
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitProject
+Book()`. Since the `currentStatePointer` is not pointing at the end of the `projectBookStateList`, all project book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -261,14 +289,14 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 **Aspect: How undo & redo executes:**
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+* **Alternative 1 (current choice):** Saves the entire project book.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
 
 _{more aspects and alternatives to be added}_
 
@@ -295,7 +323,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* volunteer organisation project director 
+* volunteer organisation project director
 * has a need to manage a significant number of contacts from team members, organisations and volunteers
 * has a need to keep track of liaisons
 * prefer desktop apps over other types
@@ -336,7 +364,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1.  User requests to add a team member and provides information about team member.
 2. System stores the new team member's details.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
@@ -406,14 +434,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to delete a specific person in the list.
-   - User specifies the index to delete.
-2. System removes the person from the address book.
+    - User specifies the index to delete.
+2. System removes the person from the project book.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
-* 1a. The address book is empty.
+* 1a. The project book is empty.
 
   Use case ends.
 
@@ -428,10 +456,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to create remark for a person.
-   - User specifies the index to create remark. 
+    - User specifies the index to create remark.
 2. System stores the new remark and sets its status to `pending`.
 
-    Use case ends.
+   Use case ends.
 
 **Extensions**
 
@@ -462,7 +490,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     - User specifies the index to create remark.
 2. System updates the remark status to `completed`.
 
-  Use case ends.
+Use case ends.
 
 
 **Extensions**
@@ -475,7 +503,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. The given index is invalid.
 
-    * 1b1. AddressBook shows an error message.
+    * 1b1. Project
+      Book shows an error message.
 
       Use case ends.
 
@@ -484,7 +513,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 1c1. System checks the person’s remarks and finds no matching pending or completed remark.
 
     * 1c2. System shows an error message indicating the remark was not found.
-  
+
     * 1c3. User may choose to <u>UC5 - Add Remark for Person Update</u>.
 
       Use case resumes at step 1.
@@ -509,7 +538,7 @@ Use case ends.
 
 * 1b. Duplicate project.
 
-    * 1b1. System checks the database and finds a project with the same name. 
+    * 1b1. System checks the database and finds a project with the same name.
     * 1b2. System shows an error message.
 
       Use case ends.
@@ -535,13 +564,13 @@ Use case ends.
 * 1b. Project does not exist.
 
     * 1b1. System shows an error indicating that project does not exist.
-    * 1b2. User may choose to <u>UC7: Add Project</u>. 
+    * 1b2. User may choose to <u>UC7: Add Project</u>.
 
       Use case resumes at step 1.
 
 * 1c. Person already linked to project.
 
-    * 1c1. System shows an error indicating that person already linked to project. 
+    * 1c1. System shows an error indicating that person already linked to project.
 
       Use case ends.
 
@@ -641,15 +670,15 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 1. _{ more test cases …​ }_
@@ -658,8 +687,8 @@ testers are expected to do more *exploratory* testing.
 
 1. Adding a project while all projects are being shown
 
-    1. Test case: `project add n/Clean Beach`<br>
-       Expected: A new project named Clean Beach is added to the list with the correct timestamp. No last update and description is available.
+    1. Test case: `project add n/Clean Beach d/Cleaning the beach`<br>
+       Expected: A new project named Clean Beach is added to the list with the correct timestamp. No last update is available.
     2. Test case: `project add d/No name provided`<br>
        Expected: No project is added. Error message shown indicating that the name field is required. Status bar remains unchanged.
 
@@ -670,22 +699,22 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `project view project/Clean Beach`<br>
        Expected: The details of project Clean Beach is shown, including a list of persons associated with it, categorized by different roles.
     2. Test case: `project view project/Nonexistent`<br>
-        Expected: No project is viewed. Message shown indicating that the project with the given name does not exist.
+       Expected: No project is viewed. Message shown indicating that the project with the given name does not exist.
 
 ### Deleting a person
 
 1. Deleting a person while all persons are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+    1. Test case: `delete 1`<br>
+       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+    1. Test case: `delete 0`<br>
+       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
+    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
 
@@ -693,6 +722,6 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_

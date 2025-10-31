@@ -11,6 +11,7 @@ import java.util.List;
 
 import loopin.projectbook.commons.core.index.Index;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
+import loopin.projectbook.logic.commands.personcommands.EditCommand;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.ProjectBook;
 import loopin.projectbook.model.person.NameContainsKeywordsPredicate;
