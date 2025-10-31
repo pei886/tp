@@ -60,7 +60,7 @@ public class CommandResultTest {
                 + ", showHelp=" + commandResult.isShowHelp()
                 + ", exit=" + commandResult.isExit()
                 + ", showPersonList=" + commandResult.isShowPersonList()
-                + ", showProjectList=" + commandResult.isShowProjectList()+ "}";
+                + ", showProjectList=" + commandResult.isShowProjectList() + "}";
         assertEquals(expected, commandResult.toString());
     }
 }
