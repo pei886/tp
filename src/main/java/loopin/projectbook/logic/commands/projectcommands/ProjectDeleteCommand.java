@@ -85,6 +85,10 @@ public class ProjectDeleteCommand extends Command {
             throw new CommandException(String.format(MESSAGE_NO_PROJECT, targetName));
         }
         Project toDelete = match.get();
+        toDelete.getAllPeople().stream().forEach(person -> {
+            person.removeProject(toDelete);
+            model.setPersonInPlace(person);
+        });
         model.deleteProject(toDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PROJECT_SUCCESS, toDelete.getName()));
     }
