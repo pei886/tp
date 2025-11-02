@@ -72,6 +72,10 @@ public class ProjectDeleteCommand extends Command {
                 throw new CommandException(MESSAGE_INVALID_PROJECT_DISPLAYED_INDEX);
             }
             Project toDelete = lastShownList.get(targetIndex.getZeroBased());
+            toDelete.getAllPeople().stream().forEach(person -> {
+                person.removeProject(toDelete);
+                model.setPersonInPlace(person);
+            });
             model.deleteProject(toDelete);
             return new CommandResult(String.format(MESSAGE_DELETE_PROJECT_SUCCESS, toDelete.getName()));
         }

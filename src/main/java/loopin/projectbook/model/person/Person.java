@@ -143,7 +143,9 @@ public abstract class Person {
         this.projects.add(p);
         logger.fine("Project added to person.");
     }
-
+    public void removeProject(Project p) {
+        this.projects.remove(p);
+    }
     /**
      * Returns a list of the projects that the person is in
      * @return
