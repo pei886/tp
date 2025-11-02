@@ -19,7 +19,7 @@ import loopin.projectbook.model.project.ProjectName;
 /**
  * Parses input arguments and creates a new AddProjectCommand object
  */
-public class AddProjectCommandParser implements Parser<AddProjectCommand> {
+public class ProjectAddCommandParser implements Parser<AddProjectCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand

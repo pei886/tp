@@ -57,7 +57,7 @@ public class UniqueProjectList implements Iterable<Project> {
      * Normalizes a project name by trimming, collapsing internal whitespace to a single space, and lowercasing.
      */
     private static String normalizeName(String s) {
-        return s.trim().replaceAll("\\s+", " ").toLowerCase();
+        return s.trim().replaceAll("\\s+", " ");
     }
 
     /**

@@ -10,7 +10,7 @@ import static loopin.projectbook.commons.util.AppUtil.checkArgument;
 public class Description {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Descriptions can contain any characters";
+            "Descriptions can contain any characters, but it should not be blank";
 
     /*
      * Descriptions are optional (can be blank).
@@ -34,8 +34,8 @@ public class Description {
     /**
      * Returns true if a given string is a valid description.
      */
-    public static boolean isValidDescription(String test) {
-        return test.matches(VALIDATION_REGEX);
+    public static boolean isValidDescription(String description) {
+        return description.matches(VALIDATION_REGEX) && !description.isEmpty();
     }
 
     /**
