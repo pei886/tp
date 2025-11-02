@@ -39,12 +39,12 @@ import loopin.projectbook.logic.parser.person.FindCommandParser;
 import loopin.projectbook.logic.parser.person.FindRoleCommandParser;
 import loopin.projectbook.logic.parser.person.RemarkCommandParser;
 import loopin.projectbook.logic.parser.person.ResolveRemarkCommandParser;
-import loopin.projectbook.logic.parser.project.AddProjectCommandParser;
+import loopin.projectbook.logic.parser.project.ProjectAddCommandParser;
 import loopin.projectbook.logic.parser.project.ProjectAssignCommandParser;
 import loopin.projectbook.logic.parser.project.ProjectDeleteCommandParser;
 import loopin.projectbook.logic.parser.project.ProjectFindCommandParser;
 import loopin.projectbook.logic.parser.project.ProjectRemoveCommandParser;
-import loopin.projectbook.logic.parser.project.ViewProjectCommandParser;
+import loopin.projectbook.logic.parser.project.ProjectViewCommandParser;
 
 
 /**
@@ -132,7 +132,7 @@ public class ProjectBookParser {
 
             switch (sub) {
             case AddProjectCommand.SUBCOMMAND:
-                return new AddProjectCommandParser().parse(" " + rest);
+                return new ProjectAddCommandParser().parse(" " + rest);
             case ProjectAssignCommand.SUBCOMMAND:
                 return new ProjectAssignCommandParser().parse(rest);
             case ProjectRemoveCommand.SUBCOMMAND:
@@ -140,7 +140,7 @@ public class ProjectBookParser {
             case ProjectDeleteCommand.SUBCOMMAND:
                 return new ProjectDeleteCommandParser().parse(" " + rest);
             case ViewProjectCommand.SUBCOMMAND:
-                return new ViewProjectCommandParser().parse(" " + rest);
+                return new ProjectViewCommandParser().parse(" " + rest);
             case ProjectListCommand.SUBCOMMAND:
                 logger.info("Projects listed");
                 return new ProjectListCommand();
