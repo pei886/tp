@@ -20,7 +20,7 @@ public class ViewProjectCommand extends Command {
     public static final String COMMAND_WORD = "project";
     public static final String SUBCOMMAND = "view";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Views details of a project.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " " + SUBCOMMAND + ": Views details of a project.\n"
             + "Parameters: "
             + PREFIX_PROJECT + "PROJECT_NAME "
             + "Example: " + COMMAND_WORD + " project/Beach Cleanup";

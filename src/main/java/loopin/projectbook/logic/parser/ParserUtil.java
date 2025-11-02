@@ -142,7 +142,7 @@ public class ParserUtil {
     public static ProjectName parseProjectName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (trimmedName.isEmpty()) {
+        if (trimmedName.isEmpty() || !ProjectName.isValidProjectName(trimmedName)) {
             throw new ParseException(ProjectName.MESSAGE_CONSTRAINTS);
         }
         return new ProjectName(trimmedName);
