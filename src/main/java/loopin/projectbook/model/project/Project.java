@@ -202,8 +202,7 @@ public class Project {
             return false;
         }
         Project other = (Project) o;
-        return this.getName().equals(other.getName())
-                && this.getDescription().equals(other.getDescription());
+        return this.getName().equals(other.getName());
     }
 
     @Override
