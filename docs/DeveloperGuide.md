@@ -361,7 +361,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add a team member and provides information about team member.
+1. User requests to add a team member and provides information about team member.
 2. System stores the new team member's details.
 
    Use case ends.
@@ -376,17 +376,17 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. Duplicate team member
 
-    * 1b1. System checks the database and finds a team member with identical names or emails.
+    * 1b1. System checks the database and finds a team member with identical emails, phones or telegrams.
     * 1b2. System shows an error message.
 
       Use case ends.
 
-**Use Case: UC2 - Add Organisation**
+**Use Case: UC2 - Add Organisation Member**
 
 **MSS**
 
-1.  User requests to add an organisation and provides information about the organisation.
-2. System stores the new organisation's details.
+1. User requests to add an organisation member and provides information about the organisation member.
+2. System stores the new organisation member's details.
 
    Use case ends.
 
@@ -400,7 +400,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. Duplicate organisation.
 
-    * 1b1. System checks the database and finds an organisation with identical names or emails.
+    * 1b1. System checks the database and finds an organisation with identical emails, phones or telegrams.
     * 1b2. System shows an error message.
 
       Use case ends.
@@ -409,7 +409,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **MSS**
 
-1.  User requests to add a volunteer and provides information about the volunteer.
+1. User requests to add a volunteer and provides information about the volunteer.
 2. System stores the new volunteer's details.
 
    Use case ends.
@@ -424,7 +424,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 1b. Duplicate volunteer.
 
-    * 1b1. System checks the database and finds a volunteer with identical names or emails.
+    * 1b1. System checks the database and finds a volunteer with identical emails, phones or telegrams.
     * 1b2. System shows an error message.
 
       Use case ends.
