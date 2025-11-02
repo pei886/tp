@@ -142,6 +142,12 @@ Adds a person of a specific role to the project book. There are 3 roles a person
 * A person's name and email are both basic contact information that are required to add a person.
 * Additional contact information such as phone number and telegram username can also be stored, but they are not required.
 
+**What is a duplicate person?**
+* When adding people into the project book, you might get an error stating that the person is already in the project book.
+* A person with the same phone number, email address or telegram username will be considered a duplicate person and cannot be added.
+* This is because two different people cannot have the same phone number, email address or telegram username.
+* People with the same name are not considered duplicate because it is possible for people to have the same name (Even the same full name).
+
 </box>
 
 Feature | Command word | Command format | Example
@@ -149,7 +155,6 @@ Feature | Command word | Command format | Example
 Add a volunteer | `addv` | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
 Add a team member | `addt` | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarah_ng`
 Add an organisation member | `addo` | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
-
 
 ![img.png](img.png)
 
