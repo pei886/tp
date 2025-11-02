@@ -143,6 +143,7 @@ public abstract class Person {
         this.projects.add(p);
         logger.fine("Project added to person.");
     }
+    /** Removes project from the person */
     public void removeProject(Project p) {
         this.projects.remove(p);
     }

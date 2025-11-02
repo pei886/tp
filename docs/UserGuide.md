@@ -202,6 +202,27 @@ Examples:
 ![result for 'find alex david'](images/findcommandresult.png)
 
 ---
+
+### `findrole`: Finding Persons by Role
+
+Finds and lists all persons in the project book whose role matches the specified role type.
+
+**Format:**  
+`findrole ROLE_CHARACTER`
+
+**Details:**
+* This command shows all the people of a certain role
+* Accepted role shortcuts:
+    * `t` — Team Member
+    * `v` — Volunteer
+    * `o` — Organisation Member
+
+**Examples:**
+* `findrole t` returns all **Team Members**.
+* `findrole v` returns all **Volunteers**.
+* `findrole o` returns all the **Organisation Members (OrgMembers)**.
+
+---
 ### `delete`: Deleting a Person
 
 Deletes the specified person from the project book.
@@ -339,9 +360,11 @@ _Details coming soon ..._
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
-
+**Q**: **How do I transfer my data to another Computer?** <br>
+**Step 1:** Install the app on the other computer <br>
+**Step 2:** Make a new folder in the same folder as the app, and name it data<br>
+**Step 3:** Copy the original projectbook.json located in the data folder over to the new data folder <br>
+**Step 4:** You are ready to use the projectbook like before!
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
