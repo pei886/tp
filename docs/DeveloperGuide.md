@@ -652,6 +652,9 @@ Use case ends.
 * **Parameter**: A piece of information provided by the user as part of a CLI command. Usually follows a strict format.
 * **Index**: The position of a contact in the current list as displayed by the system. Uses 1-based indexing.
 * **Remark**: A tag attached to a contact indicating a need to update them on the project. Each remark has its own status (pending or completed).
+* **Volunteer**: A volunteer with basic contact info
+* **TeamMember**: A team member with basic contact info with a Committee.
+* **OrgMember**: A member of an external organisation with basic contact info and an Organisation.
 * **Project**: A logical grouping of tasks, updates, and contacts in Loopin.
 --------------------------------------------------------------------------------------------------------------------
 

@@ -72,6 +72,7 @@ public final class ProjectRemoveCommand extends BaseProjectMemberCommand {
         Project project = resolveProjectByName(model, projectName);
 
         Person target = resolveTargetPerson(model, name, index);
+        target.removeProject(project);
 
         if (!project.hasMember(target)) {
             throw new CommandException(String.format(MESSAGE_NOT_IN, target.getName()));
@@ -79,7 +80,7 @@ public final class ProjectRemoveCommand extends BaseProjectMemberCommand {
 
         project.removePerson(target);
         model.setProject(project);
-
+        model.setPersonInPlace(target);
         return new CommandResult(String.format(MESSAGE_SUCCESS, target.getName(), projectName));
     }
 }
