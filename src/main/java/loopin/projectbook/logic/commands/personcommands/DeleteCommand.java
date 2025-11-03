@@ -2,6 +2,7 @@ package loopin.projectbook.logic.commands.personcommands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import loopin.projectbook.commons.core.index.Index;
@@ -12,6 +13,7 @@ import loopin.projectbook.logic.commands.CommandResult;
 import loopin.projectbook.logic.commands.exceptions.CommandException;
 import loopin.projectbook.model.Model;
 import loopin.projectbook.model.person.Person;
+import loopin.projectbook.model.project.Project;
 
 /**
  * Deletes a person identified using it's displayed index from the project book.
@@ -43,6 +45,11 @@ public class DeleteCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        List<Project> assignedProjects = new ArrayList<>(personToDelete.getProjects());
+        for (Project project : assignedProjects) {
+            project.removePerson(personToDelete);
+            model.setProject(project);
+        }
         model.deletePerson(personToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.formatPerson(personToDelete)));
     }
