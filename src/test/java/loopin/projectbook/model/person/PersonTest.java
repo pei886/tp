@@ -21,23 +21,33 @@ public class PersonTest {
         assertFalse(ALICE.isSamePerson(null));
 
         // same name, all other attributes different -> returns false
-        Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
+        Person editedAlice = new PersonBuilder(ALICE)
+                .withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB)
                 .withTelegram(VALID_TELEGRAM_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // different name, different email, all other attributes same -> returns true
-        editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).withEmail(VALID_EMAIL_BOB).build();
+        // same email, all other attributes different -> returns true
+        editedAlice = new PersonBuilder(ALICE)
+                .withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB)
+                .withTelegram(VALID_TELEGRAM_BOB).build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
-        // name differs in case, different email, all other attributes same -> returns false
-        Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase())
-                .withEmail(VALID_EMAIL_AMY).build();
-        assertTrue(BOB.isSamePerson(editedBob));
+        // same phone, all other attributes different -> returns true
+        editedAlice = new PersonBuilder(ALICE)
+                .withName(VALID_NAME_BOB)
+                .withEmail(VALID_EMAIL_BOB)
+                .withTelegram(VALID_TELEGRAM_BOB).build();
+        assertTrue(ALICE.isSamePerson(editedAlice));
 
-        // name has trailing spaces, different email, all other attributes same -> returns false
-        String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
-        editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).withEmail(VALID_EMAIL_AMY).build();
-        assertTrue(BOB.isSamePerson(editedBob));
+        // same telegram, all other attributes different -> returns true
+        editedAlice = new PersonBuilder(ALICE)
+                .withName(VALID_NAME_BOB)
+                .withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).build();
+        assertTrue(ALICE.isSamePerson(editedAlice));
+
     }
 
     @Test

@@ -16,6 +16,7 @@ import loopin.projectbook.model.person.Name;
 import loopin.projectbook.model.person.Phone;
 import loopin.projectbook.model.person.Remark;
 import loopin.projectbook.model.person.Telegram;
+import loopin.projectbook.testutil.PersonBuilder;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";
@@ -29,9 +30,9 @@ public class JsonAdaptedPersonTest {
     private static final List<JsonAdaptedRemark> INVALID_REMARKS_STATUS = List.of(INVALID_REMARK_BAD_STATUS);
 
     private static final String VALID_NAME = BENSON.getName().toString();
-    private static final String VALID_PHONE = BENSON.getPhone().toString();
+    private static final String VALID_PHONE = BENSON.getPhone().map(p -> p.value.toString()).orElse(null);
     private static final String VALID_EMAIL = BENSON.getEmail().toString();
-    private static final String VALID_TELEGRAM = BENSON.getTelegram().toString();
+    private static final String VALID_TELEGRAM = BENSON.getTelegram().map(t -> t.value.toString()).orElse(null);
     private static final String VALID_ROLE = BENSON.getRole().toString();
     private static final List<JsonAdaptedProject> VALID_PROJECTS = BENSON.getProjects().stream()
             .map(JsonAdaptedProject::new)
@@ -75,12 +76,11 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_nullPhone_throwsIllegalValueException() {
+    public void toModelType_nullPhone_returnsPerson() throws Exception {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_ROLE, null, VALID_EMAIL, VALID_TELEGRAM,
-                VALID_REMARKS, VALID_PROJECTS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+                null, null);
+        assertEquals(new PersonBuilder(BENSON).withPhone(null).build(), person.toModelType());
     }
 
     @Test
@@ -111,12 +111,11 @@ public class JsonAdaptedPersonTest {
     }
 
     @Test
-    public void toModelType_nullTelegram_throwsIllegalValueException() {
+    public void toModelType_nullTelegram_returnsPerson() throws Exception {
         JsonAdaptedPerson person =
                 new JsonAdaptedPerson(VALID_NAME, VALID_ROLE, VALID_PHONE, VALID_EMAIL, null,
-                VALID_REMARKS, VALID_PROJECTS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Telegram.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+                null, null);
+        assertEquals(new PersonBuilder(BENSON).withTelegram(null).build(), person.toModelType());
     }
 
     // --- NEW REMARK TESTS ---
