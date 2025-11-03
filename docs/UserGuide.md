@@ -131,6 +131,25 @@ Format: `help`
 
 Adds a person of a specific role to the project book. There are 3 roles a person can play: volunteer, committee member, and organisation contact.
 
+<box type="info" seamless>
+
+**Notes about the types of roles**
+* A volunteer is not part of the core team, but is recruited to help with projects. Loopin stores only basic contact information of volunteers.
+* A team member is part of the core team and belongs to a committee. Loopin stores the committee and basic contact information of team members.
+* An organisation member is someone associated with an external organisation. Loopin stores the organisation and basic contact information of organisation members.
+
+**What is "basic contact information"?**
+* A person's name and email are both basic contact information that are required to add a person.
+* Additional contact information such as phone number and telegram username can also be stored, but they are not required.
+
+**What is a duplicate person?**
+* When adding people into the project book, you might get an error stating that the person is already in the project book.
+* A person with the same phone number, email address or telegram username will be considered a duplicate person and cannot be added.
+* This is because two different people cannot have the same phone number, email address or telegram username.
+* People with the same name are not considered duplicate because it is possible for people to have the same name (Even the same full name).
+
+</box>
+
 Feature | Command word | Command format | Example
 ---|---|---|---
 Add a volunteer | `addv` | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
