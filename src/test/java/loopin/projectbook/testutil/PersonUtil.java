@@ -22,7 +22,7 @@ public class PersonUtil {
 
     /** Builds a full "add ..." command line for {@code person}. */
     public static String getAddCommand(Person person) {
-        return "add " + getPersonDetails(person);
+        return "addv " + getPersonDetails(person);
     }
 
     /**
