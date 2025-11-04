@@ -208,11 +208,11 @@ Finds persons by matching their name to a sequence of keywords.
 * The search is **case-insensitive** (e.g., `hans` will match `Hans`).
 * The search matches **any part of the name** (e.g., `Han` will match `Hans`, `Hannah`, or `Johanson`).
 * The order of the keywords does not matter.
-* The search results will show persons whose names contain **all keywords**.
+* The search results will show persons whose names contain **any keywords**.
 
 **Examples:**
 * `find John` returns `John Doe`, `Johnson Tan`.
-* `find david alex` returns `Alex Yeoh David`, `Alexandra Davidson`.
+* `find david alex` returns `Alex Yeoh David`, `Alexandra Davidson`, `David Li`.
 
 ![result for 'find alex david'](images/findcommandresult.png)
 
