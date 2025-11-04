@@ -106,8 +106,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 How the `Logic` component works:
 
-1. When `Logic` is called upon to execute a command, it is passed to an `Project
-BookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
+1. When `Logic` is called upon to execute a command, it is passed to an `ProjectBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
 1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
@@ -118,9 +117,7 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <puml src="diagrams/ParserClasses.puml" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `Project
-BookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `Project
-BookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `ProjectBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `ProjectBookParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
@@ -193,58 +190,43 @@ This section describes some noteworthy details on how certain features are inten
 
 #### Proposed Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedProject
-Book`. It extends `Project
-Book` with an undo/redo history, stored internally as an `projectBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The proposed undo/redo mechanism is facilitated by `VersionedProjectBook`. It extends `ProjectBook` with an undo/redo history, stored internally as an `projectBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
 
-* `VersionedProject
-Book#commit()` — Saves the current project book state in its history.
-* `VersionedProject
-Book#undo()` — Restores the previous project book state from its history.
-* `VersionedProject
-Book#redo()` — Restores a previously undone project book state from its history.
+* `VersionedProjectBook#commit()` — Saves the current project book state in its history.
+* `VersionedProjectBook#undo()` — Restores the previous project book state from its history.
+* `VersionedProjectBook#redo()` — Restores a previously undone project book state from its history.
 
-These operations are exposed in the `Model` interface as `Model#commitProject
-Book()`, `Model#undoProject
-Book()` and `Model#redoProject
-Book()` respectively.
+These operations are exposed in the `Model` interface as `Model#commitProjectBook()`, `Model#undoProjectBook()` and `Model#redoProjectBook()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedProject
-Book` will be initialized with the initial project book state, and the `currentStatePointer` pointing to that single project book state.
+Step 1. The user launches the application for the first time. The `VersionedProjectBook` will be initialized with the initial project book state, and the `currentStatePointer` pointing to that single project book state.
 
 <puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the project book. The `delete` command calls `Model#commitProject
-Book()`, causing the modified state of the project book after the `delete 5` command executes to be saved in the `projectBookStateList`, and the `currentStatePointer` is shifted to the newly inserted project book state.
+Step 2. The user executes `delete 5` command to delete the 5th person in the project book. The `delete` command calls `Model#commitProjectBook()`, causing the modified state of the project book after the `delete 5` command executes to be saved in the `projectBookStateList`, and the `currentStatePointer` is shifted to the newly inserted project book state.
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitProject
-Book()`, causing another modified project book state to be saved into the `projectBookStateList`.
+Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitProjectBook()`, causing another modified project book state to be saved into the `projectBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
 <box type="info" seamless>
 
-**Note:** If a command fails its execution, it will not call `Model#commitProject
-Book()`, so the project book state will not be saved into the `projectBookStateList`.
+**Note:** If a command fails its execution, it will not call `Model#commitProjectBook()`, so the project book state will not be saved into the `projectBookStateList`.
 
 </box>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoProject
-Book()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous project book state, and restores the project book to that state.
+Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoProjectBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous project book state, and restores the project book to that state.
 
 <puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
 
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index 0, pointing to the initial Project
-Book state, then there are no previous Project
-Book states to restore. The `undo` command uses `Model#canUndoProject
-Book()` to check if this is the case. If so, it will return an error to the user rather
+**Note:** If the `currentStatePointer` is at index 0, pointing to the initial ProjectBook state, then there are no previous Project
+Book states to restore. The `undo` command uses `Model#canUndoProjectBook()` to check if this is the case. If so, it will return an error to the user rather
 than attempting to perform the undo.
 
 </box>
@@ -263,26 +245,19 @@ Similarly, how an undo operation goes through the `Model` component is shown bel
 
 <puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
 
-The `redo` command does the opposite — it calls `Model#redoProject
-Book()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the project book to that state.
+The `redo` command does the opposite — it calls `Model#redoProjectBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the project book to that state.
 
 <box type="info" seamless>
 
-**Note:** If the `currentStatePointer` is at index `projectBookStateList.size() - 1`, pointing to the latest project book state, then there are no undone Project
-Book states to restore. The `redo` command uses `Model#canRedoProject
-Book()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+**Note:** If the `currentStatePointer` is at index `projectBookStateList.size() - 1`, pointing to the latest project book state, then there are no undone ProjectBook states to restore. The `redo` command uses `Model#canRedoProjectBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
 </box>
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the project book, such as `list`, will usually not call `Model#commitProject
-Book()`, `Model#undoProject
-Book()` or `Model#redoProject
-Book()`. Thus, the `projectBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the project book, such as `list`, will usually not call `Model#commitProjectBook()`, `Model#undoProjectBook()` or `Model#redoProjectBook()`. Thus, the `projectBookStateList` remains unchanged.
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitProject
-Book()`. Since the `currentStatePointer` is not pointing at the end of the `projectBookStateList`, all project book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitProjectBook()`. Since the `currentStatePointer` is not pointing at the end of the `projectBookStateList`, all project book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -589,7 +564,7 @@ Use case ends.
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+1. Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2. Should process commands and display commands within 1 second.
 3. Should function without an internet connection.
 4. Should not use more than 1GB of RAM.
@@ -628,13 +603,13 @@ testers are expected to do more *exploratory* testing.
 
     1. Download the jar file and copy into an empty folder
 
-    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    2. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
     1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-    1. Re-launch the app by double-clicking the jar file.<br>
+    2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 ### Adding a project
@@ -643,6 +618,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `project add n/Clean Beach d/Cleaning the beach`<br>
        Expected: A new project named Clean Beach is added to the list with the correct timestamp. No last update is available.
+
     2. Test case: `project add d/No name provided`<br>
        Expected: No project is added. Error message shown indicating that the name field is required. Status bar remains unchanged.
 
@@ -652,6 +628,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `project view project/Clean Beach`<br>
        Expected: The details of project Clean Beach is shown, including a list of persons associated with it, categorized by different roles.
+
     2. Test case: `project view project/Nonexistent`<br>
        Expected: No project is viewed. Message shown indicating that the project with the given name does not exist.
 
@@ -661,13 +638,13 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-    1. Test case: `delete 1`<br>
+    2. Test case: `delete 1`<br>
        Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-    1. Test case: `delete 0`<br>
+    3. Test case: `delete 0`<br>
        Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
 ### Saving data
@@ -675,28 +652,41 @@ testers are expected to do more *exploratory* testing.
 1. Dealing with missing data files
 
     1. To simulate a missing data file, delete the file data/projectbook.json.
+
     2. Launch the app.
        Expected: The app will be populated with sample data, similar to first launch.
-       
-2. Dealing with corrupted data files
 
+2. Dealing with corrupted data files
+    
     1. To simulate a corrupted data file, edit the file data/projectbook.json such that the data is invalid.
+
     2. Launch the app.
        Expected: The app will delete all data and start from an empty projectbook.
 
+--------------------------------------------------------------------------------------------------------------------
+
 ## **Appendix: Planned Enhancements**
 Team size: 5
-1. Handle long inputs in the UI (names, phones, emails, remarks). <br>
+
+1. Handle long inputs in the UI (names, phones, emails, remarks).<br>
 Currently, long inputs are truncated with "..." in the UI. We plan to implement text wrapping so that the full text is displayed to the user.
-2. Allow non exact matches for project/PROJECT_NAME inputs. <br>
+
+2. Allow non exact matches for project/PROJECT_NAME inputs.<br>
 Currently, commands that require the input project/PROJECT_NAME require the user input to match the project name exactly. We plan to allow the user to use a substring of project name instead of the full project name, provided that there is only one project that matches the substring.
+
 3. Make `find` search more fields.<br>
 Currently, `find` only searches the name and `findrole` only searches the role. We plan to make `find` more flexible and allow it to search other fields such as the phone, email and telegram.
+
 4. Allow user to choose between long and short version of each project command word.<br>
 Currently, each project command follows the format `project COMMAND_WORD`. We plan to implement a second, shorter version of each command word (i.e. project add = addp, project delete = deletep, project assign = assignp)
+
 5. Allow more flexibility in the validation for Phone.<br>
 Currently, phone numbers must be strictly numeric and more than 3 digits. We plan to allow for more flexible formats such as `1234 5678 (HP) 1111-3333 (Office)` and `(+65) 9876 4321`
+
 6. Add deadline for remarks.<br>
 Currently, remarks act as a simple reminder without any prioritised order. We plan to give the user the option to add a deadline for when a remark should be resolved by, and prioritize the order of remarks by the urgency of the deadline.
+
 7. Add warnings for `clear`, `delete` and `project delete`<br>
 Currently, if the user correctly inputs the command for `clear`, `delete`, and `project delete`, the app will simply perform the deletion without any additional checks. We plan to add an additional warning step, where the app will warn the user of the exact deletion that is about to happen and asks the user for confirmation before deleting.
+
+--------------------------------------------------------------------------------------------------------------------

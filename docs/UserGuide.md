@@ -190,7 +190,7 @@ Edits the specified fields of an existing person in the project book.
 * `edit 1 p/91234567 e/johndoe@example.com` edits the phone and email of the 1st person in the currently displayed list.
 * `edit 2 n/Betsy Crower` edits the name of the 2nd person in the currently displayed list.
 
-<box type="tip" seamless>i
+<box type="tip" seamless>
 
 **Tip:** Use `list` or `find` first to get the correct `INDEX` of the person you want to edit!
 
@@ -217,7 +217,6 @@ Finds persons by matching their name to a sequence of keywords.
 ![result for 'find alex david'](images/findcommandresult.png)
 
 ---
-
 ### `findrole`: Finding Persons by Role
 
 Finds all persons in the project book whose role matches the specified role type.
@@ -313,6 +312,7 @@ Adds a project to the project book.
 **Tip:** Project names are your unique identifiers. Choose clear, unique names like "Annual Gala 2025" instead of just "Gala".
 
 </box>
+
 ---
 ### `project delete`: Deleting a Project
 
@@ -335,6 +335,7 @@ Deleting a project does *not* delete the persons who have been previously assign
 **Warning:** Make sure to use `project delete` and not `delete` if you want to delete a project and not a person.
 
 </box>
+
 ---
 ### `project view`: Viewing a Project
 
@@ -446,18 +447,21 @@ If your changes to the data file makes its format invalid, ProjectBook will disc
 --------------------------------------------------------------------------------------------------------------------
 ## Coming in Future Versions
 
-1. `undo` feature
-   Are you worried that you might accidentally delete something you shouldn't have? With the upcoming `undo` feature, you can easily undo any unwanted changes!
+1. `undo` feature <br>
+   Are you worried that you might accidentally delete something you shouldn't have? <br>
+   With the upcoming `undo` feature, you can easily undo any unwanted changes!
 
-2. `archive` and `load` feature
-   Are you starting on a fresh new set of projects, but don't want to delete your old ones? Using the upcoming `archive` feature, you can simply archive your old project book and start on a new one! Load the archived data whenever you want using the `load` command!
+2. `archive` and `load` feature <br>
+   Are you starting on a fresh new set of projects, but don't want to delete your old ones? <br>
+   Using the upcoming `archive` feature, you can simply archive your old project book and start on a new one! Load the archived data whenever you want using the `load` command!
    
-3. `project edit` feature
-   Want to update a project name or description? Edit a project with the upcoming `project edit` feature!
+3. `project edit` feature <br>
+   Want to update a project name or description? <br>
+   Edit a project with the upcoming `project edit` feature!
 
-4. Shortened project commands
-   Are you tired of typing out `project add`, `project delete` and all these other long project command words?
-   Use the upcoming shortened project commands! `project add` can be shortened to `addp`, `project delete` can be shortened to `deletep` and so on! 
+4. Shortened project commands <br>
+   Are you tired of typing out `project add`, `project delete` and all these other long project command words? <br>
+   Use the upcoming shortened project commands! `project add` can be shortened to `addp`, `project delete` can be shortened to `deletep` and so on! <br> 
    Don't worry if you've gotten used to the old format — they'll still be accepted.
 
 --------------------------------------------------------------------------------------------------------------------
