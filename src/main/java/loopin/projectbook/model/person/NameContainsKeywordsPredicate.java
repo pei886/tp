@@ -20,7 +20,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
         //        return keywords.stream()
         //                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
         return keywords.stream().map(keywords -> keywords.toLowerCase())
-                .allMatch(word -> person.getName().fullName.toLowerCase().contains(word));
+                .anyMatch(word -> person.getName().fullName.toLowerCase().contains(word));
     }
 
     @Override

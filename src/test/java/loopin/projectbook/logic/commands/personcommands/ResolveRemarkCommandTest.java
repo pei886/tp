@@ -45,25 +45,23 @@ public class ResolveRemarkCommandTest {
     public void execute_validIndexes_success() {
         ResolveRemarkCommand resolveCommand = new ResolveRemarkCommand(INDEX_FIRST_PERSON, remarkIndex);
 
+        Person personBefore = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Remark remarkToRemove = personBefore.getRemarks().iterator().next();
+
         String expectedMessage = String.format(ResolveRemarkCommand.MESSAGE_RESOLVE_REMARK_SUCCESS,
-                personWithRemark.getName().fullName,
-                personWithRemark.getRemarks().iterator().next().content);
+                Messages.formatPerson(personBefore));
 
         Model expectedModel = new ModelManager(model.getProjectBook(), new UserPrefs());
-
-        // Manually apply the change to the expected model for assertion
-        Person expectedPerson = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Remark oldRemark = expectedPerson.getRemarks().iterator().next(); // Get the original remark
-        Remark resolvedRemark = oldRemark.resolve();
-        Person resolvedExpectedPerson = expectedPerson.withResolvedRemark(oldRemark, resolvedRemark);
-        expectedModel.setPerson(expectedPerson, resolvedExpectedPerson);
+        Person expectedPersonBefore = expectedModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person expectedPersonAfter = expectedPersonBefore.withRemarkRemoved(remarkToRemove);
+        expectedModel.setPerson(expectedPersonBefore, expectedPersonAfter);
 
         assertCommandSuccess(resolveCommand, model, expectedMessage, expectedModel);
 
         // Final check: the remark status in the actual model must be COMPLETED
-        Person actualResolvedPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        assertTrue(actualResolvedPerson.getRemarks().stream()
-                .anyMatch(r -> r.status.equals(Status.COMPLETED)));
+        Person actualPersonAfter = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        assertTrue(actualPersonAfter.getRemarks().stream()
+                .noneMatch(r -> r.equals(remarkToRemove)));
     }
 
     @Test
@@ -82,16 +80,17 @@ public class ResolveRemarkCommandTest {
         assertCommandFailure(resolveCommand, model, ResolveRemarkCommand.MESSAGE_INVALID_REMARK_DISPLAYED_INDEX);
     }
 
-    @Test
-    public void execute_alreadyResolvedRemark_failure() {
-        // Resolve the remark once
-        Remark initialRemark = personWithRemark.getRemarks().iterator().next();
-        Remark resolvedRemark = initialRemark.resolve();
-        Person alreadyResolvedPerson = personWithRemark.withResolvedRemark(initialRemark, resolvedRemark);
-        model.setPerson(personWithRemark, alreadyResolvedPerson);
-
-        // Try to resolve again
-        ResolveRemarkCommand resolveCommand = new ResolveRemarkCommand(INDEX_FIRST_PERSON, remarkIndex);
-        assertCommandFailure(resolveCommand, model, ResolveRemarkCommand.MESSAGE_REMARK_ALREADY_RESOLVED);
-    }
+    //Did not test for resolve remark as we removed the remark entirely
+//    @Test
+//    public void execute_alreadyResolvedRemark_failure() {
+//        // Resolve the remark once
+//        Remark initialRemark = personWithRemark.getRemarks().iterator().next();
+//        Remark resolvedRemark = initialRemark.resolve();
+//        Person alreadyResolvedPerson = personWithRemark.withResolvedRemark(initialRemark, resolvedRemark);
+//        model.setPerson(personWithRemark, alreadyResolvedPerson);
+//
+//        // Try to resolve again
+//        ResolveRemarkCommand resolveCommand = new ResolveRemarkCommand(INDEX_FIRST_PERSON, remarkIndex);
+//        assertCommandFailure(resolveCommand, model, ResolveRemarkCommand.MESSAGE_REMARK_ALREADY_RESOLVED);
+//    }
 }

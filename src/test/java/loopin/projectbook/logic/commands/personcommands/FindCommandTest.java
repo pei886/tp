@@ -2,12 +2,7 @@ package loopin.projectbook.logic.commands.personcommands;
 
 import static loopin.projectbook.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static loopin.projectbook.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static loopin.projectbook.testutil.TypicalPersons.ALICE;
-import static loopin.projectbook.testutil.TypicalPersons.CARL;
-import static loopin.projectbook.testutil.TypicalPersons.DANIEL;
-import static loopin.projectbook.testutil.TypicalPersons.ELLE;
-import static loopin.projectbook.testutil.TypicalPersons.getTypicalPersons;
-import static loopin.projectbook.testutil.TypicalPersons.getTypicalProjectBook;
+import static loopin.projectbook.testutil.TypicalPersons.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -59,13 +54,13 @@ public class FindCommandTest {
 
     // Since an empty string is a subset of all strings, all persons will be found
     @Test
-    public void execute_zeroKeywords_allPersonsFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 7);
+    public void execute_zeroKeywords_noPersonsFound() {
+        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel, SHOW_PERSON_LIST);
-        assertEquals(getTypicalPersons(), model.getFilteredPersonList());
+        assertTrue(model.getFilteredPersonList().isEmpty());
     }
 
     @Test
@@ -75,13 +70,14 @@ public class FindCommandTest {
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel, SHOW_PERSON_LIST);
+
         assertEquals(Arrays.asList(ALICE, CARL, DANIEL, ELLE), model.getFilteredPersonList());
     }
 
     @Test
     public void execute_multipleKeywords_onePersonFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 1);
-        NameContainsKeywordsPredicate predicate = preparePredicate("l u i");
+        NameContainsKeywordsPredicate predicate = preparePredicate("Alice");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel, SHOW_PERSON_LIST);
@@ -91,7 +87,7 @@ public class FindCommandTest {
     @Test
     public void execute_multipleKeywords_zeroPersonsFound() {
         String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
-        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
+        NameContainsKeywordsPredicate predicate = preparePredicate("Kusasnz");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel, SHOW_PERSON_LIST);
