@@ -711,4 +711,5 @@ Currently, remarks act as a simple reminder without any prioritised order. We pl
 7. Add warnings for `clear`, `delete` and `project delete`<br>
 Currently, if the user correctly inputs the command for `clear`, `delete`, and `project delete`, the app will simply perform the deletion without any additional checks. We plan to add an additional warning step, where the app will warn the user of the exact deletion that is about to happen and asks the user for confirmation before deleting.
 
---------------------------------------------------------------------------------------------------------------------
+8. Add `project edit` commands.
+Currently, projects cannot be edited once created. We plan to include this command to provide greater flexibility in managing project information.
