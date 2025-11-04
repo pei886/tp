@@ -1,3 +1,4 @@
+---
 layout: default.md
 title: "User Guide"
 pageNav: 3
@@ -20,15 +21,17 @@ Action | Format, Examples
 [**Delete**](#delete-deleting-a-person) | `delete INDEX`<br> e.g., `delete 3`
 [**Edit**](#edit-editing-a-person) | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com t/jameslee123`
 [**Remark**](#remark-adding-a-remark) | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
-[**Resolve**](#resolve-resolving-a-remark) | `resolve PERSON_INDEX REMARK_INDEX ` <br> e.g. `resolve 2 1`
-[**Find**](#find-finding-persons) | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+[**Resolve**](#resolve-resolving-a-remark) | `resolve INDEX REMARK_INDEX ` <br> e.g. `resolve 2 1`
+[**Find**](#find-finding-persons) | `find KEYWORD [MORE_KEYWORDS]...`<br> e.g., `find James Jake`
+[**FindRole**](#findrole-finding-persons-by-role) | `findrole ROLE_CHARACTER` <br> e.g. `find t`  
 [**List**](#list-listing-all-persons) | `list`
-[**Add project**](#project-add-adding-a-project) | `project add n/NAME d/DESCRIPTION` <br> e.g., `project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
+[**Add project**](#project-add-adding-a-project) | `project add project/PROJECT_NAME d/DESCRIPTION` <br> e.g., `project add project/Beach Cleanup d/Beach cleaning at Siloso Beach`
 [**List projects**](#project-list-listing-all-projects) | `project list`
-[**View project**](#project-view-viewing-a-project) | `project view project/PROJECTNAME` <br> e.g., `project view project/Beach Cleanup`
-[**Delete project**](#project-delete-deleting-a-project) | `project delete project/PROJECTNAME` <br> e.g., `project delete project/Fundraising Drive`
-[**Assign person to project**](#project-assign-assigning-a-person-to-a-project) | `project assign INDEX project/PROJECTNAME` <br> `project assign n/NAME project/PROJECTNAME` <br> e.g., `project assign 3 project/Artshow`
-[**Remove person from project**](#project-remove-removing-a-person-from-a-project) | `project remove INDEX project/PROJECTNAME` <br> `project remove n/NAME project/PROJECTNAME` <br> e.g., `project remove 4 project/Wellbeing`
+[**View project**](#project-view-viewing-a-project) | `project view project/PROJECT_NAME` <br> e.g., `project view project/Beach Cleanup`
+[**Find project**](#project-find-finding-projects) | `project find KEYWORD [MORE_KEYWORDS]...`<br> e.g., `find beach`
+[**Delete project**](#project-delete-deleting-a-project) | `project delete project/PROJECT_NAME` <br> e.g., `project delete project/Fundraising Drive`
+[**Assign person to project**](#project-assign-assigning-a-person-to-a-project) | `project assign INDEX project/PROJECT_NAME` <br> e.g., `project assign 3 project/Artshow` <br> `project assign n/NAME project/PROJECT_NAME` <br> e.g., `project assign n/Charlotte Oliveiro project/Artshow`
+[**Remove person from project**](#project-remove-removing-a-person-from-a-project) | `project remove INDEX project/PROJECT_NAME` <br> e.g., `project remove 4 project/Wellbeing` <br>`project remove n/NAME project/PROJECT_NAME` <br> e.g., `project remove n/David Li project/Wellbeing`
 [**Help**](#help-viewing-help) | `help`
 [**Exit**](#exit-exiting-the-program) | `exit`
 
@@ -39,16 +42,16 @@ Action | Format, Examples
 ## Getting Started
 
 ### 1. Installation
-
 1.  Ensure you have Java `17` or above installed in your Computer.<br>
     **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+    **Windows users:** You may follow this [guide](https://se-education.org/guides/tutorials/javaInstallationWindows.html) to download Java `17`.
 
 2.  Download the latest `.jar` file from our GitHub page.
 
 3.  Copy the file to the folder you want to use as the *home folder* for your ProjectBook.
 
 4.  Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar projectBook.jar` command to run the application.<br>
-    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
+    A GUI similar to the below (but without any projects) should appear in a few seconds. Note how the app contains some sample data.
 
     ![Ui](images/Ui.png)
 
@@ -62,7 +65,7 @@ Action | Format, Examples
     `addv n/John Doe p/98765432 e/johnd@example.com`
 
 4.  Next, create a project for John to be a part of. Type:
-    `project add n/Beach Cleanup d/Weekly cleanup at Siloso Beach`
+    `project add project/Beach Cleanup d/Weekly cleanup at Siloso Beach`
 
 5.  You should see John as Item 1 in the person list. Let's assign him to your new project. Type:
     `project assign 1 project/Beach Cleanup`
@@ -72,7 +75,15 @@ Action | Format, Examples
 
 7.  To see all contacts in your book, type `list`.
 
-8.  To exit the app, type `exit`.
+8.  To see all projects, type `project list`.
+
+9.  To exit the app, type `exit`.
+
+<box type="warning" seamless>
+    
+If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+    
+</box>
 
 Refer to the [Features](#features) below for details of each command.
 
@@ -86,12 +97,12 @@ Refer to the [Features](#features) below for details of each command.
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `addv n/NAME`, `NAME` is a parameter which can be used as `addv n/John Doe`.
-
+  
 * Items in square brackets `[]` are optional.<br>
   e.g `n/NAME [p/PHONE]` can be used as `n/John Doe p/98613698` or as `n/John Doe`.
-
-* `INDEX` refers to the index number shown in the displayed person list. The index must be a positive integer e.g., `1`, `2`, `3`...
-
+ 
+* `INDEX` refers to the index number shown in the currently displayed list. The index must be a positive integer (1, 2, 3, ...).
+    
 * Items with `…` after them can be used multiple times including zero times.<br>
   e.g. `[u/UPDATE]…` can be used as ` ` (i.e. 0 times), `u/add to group chat`, `u/register in portal` etc.
 
@@ -101,20 +112,18 @@ Refer to the [Features](#features) below for details of each command.
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-
 </box>
 
 <box type="tip" seamless>
 
-**Pro Tip: Command Chaining**
-
-The `INDEX` for commands like `edit` or `delete` refers to the *currently displayed list*.
-
-This means you can "chain" commands. For example:
-1.  Use `find Alex` to show only people named Alex.
-2.  The list might show two people: `1. Alex Yeoh` and `2. Alexandra Tan`.
-3.  You can then use `delete 1` to delete **Alex Yeoh**, who is the 1st person *in that filtered list*.
+> **💡 Pro Tip: Command Chaining**
+> 
+> The `INDEX` for commands like `edit` or `delete` refers to the *currently displayed list*.
+> 
+> This means you can "chain" commands. For example:
+> 1.  Use `find Alex` to show only people whose names contain 'Alex'.
+> 2.  The list might show two people: `1. Alex Yeoh` and `2. Alexandra Tan`.
+> 3.  You can then use `delete 1` to delete **Alex Yeoh**, who is the 1st person *in that filtered list*.
 
 </box>
 
@@ -124,7 +133,7 @@ Shows a message explaining how to access the help page. The link will bring you 
 
 ![help message](images/helpMessage.png)
 
-Format: `help`
+**Format:** `help`
 
 ---
 ### `addv` / `addt` / `addo`: Adding a Person (Volunteer, TeamMember, OrganisationMember)
@@ -144,60 +153,42 @@ Adds a person of a specific role to the project book. There are 3 roles a person
 
 **What is a duplicate person?**
 * When adding people into the project book, you might get an error stating that the person is already in the project book.
-* A person with the same phone number, email address or telegram username will be considered a duplicate person and cannot be added.
+* A person with the exact same **phone** number, **email** address or **telegram** username will be considered a duplicate person and cannot be added.
 * This is because two different people cannot have the same phone number, email address or telegram username.
-* People with the same name are not considered duplicate because it is possible for people to have the same name (Even the same full name).
+* People with the same name are not considered duplicate because it is possible for people to have the same name (even the same full name).
 
 </box>
 
 Feature | Command word | Command format | Example
 ---|---|---|---
-Add a volunteer | `addv` | `addv n/NAME [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addv n/James Ho p/22224444 e/jamesho@example.com t/jamesho123`
-Add a team member | `addt` | `addt n/NAME c/COMMITTEE [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addt n/Sarah Ng c/Logistics p/12345678 e/sarahng@example.com t/sarah_ng`
-Add an organisation member | `addo` | `addo n/NAME o/ORGANISATION [p/PHONE] e/EMAIL [t/TELEGRAM]` | `addo n/Timothy Lee o/Example Company p/98371896 e/partner@example.com t/timlee`
+Add a volunteer | `addv` | `addv n/NAME e/EMAIL [p/PHONE] [t/TELEGRAM]` | `addv n/James Ho e/jamesho@example.com p/22224444 t/jamesho123`
+Add a team member | `addt` | `addt n/NAME e/EMAIL c/COMMITTEE [p/PHONE] [t/TELEGRAM]` | `addt n/Sarah Ng e/sarahng@example.com c/Logistics p/12345678 t/sarah_ng`
+Add an organisation member | `addo` | `addo n/NAME o/ORGANISATION e/EMAIL [p/PHONE] [t/TELEGRAM]` | `addo n/Timothy Lee e/partner@example.com o/Example Company p/98371896 t/timlee`
 
 ![img.png](img.png)
-
----
-### `remark`: Adding a Remark
-
-Adds a remark to a person. Remarks are used as a "to-do" list or reminder to liaise with a person about a certain update.
-
-Format: `remark INDEX u/UPDATE`
-
-Example: `remark 2 u/add to shared drive`
-
----
-### `resolve`: Resolving a Remark
-
-Removes a remark from a person after the task is done. After having updated the person, the reminder is no longer needed.
-
-Format: `resolve PERSON_INDEX REMARK_INDEX`
-
-Example: `resolve 2 1` (Removes the 1st remark from the 2nd person)
 
 ---
 ### `list`: Listing All Persons
 
 Shows a list of all persons in the project book.
 
-Format: `list`
+**Format:** `list`
 
 ---
 ### `edit`: Editing a Person
 
 Edits the specified fields of an existing person in the project book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`
+**Format:** `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [t/TELEGRAM]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list.
-* The `INDEX` **must be a positive integer** (1, 2, 3, …).
-* At least one of the optional fields must be provided.
+**Details:**
+* **At least one** of the optional fields must be provided.
 * The given value will replace the existing value for that field.
+* This command can also be used to update fields that were originally empty.
 
-Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone and email of the 1st person.
-* `edit 2 n/Betsy Crower` Edits the name of the 2nd person.
+**Examples:**
+* `edit 1 p/91234567 e/johndoe@example.com` edits the phone and email of the 1st person in the currently displayed list.
+* `edit 2 n/Betsy Crower` edits the name of the 2nd person in the currently displayed list.
 
 <box type="tip" seamless>
 **Tip:** Use `list` or `find` first to get the correct `INDEX` of the person you want to edit!
@@ -206,16 +197,19 @@ Examples:
 ---
 ### `find`: Finding Persons
 
-Locates persons by matching their name to a sequence of keywords.
+Finds persons by matching their name to a sequence of keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+**Format:** `find KEYWORD [MORE_KEYWORDS]...`
+
+**Details:**
 
 * The search is **case-insensitive** (e.g., `hans` will match `Hans`).
 * The search matches **any part of the name** (e.g., `Han` will match `Hans`, `Hannah`, or `Johanson`).
 * The order of the keywords does not matter.
+* The search results will show persons whose names contain **all keywords**.
 
-Examples:
-* `find John` returns `John Doe`, or `Johnson Tan`.
+**Examples:**
+* `find John` returns `John Doe`, `Johnson Tan`.
 * `find david alex` returns `Alex Yeoh David`, `Alexandra Davidson`.
 
 ![result for 'find alex david'](images/findcommandresult.png)
@@ -224,34 +218,51 @@ Examples:
 
 ### `findrole`: Finding Persons by Role
 
-Finds and lists all persons in the project book whose role matches the specified role type.
+Finds all persons in the project book whose role matches the specified role type.
 
 **Format:**  
 `findrole ROLE_CHARACTER`
 
 **Details:**
-* This command shows all the people of a certain role
-* Accepted role shortcuts:
+* Accepted role characters include
     * `t` — Team Member
     * `v` — Volunteer
     * `o` — Organisation Member
 
 **Examples:**
-* `findrole t` returns all **Team Members**.
-* `findrole v` returns all **Volunteers**.
-* `findrole o` returns all the **Organisation Members (OrgMembers)**.
+* `findrole t` returns all Team Members.
+* `findrole v` returns all Volunteers.
+* `findrole o` returns all the Organisation Members.
+
+> 💡 **Tip:** If you want to view all persons after using the `findrole` command, use `list`.
+
+---
+### `remark`: Adding a Remark
+
+Adds a remark to a person. Remarks are used as a "to-do" list or reminder to liaise with a person about a certain update.
+
+**Format:** `remark INDEX u/UPDATE`
+
+**Example:** `remark 2 u/add to shared drive` adds a remark 'add to shared drive' to the 2nd person in the currently displayed list.
+
+---
+### `resolve`: Resolving a Remark
+
+Removes a remark from a person after the task is done. After having updated the person, the reminder is no longer needed, thus the corresponding remark can be resolved.
+
+**Format:** `resolve PERSON_INDEX REMARK_INDEX`
+
+**Example:** `resolve 2 1` removes the 1st remark from the 2nd person in the currently displayed list.
 
 ---
 ### `delete`: Deleting a Person
 
 Deletes the specified person from the project book.
+> ⚠️ **Warning:** This action is irreversible. Deleted entries cannot be recovered.
 
-Format: `delete INDEX`
+**Format:** `delete INDEX`
 
-* Deletes the person at the specified `INDEX` from the *currently displayed list*.
-* The `INDEX` **must be a positive integer** (1, 2, 3, …).
-
-Examples:
+**Examples:**
 * `list` followed by `delete 2` deletes the 2nd person in the project book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
@@ -260,7 +271,9 @@ Examples:
 
 Clears all entries (all persons and all projects) from the project book.
 
-Format: `clear`
+> ⚠️ **Warning:** This action is irreversible. Deleted entries cannot be recovered.
+
+**Format:** `clear`
 
 <box type="warning" seamless>
 **Warning:** This action cannot be reversed.
@@ -271,47 +284,64 @@ Format: `clear`
 
 Shows a list of all projects in the project book.
 
-Format: `project list`
+**Format:** `project list`
 
 ---
 ### `project add`: Adding a Project
 
 Adds a project to the project book.
 
-Format: `project add n/PROJECTNAME d/DESCRIPTION`
+**Format:** `project add project/PROJECT_NAME d/DESCRIPTION`
 
-Example:
-`project add n/Beach Cleanup d/Beach cleaning at Siloso Beach`
-* Adds a new project named "Beach Cleanup" with the given description.
-* No one is assigned to it yet.
+**Example:**
+`project add project/Beach Cleanup d/Beach cleaning at Siloso Beach` adds a new project named "Beach Cleanup" with the given description. Upon project addition, no persons have been assigned to the project.
 
-<box type="tip" seamless>
-**Tip:** Project names are your unique identifiers. Choose clear, unique names like "Annual Gala 2025" instead of just "Gala".
-</box>
+> 💡 **Tip:** Project names are your unique identifiers. Choose clear, unique names like "Annual Gala 2025" instead of just "Gala".
 
 ---
 ### `project delete`: Deleting a Project
 
 Deletes the specified project from the project book.
+> ⚠️ **Warning:** This action is irreversible. Deleted entries cannot be recovered.
+> ⚠️ **Warning:** Make sure to use `project delete` and not `delete` if you want to delete a project and not a person.
 
-Format: `project delete project/PROJECTNAME`
+**Format:** `project delete project/PROJECT_NAME`
 
-Example:
+**Details:**
+* Deleting a project does *not* delete the persons who have been previously assigned to the project. These persons will no longer be associated with the deleted project.
+
+**Example:**
 `project delete project/Fundraising Drive`
-
-* Deleting a project does *not* delete the persons who were associated with it. They will just no longer be assigned to this project.
 
 ---
 ### `project view`: Viewing a Project
 
 Views the summary of an existing project and its participants.
 
-Format: `project view project/PROJECTNAME`
+**Format:** `project view project/PROJECT_NAME`
 
-Example:
+**Example:**
 `project view project/Beach Cleanup`
 * Lists the name and description of the project.
-* Lists all contacts (volunteers, team, orgs) assigned to it.
+* Lists all contacts (volunteers, team members, organisation members) assigned to it.
+
+---
+### `project find`: Finding Projects
+
+Finds projects by matching their name to a sequence of keywords.
+
+**Format:** `project find KEYWORD [MORE_KEYWORDS]...`
+
+**Details:**
+
+* The search is **case-insensitive** (e.g., `beach` will match `Beach`).
+* The search matches **any part of the project** (e.g., `beach` will match `Beach`, `Beaches`, or `EastCoastBeach`).
+* The order of the keywords does not matter.
+* The search results will show persons whose names contain **any keywords**.
+
+**Examples:**
+* `project find beach` returns `Beach Cleanup`, `Fundraiser Event at East Coast Beach`.
+* `project find beach fundraiser` returns `Beach Cleanup`, `Fundraiser Event at East Coast Beach`, `Fundraiser at ABC Primary School`.
 
 ---
 ### `project assign`: Assigning a Person to a Project
@@ -319,8 +349,8 @@ Example:
 Assigns a specified volunteer, team member, or organisation member to a project.
 
 **Formats:**
-* `project assign INDEX project/PROJECTNAME`
-* `project assign n/NAME project/PROJECTNAME`
+* `project assign INDEX project/PROJECT_NAME`
+* `project assign n/NAME project/PROJECT_NAME`
 
 * Assigns the person at the specified `INDEX`, or with the specified `NAME`, to the specified `PROJECT`.
 * The `INDEX` refers to the index number shown in the displayed person list. It **must be a positive integer** (1, 2, 3, …).
@@ -337,8 +367,8 @@ Assigns a specified volunteer, team member, or organisation member to a project.
 Removes a specified volunteer, team member, or organisation member from a project.
 
 **Formats:**
-* `project remove INDEX project/PROJECTNAME`
-* `project remove n/NAME project/PROJECTNAME`
+* `project remove INDEX project/PROJECT_NAME`
+* `project remove n/NAME project/PROJECT_NAME`
 
 * Removes the person at the specified `INDEX`, or with the specified `NAME`, from the specified `PROJECT`.
 * The `INDEX` refers to the index number shown in the displayed person list. It **must be a positive integer** (1, 2, 3, …).
@@ -371,10 +401,6 @@ Loopin data are saved automatically as a JSON file `[JAR file location]/data/pro
 If your changes to the data file makes its format invalid, ProjectBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
 </box>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -383,10 +409,30 @@ _Details coming soon ..._
 **Step 1:** Install the app on the other computer <br>
 **Step 2:** Make a new folder in the same folder as the app, and name it data<br>
 **Step 3:** Copy the original projectbook.json located in the data folder over to the new data folder <br>
-**Step 4:** You are ready to use the projectbook like before!
+**Step 4:** You are ready to use the project book like before!
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
 
 1.  **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2.  **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3.  **When entering extremely long inputs** such as names, phone numbers, emails and remarks, the UI truncates them with a `...`. We plan to fix this in future enhancements by wrapping the text onto the next line. For now, to avoid this, please avoid typing in overly long inputs.
+
+--------------------------------------------------------------------------------------------------------------------
+## Coming in Future Versions
+
+1. `undo` feature
+   Are you worried that you might accidentally delete something you shouldn't have? With the upcoming `undo` feature, you can easily undo any unwanted changes!
+
+2. `archive` and `load` feature
+   Are you starting on a fresh new set of projects, but don't want to delete your old ones? Using the upcoming `archive` feature, you can simply archive your old project book and start on a new one! Load the archived data whenever you want using the `load` command!
+   
+3. `project edit` feature
+   Want to update a project name or description? Edit a project with the upcoming `project edit` feature!
+
+4. Shortened project commands
+   Are you tired of typing out `project add`, `project delete` and all these other long project command words?
+   Use the upcoming shortened project commands! `project add` can be shortened to `addp`, `project delete` can be shortened to `deletep` and so on! 
+   Don't worry if you've gotten used to the old format — they'll still be accepted.
+
+--------------------------------------------------------------------------------------------------------------------
