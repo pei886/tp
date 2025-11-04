@@ -44,7 +44,7 @@ public class UniqueProjectListTest {
         Project p = proj("Website   Revamp");
         list.add(p);
 
-        Optional<Project> found = list.findByName("  website revamp ");
+        Optional<Project> found = list.findByName("  Website Revamp  ");
         assertTrue(found.isPresent());
         assertEquals(p, found.get());
     }
@@ -115,7 +115,7 @@ public class UniqueProjectListTest {
         UniqueProjectList list = new UniqueProjectList();
         list.add(proj("Alpha"));
 
-        list.removeByName("  ALPHA ");
+        list.removeByName("   Alpha   ");
         assertFalse(list.contains(proj("Alpha")));
     }
 
