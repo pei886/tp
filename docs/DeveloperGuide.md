@@ -612,6 +612,16 @@ testers are expected to do more *exploratory* testing.
     2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
+### Adding a person
+
+1. Adding a person while all persons are shown
+
+    1. Test case: `addv n/John Wang e/johnwang@gmail.com t/johnwang`<br>
+       Expected: A new Volunteer named John Wang with email johnwang@gmail.com and telegram @johnwang is added to the person list.
+
+    2. Test case: `addo o/Good Org n/Mr Good e/goodorg@org.com`<br>
+       Expected: A new representative Mr Good from Good Org has been added to the person list.
+
 ### Adding a project
 
 1. Adding a project while all projects are being shown
@@ -622,15 +632,27 @@ testers are expected to do more *exploratory* testing.
     2. Test case: `project add d/No name provided`<br>
        Expected: No project is added. Error message shown indicating that the name field is required. Status bar remains unchanged.
 
-### Viewing a project
+### Adding a remark to person
 
-1. Viewing a project when projects are being shown
+1. Adding a remark when person is being shown
 
-    1. Test case: `project view project/Clean Beach`<br>
-       Expected: The details of project Clean Beach is shown, including a list of persons associated with it, categorized by different roles.
+    1. Test case: `remark 1 u/Call him`<br>
+       Expected: A new remark tag labeled "Call him" is attached to the first person in the person list.
 
-    2. Test case: `project view project/Nonexistent`<br>
-       Expected: No project is viewed. Message shown indicating that the project with the given name does not exist.
+    2. Test case: `remark 999 u/Call him`<br>
+       Expected: No remarks are added as index does not exist.
+
+### Assigning a person to project
+
+1. Assigning a person to project
+
+    1. Prerequisites: At least one project (e.g. Clean Beach) exists and one person exists.
+
+    1. Test case: `project assign 1 project/Clean Beach`<br>
+       Expected: The first person in the persons list is added to the project Clean Beach, with the correct updated status bar
+
+    2. Test case: `project assign 1 project/Clean Beach`<br>
+       Expected: An error message appears indicating that person is already in the project.
 
 ### Deleting a person
 
