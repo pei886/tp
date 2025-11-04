@@ -668,25 +668,25 @@ testers are expected to do more *exploratory* testing.
 ## **Appendix: Planned Enhancements**
 Team size: 5
 
-1. Handle long inputs in the UI (names, phones, emails, remarks)
+1. Handle long inputs in the UI (names, phones, emails, remarks).<br>
 Currently, long inputs are truncated with "..." in the UI. We plan to implement text wrapping so that the full text is displayed to the user.
 
-2. Allow non exact matches for project/PROJECT_NAME inputs.
+2. Allow non exact matches for project/PROJECT_NAME inputs.<br>
 Currently, commands that require the input project/PROJECT_NAME require the user input to match the project name exactly. We plan to allow the user to use a substring of project name instead of the full project name, provided that there is only one project that matches the substring.
 
-3. Make `find` search more fields.
+3. Make `find` search more fields.<br>
 Currently, `find` only searches the name and `findrole` only searches the role. We plan to make `find` more flexible and allow it to search other fields such as the phone, email and telegram.
 
-4. Allow user to choose between long and short version of each project command word
+4. Allow user to choose between long and short version of each project command word.<br>
 Currently, each project command follows the format `project COMMAND_WORD`. We plan to implement a second, shorter version of each command word (i.e. project add = addp, project delete = deletep, project assign = assignp)
 
-5. Allow more flexibility in the validation for Phone
+5. Allow more flexibility in the validation for Phone.<br>
 Currently, phone numbers must be strictly numeric and more than 3 digits. We plan to allow for more flexible formats such as `1234 5678 (HP) 1111-3333 (Office)` and `(+65) 9876 4321`
 
-6. Add deadline for remarks
+6. Add deadline for remarks.<br>
 Currently, remarks act as a simple reminder without any prioritised order. We plan to give the user the option to add a deadline for when a remark should be resolved by, and prioritize the order of remarks by the urgency of the deadline.
 
-7. Add warnings for `clear`, `delete` and `project delete`
+7. Add warnings for `clear`, `delete` and `project delete`<br>
 Currently, if the user correctly inputs the command for `clear`, `delete`, and `project delete`, the app will simply perform the deletion without any additional checks. We plan to add an additional warning step, where the app will warn the user of the exact deletion that is about to happen and asks the user for confirmation before deleting.
 
 --------------------------------------------------------------------------------------------------------------------
