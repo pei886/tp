@@ -9,7 +9,6 @@ pageNav: 3
 Loopin is a desktop app that helps project leaders **track team members, organisation partners, volunteers, and project updates** in one place. It is designed for project leads and coordinators, and friendly for first-time users via a CLI (only typing required) interface.
 
 <page-nav-print />
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command Summary
