@@ -43,7 +43,7 @@ Action | Format, Examples
 
 ### 1. Installation
 1.  Ensure you have Java `17` or above installed in your Computer.<br>
-    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).<br>
     **Windows users:** You may follow this [guide](https://se-education.org/guides/tutorials/javaInstallationWindows.html) to download Java `17`.
 
 2.  Download the latest `.jar` file from our GitHub page.
@@ -116,14 +116,14 @@ Refer to the [Features](#features) below for details of each command.
 
 <box type="tip" seamless>
 
-> **💡 Pro Tip: Command Chaining**
-> 
-> The `INDEX` for commands like `edit` or `delete` refers to the *currently displayed list*.
-> 
-> This means you can "chain" commands. For example:
-> 1.  Use `find Alex` to show only people whose names contain 'Alex'.
-> 2.  The list might show two people: `1. Alex Yeoh` and `2. Alexandra Tan`.
-> 3.  You can then use `delete 1` to delete **Alex Yeoh**, who is the 1st person *in that filtered list*.
+ **Pro Tip: Command Chaining**
+ 
+ The `INDEX` for commands like `edit` or `delete` refers to the *currently displayed list*.
+ 
+ This means you can "chain" commands. For example:
+ 1.  Use `find Alex` to show only people whose names contain 'Alex'.
+ 2.  The list might show two people: `1. Alex Yeoh` and `2. Alexandra Tan`.
+ 3.  You can then use `delete 1` to delete **Alex Yeoh**, who is the 1st person *in that filtered list*.
 
 </box>
 
@@ -131,9 +131,9 @@ Refer to the [Features](#features) below for details of each command.
 
 Shows a message explaining how to access the help page. The link will bring you to a condensed cheatsheet of commands for your future reference!
 
-![help message](images/helpMessage.png)
-
 **Format:** `help`
+
+![help message](images/helpMessage.png)
 
 ---
 ### `addv` / `addt` / `addo`: Adding a Person (Volunteer, TeamMember, OrganisationMember)
@@ -142,7 +142,7 @@ Adds a person of a specific role to the project book. There are 3 roles a person
 
 <box type="info" seamless>
 
-**Notes about the types of roles**
+**What are the 3 types of roles**
 * A volunteer is not part of the core team, but is recruited to help with projects. Loopin stores only basic contact information of volunteers.
 * A team member is part of the core team and belongs to a committee. Loopin stores the committee and basic contact information of team members.
 * An organisation member is someone associated with an external organisation. Loopin stores the organisation and basic contact information of organisation members.
@@ -190,8 +190,10 @@ Edits the specified fields of an existing person in the project book.
 * `edit 1 p/91234567 e/johndoe@example.com` edits the phone and email of the 1st person in the currently displayed list.
 * `edit 2 n/Betsy Crower` edits the name of the 2nd person in the currently displayed list.
 
-<box type="tip" seamless>
+<box type="tip" seamless>i
+
 **Tip:** Use `list` or `find` first to get the correct `INDEX` of the person you want to edit!
+
 </box>
 
 ---
@@ -234,7 +236,12 @@ Finds all persons in the project book whose role matches the specified role type
 * `findrole v` returns all Volunteers.
 * `findrole o` returns all the Organisation Members.
 
-> 💡 **Tip:** If you want to view all persons after using the `findrole` command, use `list`.
+
+<box type="tip" seamless>
+
+**Tip:** If you want to view all persons after using the `findrole` command, use `list`.
+
+</box>
 
 ---
 ### `remark`: Adding a Remark
@@ -258,7 +265,6 @@ Removes a remark from a person after the task is done. After having updated the 
 ### `delete`: Deleting a Person
 
 Deletes the specified person from the project book.
-> ⚠️ **Warning:** This action is irreversible. Deleted entries cannot be recovered.
 
 **Format:** `delete INDEX`
 
@@ -266,17 +272,23 @@ Deletes the specified person from the project book.
 * `list` followed by `delete 2` deletes the 2nd person in the project book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+<box type="warning" seamless>
+
+**Warning:** This action is irreversible. Deleted entries cannot be recovered.
+
+</box>
+
 ---
 ### `clear`: Clearing All Entries
 
 Clears all entries (all persons and all projects) from the project book.
 
-> ⚠️ **Warning:** This action is irreversible. Deleted entries cannot be recovered.
-
 **Format:** `clear`
 
 <box type="warning" seamless>
-**Warning:** This action cannot be reversed.
+
+**Warning:** This action is irreversible. Cleared entries cannot be recovered.
+
 </box>
 
 ---
@@ -296,23 +308,33 @@ Adds a project to the project book.
 **Example:**
 `project add project/Beach Cleanup d/Beach cleaning at Siloso Beach` adds a new project named "Beach Cleanup" with the given description. Upon project addition, no persons have been assigned to the project.
 
-> 💡 **Tip:** Project names are your unique identifiers. Choose clear, unique names like "Annual Gala 2025" instead of just "Gala".
+<box type="tip" seamless>
 
+**Tip:** Project names are your unique identifiers. Choose clear, unique names like "Annual Gala 2025" instead of just "Gala".
+
+</box>
 ---
 ### `project delete`: Deleting a Project
 
 Deletes the specified project from the project book.
-> ⚠️ **Warning:** This action is irreversible. Deleted entries cannot be recovered.
-> ⚠️ **Warning:** Make sure to use `project delete` and not `delete` if you want to delete a project and not a person.
 
 **Format:** `project delete project/PROJECT_NAME`
-
-**Details:**
-* Deleting a project does *not* delete the persons who have been previously assigned to the project. These persons will no longer be associated with the deleted project.
 
 **Example:**
 `project delete project/Fundraising Drive`
 
+<box type="info" seamless>
+
+Deleting a project does *not* delete the persons who have been previously assigned to the project. These persons will no longer be associated with the deleted project.
+
+</box>
+
+<box type="warning" seamless>
+
+**Warning:** This action is irreversible. Deleted entries cannot be recovered.
+**Warning:** Make sure to use `project delete` and not `delete` if you want to delete a project and not a person.
+
+</box>
 ---
 ### `project view`: Viewing a Project
 
@@ -397,8 +419,10 @@ Loopin's data is saved in the hard disk automatically after any command that mod
 Loopin data are saved automatically as a JSON file `[JAR file location]/data/projectbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
+
 **Caution:**
 If your changes to the data file makes its format invalid, ProjectBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.
+
 </box>
 
 --------------------------------------------------------------------------------------------------------------------
@@ -410,6 +434,7 @@ If your changes to the data file makes its format invalid, ProjectBook will disc
 **Step 2:** Make a new folder in the same folder as the app, and name it data<br>
 **Step 3:** Copy the original projectbook.json located in the data folder over to the new data folder <br>
 **Step 4:** You are ready to use the project book like before!
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
