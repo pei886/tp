@@ -76,17 +76,16 @@ public class CommandTestUtil {
             throw new AssertionError("Execution of command should not fail.", ce);
         }
     }
-
     /**
      * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}
-     * that takes a string {@code expectedMessage}, used for CommandResult with showPersonList and showProjectList false.
+     * that takes a string {@code expectedMessage}, used for CommandResult with showPersonList and
+     * showProjectList false.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
             Model expectedModel) {
         CommandResult expectedCommandResult = new CommandResult(expectedMessage);
         assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
     }
-    
     /**
      * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}
      * that takes a string {@code expectedMessage}, used for CommandResult with showPersonList or showProjectList true.
@@ -94,12 +93,12 @@ public class CommandTestUtil {
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
             Model expectedModel, boolean showPersonList) {
         CommandResult expectedCommandResult = showPersonList
-                ? new CommandResult(expectedMessage, false, false, true, false) // Command result with showPersonList = true
-                : new CommandResult(expectedMessage, false, false, false, true); // Command result with showProjectList = true
+                ? new CommandResult(expectedMessage, false,
+                false, true, false) // Command result with showPersonList = true
+                : new CommandResult(expectedMessage, false, false,
+                false, true); // Command result with showProjectList = true
         assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
     }
-
-
     /**
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>

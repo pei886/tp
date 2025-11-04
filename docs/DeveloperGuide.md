@@ -603,13 +603,13 @@ testers are expected to do more *exploratory* testing.
 
     1. Download the jar file and copy into an empty folder
 
-    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    2. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
     1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-    1. Re-launch the app by double-clicking the jar file.<br>
+    2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
 ### Adding a project
@@ -618,6 +618,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `project add n/Clean Beach d/Cleaning the beach`<br>
        Expected: A new project named Clean Beach is added to the list with the correct timestamp. No last update is available.
+
     2. Test case: `project add d/No name provided`<br>
        Expected: No project is added. Error message shown indicating that the name field is required. Status bar remains unchanged.
 
@@ -627,6 +628,7 @@ testers are expected to do more *exploratory* testing.
 
     1. Test case: `project view project/Clean Beach`<br>
        Expected: The details of project Clean Beach is shown, including a list of persons associated with it, categorized by different roles.
+
     2. Test case: `project view project/Nonexistent`<br>
        Expected: No project is viewed. Message shown indicating that the project with the given name does not exist.
 
@@ -636,13 +638,13 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-    1. Test case: `delete 1`<br>
+    2. Test case: `delete 1`<br>
        Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-    1. Test case: `delete 0`<br>
+    3. Test case: `delete 0`<br>
        Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
 ### Saving data
@@ -650,12 +652,14 @@ testers are expected to do more *exploratory* testing.
 1. Dealing with missing data files
 
     1. To simulate a missing data file, delete the file data/projectbook.json.
+
     2. Launch the app.
        Expected: The app will be populated with sample data, similar to first launch.
-       
-2. Dealing with corrupted data files
 
+2. Dealing with corrupted data files
+    
     1. To simulate a corrupted data file, edit the file data/projectbook.json such that the data is invalid.
+
     2. Launch the app.
        Expected: The app will delete all data and start from an empty projectbook.
 
@@ -664,25 +668,25 @@ testers are expected to do more *exploratory* testing.
 ## **Appendix: Planned Enhancements**
 Team size: 5
 
-1. Handle long inputs in the UI (names, phones, emails, remarks)
+1. Handle long inputs in the UI (names, phones, emails, remarks).<br>
 Currently, long inputs are truncated with "..." in the UI. We plan to implement text wrapping so that the full text is displayed to the user.
 
-2. Allow non exact matches for project/PROJECT_NAME inputs.
+2. Allow non exact matches for project/PROJECT_NAME inputs.<br>
 Currently, commands that require the input project/PROJECT_NAME require the user input to match the project name exactly. We plan to allow the user to use a substring of project name instead of the full project name, provided that there is only one project that matches the substring.
 
-3. Make `find` search more fields.
+3. Make `find` search more fields.<br>
 Currently, `find` only searches the name and `findrole` only searches the role. We plan to make `find` more flexible and allow it to search other fields such as the phone, email and telegram.
 
-4. Allow user to choose between long and short version of each project command word
+4. Allow user to choose between long and short version of each project command word.<br>
 Currently, each project command follows the format `project COMMAND_WORD`. We plan to implement a second, shorter version of each command word (i.e. project add = addp, project delete = deletep, project assign = assignp)
 
-5. Allow more flexibility in the validation for Phone
+5. Allow more flexibility in the validation for Phone.<br>
 Currently, phone numbers must be strictly numeric and more than 3 digits. We plan to allow for more flexible formats such as `1234 5678 (HP) 1111-3333 (Office)` and `(+65) 9876 4321`
 
-6. Add deadline for remarks
+6. Add deadline for remarks.<br>
 Currently, remarks act as a simple reminder without any prioritised order. We plan to give the user the option to add a deadline for when a remark should be resolved by, and prioritize the order of remarks by the urgency of the deadline.
 
-7. Add warnings for `clear`, `delete` and `project delete`
+7. Add warnings for `clear`, `delete` and `project delete`<br>
 Currently, if the user correctly inputs the command for `clear`, `delete`, and `project delete`, the app will simply perform the deletion without any additional checks. We plan to add an additional warning step, where the app will warn the user of the exact deletion that is about to happen and asks the user for confirmation before deleting.
 
 --------------------------------------------------------------------------------------------------------------------
