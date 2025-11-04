@@ -1,7 +1,7 @@
 ---
-  layout: default.md
-    title: "Developer Guide"
-    pageNav: 3
+layout: default.md
+title: "Developer Guide"
+pageNav: 3
 ---
 
 # Loopin Developer Guide
@@ -12,7 +12,13 @@
 
 ## **Acknowledgements**
 
-_{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
+This project was adapted from the [AddressBook Level 3 (AB3)](https://se-education.org/addressbook-level3/) project created by [SE-EDU initiative](https://se-education.org/)
+
+* [JavaFX](https://wiki.openjdk.org/display/OpenJFX) is used to build the UI
+* [JUnit](https://github.com/junit-team/junit5) is used for automated testing
+* [PlantUML](https://plantuml.com/) is used to generate the UML diagrams in this document
+* [Gradle](https://gradle.org/) is used to automate building
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -70,7 +76,7 @@ The **API** of this component is specified in [`Ui.java`](https://github.com/AY2
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `SplitPane`, `PersonListPanel`, `ProjectListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/java/loopin/projectbook/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2526S1-CS2103T-W14-4/tp/tree/master/src/main/resources/view/MainWindow.fxml)
 
@@ -170,8 +176,7 @@ Book` to only require one `Tag` object per unique tag, instead of each `Person` 
 
 The `Storage` component,
 * can save both project book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `Project
-BookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
+* inherits from both `ProjectBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
 * depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
 
 ### Common classes
@@ -180,11 +185,11 @@ Classes used by multiple components are in the `seedu.project.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Implementation**
+## **Implementation of future features**
 
-This section describes some noteworthy details on how certain features are implemented.
+This section describes some noteworthy details on how certain features are intended to be implemented in the future.
 
-### \[Proposed\] Undo/redo feature
+### \[To be implemented in future versions\] Undo/redo feature
 
 #### Proposed Implementation
 
@@ -298,13 +303,6 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
     * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -337,27 +335,37 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​                  | So that I can…​                                      |
-|----------|--------------|------------------------------------|-----------------------------------------------------------|
-| `* *`    | new user     | see usage instructions             | refer to instructions when I forget how to use the App    |
-| `* * *`  | user         | add a new team member              |                                                           |
-| `* * *`  | user         | add a new organisation member      |                                                           |
-| `* * *`  | user         | add a new volunteer                |                                                           |
-| `* * *`  | user         | delete a person                    | remove contacts that I no longer need                     |
-| `* * *`  | user         | create a remark to update a person | remember that I need to update that person                |
-| `* * *`  | user         | complete an update for a person    | note that I have updated the person                       |
-| `* * *`  | user         | add a project                      | organise people who are involved in a project             |
-| `* * *`  | user         | assign a person to a project       | indicate that a person is involved in a project           |
-| `* * *`  | user         | remove a person from a project     | indicate that a person is no longer involved in a project |
-| `* * *`  | user         | view a project                     | easily find the details of everyone involved in a project |
+| Priority | As a …​                                         | I want to …​                          | So that I can…​                                                            |
+| -------- | ----------------------------------------------- | ------------------------------------- | -------------------------------------------------------------------------- |
+| `* *`    | new user                                        | see usage instructions                | refer to instructions when I forget how to use the App                     |
+| `* * *`  | user                                            | add a new team member                 | add contact details of a team member who is part of a committee            |
+| `* * *`  | user                                            | add a new organisation member         | add contact details of an external organisation member                     |
+| `* * *`  | user                                            | add a new volunteer                   | add contact details of a recruited volunteer                               |
+| `* * *`  | user                                            | delete a person                       | remove contacts that I no longer need                                      |
+| `* * *`  | user                                            | create a remark to update a person    | remember that I need to update that person                                 |
+| `* * *`  | user                                            | resolve a remark for a person         | note that I have updated the person                                        |
+| `* * *`  | user                                            | add a project                         | organise people who are involved in a project                              |
+| `* * *`  | user                                            | assign a person to a project          | indicate that a person is involved in a project                            |
+| `* * *`  | user                                            | remove a person from a project        | indicate that a person is no longer involved in a project                  |
+| `* * *`  | user                                            | view a project                        | easily find the details of everyone involved in a project                  |
+| `* *`    | user                                            | edit a person                         | edit inaccurate details about a person quickly                             |
+| `* `     | new user who has finished learning the commands | remove all sample data at once        | quickly clear away sample data before adding in my own data                |
+| `* * *`  | user                                            | delete a project                      | remove projects that I am not managing anymore                             |
+| `* * *`  | user                                            | exit the app                          | exit the app when I am done using it                                       |
+| `* *`    | user with many contacts added                   | search for a person                   | easily find contact details of a person without scrolling through the list |
+| `* *`    | user with many contacts added                   | list all persons of a particular role | easily find all contacts of a particular role                              |
+| `* *`    | user with many projects added                   | search for a project                  | easily find a project without scrolling through the list                   |
+| `* *`    | user                                            | list out all persons                  | view a full list of all my contacts                                        |
+| `* *`    | user                                            | list out all projects                 | view a full list of all my projects                                        |
+| `* *` <br> (for future developers to implement) | user                                            | edit a project                        | edit inaccurate details about a project quickly                           |
 
-*{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `Loopin` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use Case: UC1 - Add Team Member**
+**Use Case: UC1 - Add Team Member** 
+(The use cases for add volunteer and organisation member are similar to this and will not be repeated)
 
 **MSS**
 
@@ -368,68 +376,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. Missing or incorrectly formatted parameter(s).
+* 1a. Invalid command format (Missing, extra or invalid parameter(s)).
 
-    * 1a1. System shows an error message indicating parameter(s) are missing or incorrect.
+    * 1a1. System shows an error message indicating invalid command format.
 
       Use case ends.
 
-* 1b. Duplicate team member
+* 1b. Duplicate person
 
-    * 1b1. System checks the database and finds a team member with identical emails, phones or telegrams.
+    * 1b1. System checks the database and finds a person with identical email, phone or telegram.
     * 1b2. System shows an error message.
 
       Use case ends.
 
-**Use Case: UC2 - Add Organisation Member**
-
-**MSS**
-
-1. User requests to add an organisation member and provides information about the organisation member.
-2. System stores the new organisation member's details.
-
-   Use case ends.
-
-**Extensions**
-
-* 1a. Missing or incorrectly formatted parameter(s).
-
-    * 1a1. System shows an error message indicating parameter(s) are missing or incorrect.
-
-      Use case ends.
-
-* 1b. Duplicate organisation.
-
-    * 1b1. System checks the database and finds an organisation with identical emails, phones or telegrams.
-    * 1b2. System shows an error message.
-
-      Use case ends.
-
-**Use Case: UC3 - Add Volunteer**
-
-**MSS**
-
-1. User requests to add a volunteer and provides information about the volunteer.
-2. System stores the new volunteer's details.
-
-   Use case ends.
-
-**Extensions**
-
-* 1a. Missing or incorrectly formatted parameter(s).
-
-    * 1a1. System shows an error message indicating parameter(s) are missing or incorrect.
-
-      Use case ends.
-
-* 1b. Duplicate volunteer.
-
-    * 1b1. System checks the database and finds a volunteer with identical emails, phones or telegrams.
-    * 1b2. System shows an error message.
-
-      Use case ends.
-
-**Use case: UC4 - Delete Person**
+**Use case: UC2 - Delete Person**
 
 **MSS**
 
@@ -441,17 +401,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. The project book is empty.
+* 1a. The given index is invalid.
 
   Use case ends.
+  
 
-* 1b. The given index is invalid.
-
-    * 1b1. System shows an error message.
-
-      Use case ends
-
-**Use case: UC5 - Add Remark for Person Update**
+**Use case: UC3 - Add Remark for Person Update**
 
 **MSS**
 
@@ -482,7 +437,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-**Use case: UC6 - Complete Person Update**
+**Use case: UC4 - Complete Person Update**
 
 **MSS**
 
@@ -518,7 +473,7 @@ Use case ends.
 
       Use case resumes at step 1.
 
-**Use case: UC7 - Add project**
+**Use case: UC5 - Add project**
 
 **MSS**
 
@@ -543,7 +498,7 @@ Use case ends.
 
       Use case ends.
 
-**Use case: UC8 - Assign person to project**
+**Use case: UC6 - Assign person to project**
 
 **MSS**
 
@@ -564,7 +519,7 @@ Use case ends.
 * 1b. Project does not exist.
 
     * 1b1. System shows an error indicating that project does not exist.
-    * 1b2. User may choose to <u>UC7: Add Project</u>.
+    * 1b2. User may choose to <u>UC5: Add Project</u>.
 
       Use case resumes at step 1.
 
@@ -575,7 +530,7 @@ Use case ends.
       Use case ends.
 
 
-**Use case: UC9 - Remove Person from Project**
+**Use case: UC7 - Remove Person from Project**
 
 **MSS**
 
@@ -596,7 +551,7 @@ Use case ends.
 * 1b. Project does not exist.
 
     * 1b1. System shows an error indicating that project does not exist.
-    * 1b2. User may choose to <u>UC7: Add Project</u>.
+    * 1b2. User may choose to <u>UC5: Add Project</u>.
 
       Use case resumes at step 1.
 
@@ -628,11 +583,9 @@ Use case ends.
 * 1b. Project does not exist.
 
     * 1b1. System shows an error indicating that project does not exist.
-    * 1b2. User may choose to <u>UC7: Add Project</u>.
+    * 1b2. User may choose to <u>UC5: Add Project</u>.
       Use case resumes at step 1.
 
-
-*{More to be added}*
 
 ### Non-Functional Requirements
 
@@ -653,8 +606,8 @@ Use case ends.
 * **Index**: The position of a contact in the current list as displayed by the system. Uses 1-based indexing.
 * **Remark**: A tag attached to a contact indicating a need to update them on the project. Each remark has its own status (pending or completed).
 * **Volunteer**: A volunteer with basic contact info
-* **TeamMember**: A team member with basic contact info with a Committee.
-* **OrgMember**: A member of an external organisation with basic contact info and an Organisation.
+* **Team Member**: A team member with basic contact info with a Committee.
+* **Organisation Member**: A member of an external organisation with basic contact info and an Organisation.
 * **Project**: A logical grouping of tasks, updates, and contacts in Loopin.
 --------------------------------------------------------------------------------------------------------------------
 
@@ -683,8 +636,6 @@ testers are expected to do more *exploratory* testing.
 
     1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
-
-1. _{ more test cases …​ }_
 
 ### Adding a project
 
@@ -719,12 +670,33 @@ testers are expected to do more *exploratory* testing.
     1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
-
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. Dealing with missing data files
 
-    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+    1. To simulate a missing data file, delete the file data/projectbook.json.
+    2. Launch the app.
+       Expected: The app will be populated with sample data, similar to first launch.
+       
+2. Dealing with corrupted data files
 
-1. _{ more test cases …​ }_
+    1. To simulate a corrupted data file, edit the file data/projectbook.json such that the data is invalid.
+    2. Launch the app.
+       Expected: The app will delete all data and start from an empty projectbook.
+
+## **Appendix: Planned Enhancements**
+Team size: 5
+1. Handle long inputs in the UI (names, phones, emails, remarks)
+Currently, long inputs are truncated with "..." in the UI. We plan to implement text wrapping so that the full text is displayed to the user.
+2. Allow non exact matches for project/PROJECT_NAME inputs.
+Currently, commands that require the input project/PROJECT_NAME require the user input to match the project name exactly. We plan to allow the user to use a substring of project name instead of the full project name, provided that there is only one project that matches the substring.
+3. Make `find` search more fields.
+Currently, `find` only searches the name and `findrole` only searches the role. We plan to make `find` more flexible and allow it to search other fields such as the phone, email and telegram.
+4. Allow user to choose between long and short version of each project command word
+Currently, each project command follows the format `project COMMAND_WORD`. We plan to implement a second, shorter version of each command word (i.e. project add = addp, project delete = deletep, project assign = assignp)
+5. Allow more flexibility in the validation for Phone
+Currently, phone numbers must be strictly numeric and more than 3 digits. We plan to allow for more flexible formats such as `1234 5678 (HP) 1111-3333 (Office)` and `(+65) 9876 4321`
+6. Add deadline for remarks
+Currently, remarks act as a simple reminder without any prioritised order. We plan to give the user the option to add a deadline for when a remark should be resolved by, and prioritize the order of remarks by the urgency of the deadline.
+7. Add warnings for `clear`, `delete` and `project delete`
+Currently, if the user correctly inputs the command for `clear`, `delete`, and `project delete`, the app will simply perform the deletion without any additional checks. We plan to add an additional warning step, where the app will warn the user of the exact deletion that is about to happen and asks the user for confirmation before deleting.
