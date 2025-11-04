@@ -23,7 +23,7 @@ Action | Format, Examples
 [**Remark**](#remark-adding-a-remark) | `remark INDEX u/UPDATE` <br> e.g. `remark 2 u/add to shared drive`
 [**Resolve**](#resolve-resolving-a-remark) | `resolve INDEX REMARK_INDEX ` <br> e.g. `resolve 2 1`
 [**Find**](#find-finding-persons) | `find KEYWORD [MORE_KEYWORDS]...`<br> e.g., `find James Jake`
-[**FindRole**](#findrole-finding-persons-by-role) | `findrole ROLE_CHARACTER` <br> e.g. `find t`  
+[**FindRole**](#findrole-finding-persons-by-role) | `findrole ROLE_CHARACTER` <br> e.g. `find t`
 [**List**](#list-listing-all-persons) | `list`
 [**Add project**](#project-add-adding-a-project) | `project add project/PROJECT_NAME d/DESCRIPTION` <br> e.g., `project add project/Beach Cleanup d/Beach cleaning at Siloso Beach`
 [**List projects**](#project-list-listing-all-projects) | `project list`
@@ -80,9 +80,9 @@ Action | Format, Examples
 9.  To exit the app, type `exit`.
 
 <box type="warning" seamless>
-    
+
 If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
-    
+
 </box>
 
 Refer to the [Features](#features) below for details of each command.
@@ -97,12 +97,12 @@ Refer to the [Features](#features) below for details of each command.
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `addv n/NAME`, `NAME` is a parameter which can be used as `addv n/John Doe`.
-  
+
 * Items in square brackets `[]` are optional.<br>
   e.g `n/NAME [p/PHONE]` can be used as `n/John Doe p/98613698` or as `n/John Doe`.
- 
+
 * `INDEX` refers to the index number shown in the currently displayed list. The index must be a positive integer (1, 2, 3, ...).
-    
+
 * Items with `…` after them can be used multiple times including zero times.<br>
   e.g. `[u/UPDATE]…` can be used as ` ` (i.e. 0 times), `u/add to group chat`, `u/register in portal` etc.
 
@@ -117,9 +117,9 @@ Refer to the [Features](#features) below for details of each command.
 <box type="tip" seamless>
 
  **Pro Tip: Command Chaining**
- 
+
  The `INDEX` for commands like `edit` or `delete` refers to the *currently displayed list*.
- 
+
  This means you can "chain" commands. For example:
  1.  Use `find Alex` to show only people whose names contain 'Alex'.
  2.  The list might show two people: `1. Alex Yeoh` and `2. Alexandra Tan`.
@@ -221,7 +221,7 @@ Finds persons by matching their name to a sequence of keywords.
 
 Finds all persons in the project book whose role matches the specified role type.
 
-**Format:**  
+**Format:**
 `findrole ROLE_CHARACTER`
 
 **Details:**
@@ -454,14 +454,14 @@ If your changes to the data file makes its format invalid, ProjectBook will disc
 2. `archive` and `load` feature <br>
    Are you starting on a fresh new set of projects, but don't want to delete your old ones? <br>
    Using the upcoming `archive` feature, you can simply archive your old project book and start on a new one! Load the archived data whenever you want using the `load` command!
-   
+
 3. `project edit` feature <br>
    Want to update a project name or description? <br>
    Edit a project with the upcoming `project edit` feature!
 
 4. Shortened project commands <br>
    Are you tired of typing out `project add`, `project delete` and all these other long project command words? <br>
-   Use the upcoming shortened project commands! `project add` can be shortened to `addp`, `project delete` can be shortened to `deletep` and so on! <br> 
+   Use the upcoming shortened project commands! `project add` can be shortened to `addp`, `project delete` can be shortened to `deletep` and so on! <br>
    Don't worry if you've gotten used to the old format — they'll still be accepted.
 
 --------------------------------------------------------------------------------------------------------------------
