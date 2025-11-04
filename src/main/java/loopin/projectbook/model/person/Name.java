@@ -8,10 +8,8 @@ import static loopin.projectbook.commons.util.AppUtil.checkArgument;
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
-
-    public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphanumeric characters, spaces"
-	    + " and these special characters including the parentheses (./,-), and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Names should only contain alphanumeric characters, spaces"
+            + " and these special characters including the parentheses (./,-), and it should not be blank";
 
     /*
      * The first character of the name must not be a whitespace,
