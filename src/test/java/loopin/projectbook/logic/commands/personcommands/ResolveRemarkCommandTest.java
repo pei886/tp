@@ -16,7 +16,6 @@ import loopin.projectbook.model.ModelManager;
 import loopin.projectbook.model.UserPrefs;
 import loopin.projectbook.model.person.Person;
 import loopin.projectbook.model.person.Remark;
-import loopin.projectbook.model.person.Remark.Status;
 
 public class ResolveRemarkCommandTest {
 
@@ -79,18 +78,4 @@ public class ResolveRemarkCommandTest {
 
         assertCommandFailure(resolveCommand, model, ResolveRemarkCommand.MESSAGE_INVALID_REMARK_DISPLAYED_INDEX);
     }
-
-    //Did not test for resolve remark as we removed the remark entirely
-//    @Test
-//    public void execute_alreadyResolvedRemark_failure() {
-//        // Resolve the remark once
-//        Remark initialRemark = personWithRemark.getRemarks().iterator().next();
-//        Remark resolvedRemark = initialRemark.resolve();
-//        Person alreadyResolvedPerson = personWithRemark.withResolvedRemark(initialRemark, resolvedRemark);
-//        model.setPerson(personWithRemark, alreadyResolvedPerson);
-//
-//        // Try to resolve again
-//        ResolveRemarkCommand resolveCommand = new ResolveRemarkCommand(INDEX_FIRST_PERSON, remarkIndex);
-//        assertCommandFailure(resolveCommand, model, ResolveRemarkCommand.MESSAGE_REMARK_ALREADY_RESOLVED);
-//    }
 }
